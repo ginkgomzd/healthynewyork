@@ -1,0 +1,6 @@
+# leave NetBeans meta-data out of the repo
+/nbproject/
+
+# these directories are controlled by the build process and shouldn't be versioned
+/platforms/
+/plugins/
