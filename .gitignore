@@ -2,5 +2,6 @@
 /nbproject/
 
 # these directories are controlled by the build process and shouldn't be versioned
+/libraries/
 /platforms/
 /plugins/
