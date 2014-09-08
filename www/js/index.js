@@ -47,3 +47,9 @@ var app = {
         console.log('Received Event: ' + id);
     }
 };
+
+$(document).ready(function () {
+  $('[data-toggle="offcanvas"]').click(function () {
+    $('.row-offcanvas').toggleClass('active')
+  });
+});
