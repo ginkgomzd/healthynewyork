@@ -46,7 +46,11 @@ body {
 }
 
 #content {
-  margin-top: 70px;
+  margin: 70px 0;
+}
+
+.navbar-offcampus-bottom li {
+  text-align: center;
 }
 
 /* Landscape layout (with min-width) */
@@ -87,20 +91,14 @@ body {
     left: -50%; /* 6 columns */
   }
 
-  .row-offcanvas-right.active {
+  .row-offcanvas-right.active,
+  .row-offcanvas-right.active .navbar-offcanvas {
     right: 50%; /* 6 columns */
   }
 
-  .row-offcanvas-right.active .navbar-offcanvas {
-    right: 50%;
-  }
-
-  .row-offcanvas-left.active {
-    left: 50%; /* 6 columns */
-  }
-
+  .row-offcanvas-left.active,
   .row-offcanvas-left.active .navbar-offcanvas {
-    left: 50%;
+    left: 50%; /* 6 columns */
   }
 
   .row-offcanvas .sidebar-offcanvas {
@@ -119,5 +117,10 @@ body {
     min-height: 50px;
     width: 100%;
     z-index: 9999;
+  }
+
+  .navbar-offcanvas-bottom {
+    bottom: 0;
+    margin-bottom: 0;
   }
 }

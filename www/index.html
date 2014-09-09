@@ -20,17 +20,40 @@
               </button>
               Healthy New York
             </div> <!-- /.navbar-offcanvas -->
+
+            <!-- content from individual pages is loaded into this space -->
             <div id="content" class="container">
               <p>Placeholder content</p>
             </div> <!-- /#content -->
+
+            <nav class="navbar-offcanvas navbar-offcanvas-bottom">
+              <div class="container">
+                <ul class="list-inline row">
+                  <li class="col-xs-3">
+                    <button type="button" class="btn btn-primary btn-xs" data-destination="coverage_info">icon</button>
+                  </li>
+                  <li class="col-xs-3">
+                    <button type="button" class="btn btn-primary btn-xs" data-destination="faq">icon</button>
+                  </li>
+                  <li class="col-xs-3">
+                    <button type="button" class="btn btn-primary btn-xs" data-destination="bookmarks">icon</button>
+                  </li>
+                  <li data-destination="schedule_appt" class="col-xs-3">
+                    <button type="button" class="btn btn-primary btn-xs" data-destination="schedule_appt">icon</button>
+                  </li>
+                </ul>
+              </div>
+            </nav>
           </div> <!-- /#main -->
           <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-            <div class="container">
-              <a href="#" class="list-group-item active">First Link</a>
-              <a href="#" class="list-group-item">Second Link</a>
-              <a href="#" class="list-group-item">Third Link</a>
-              <a href="#" class="list-group-item">Fourth Link</a>
-            </div>
+            <nav class="container">
+              <ul class="nav">
+                <li data-destination="coverage_info" class="list-group-item active">Coverage Information</li>
+                <li data-destination="faq" class="list-group-item">Frequently Asked Questions</li>
+                <li data-destination="bookmarks" class="list-group-item">Bookmarks</li>
+                <li data-destination="schedule_appt" class="list-group-item">Schedule an Appointment</li>
+              </ul>
+            </nav>
           </div><!-- /#sidebar -->
         </div> <!-- /.row -->
         <script src="js/jquery-2.1.1.min.js"></script>
