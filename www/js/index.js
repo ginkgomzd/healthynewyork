@@ -49,7 +49,17 @@ var app = {
 };
 
 $(document).ready(function () {
-  $('[data-toggle="offcanvas"]').click(function () {
+  $('#toggle-offcanvas').bind('tap', (function () {
     $('.row-offcanvas').toggleClass('active')
-  });
+  }));
+  $('#navbar-top').bind('swipe', (function (e) {
+    var startX = e.swipestart.coords[0];
+    var endX = e.swipestop.coords[0];
+
+    if (startX > endX) { // swipe left
+      $('.row-offcanvas').removeClass('active');
+    } else if(endX > startX) { // swipe right
+      $('.row-offcanvas').addClass('active');
+    }
+  }));
 });
