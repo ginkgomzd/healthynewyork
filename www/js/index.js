@@ -49,10 +49,10 @@ var app = {
 };
 
 $(document).ready(function () {
-  $('#toggle-offcanvas').bind('tap', (function () {
-    $('.row-offcanvas').toggleClass('active')
-  }));
-  $('#navbar-top').bind('swipe', (function (e) {
+  $('#toggle-offcanvas').bind('tap', function () {
+    $('.row-offcanvas').toggleClass('active');
+  });
+  $('#navbar-top').bind('swipe', function (e) {
     var startX = e.swipestart.coords[0];
     var endX = e.swipestop.coords[0];
 
@@ -61,5 +61,15 @@ $(document).ready(function () {
     } else if(endX > startX) { // swipe right
       $('.row-offcanvas').addClass('active');
     }
-  }));
+  });
+
+  // load new content when a navigation item is clicked
+  $('[data-destination]').bind('tap', function() {
+    var dest = $(this).data('destination');
+    $('#content').load('pages/' + dest + '.html', function() {
+      $('[data-destination]').removeClass('active');
+      $('[data-destination="' + dest + '"]').addClass('active');
+      $('#pagetitle').text($('#content title').text());
+    });
+  });
 });
