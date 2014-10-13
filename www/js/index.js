@@ -115,7 +115,6 @@ var app = {
         $('.row-offcanvas').removeClass('active'); // any time a link is followed, close the off-canvas menu
         $('nav a').removeClass('active');
         $('nav a[href^="' + basePath + '"]').addClass('active');
-        $('#pagetitle').text($('#content title').text());
       });
     }
 };
