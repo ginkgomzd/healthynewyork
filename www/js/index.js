@@ -115,7 +115,16 @@ var app = {
         $('.row-offcanvas').removeClass('active'); // any time a link is followed, close the off-canvas menu
         $('nav a').removeClass('active');
         $('nav a[href^="' + basePath + '"]').addClass('active');
+        app.manageDependencies();
       });
+    },
+    manageDependencies: function() {
+      // clear any classes that might have been previously added by child pages (this is a reset)
+      $('#content').removeClass().addClass('container');
+
+      if ($('#content').find('table').length !== 0) {
+        $.getScript('js/tablePage.js');
+      }
     }
 };
 
