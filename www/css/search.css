@@ -1,0 +1,21 @@
+.form-inline .form-control,
+.form-inline .form-group
+{
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.form-inline .form-group {
+  width: 85%;
+}
+
+form .btn-icon-search {
+  height: 34px;
+  margin-bottom: 15px;
+  margin-left: 10px;
+  width: 34px;
+}
+
+#search_results {
+  display: none;
+}

@@ -121,10 +121,14 @@ body {
   }
 
   #nav-search {
-    background: url('../img/ic_menu_search_holo_light.png') no-repeat;
-    background-size: 100%;
     display: block;
     float: right;
+  }
+
+  .btn-icon-search {
+    background-image: url('../img/ic_menu_search_holo_light.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
   }
 
   .navbar-offcanvas {
