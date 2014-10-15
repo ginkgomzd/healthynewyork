@@ -166,11 +166,11 @@ body {
     background-image: url('../img/ic_menu_find_holo_light.png');
   }
 
-  nav a[href^="pages/faq.html"] {
+  nav a[href^="pages/ask.html"] {
     background-image: url('../img/ic_menu_help.png');
   }
 
-  nav a[href^="pages/faq.html"].active {
+  nav a[href^="pages/ask.html"].active {
     background-image: url('../img/ic_menu_help_holo_light.png');
   }
 
