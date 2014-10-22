@@ -25,6 +25,8 @@ Router = function() {
   this.control = function(destination) {
     if (destination === 'pages/bookmarks.html') {
       app.controller = bookmark;
+    } else if (destination ==='pages/faq.html') {
+      app.controller = faq;
     } else if (destination) {
       app.controller = new Controller();
     }
