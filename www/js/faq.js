@@ -31,15 +31,15 @@ var faq = _.extend(new Controller(), {
 //      reader.onloadend = faq.templateLoaded;
 //      reader.readAsText(file);
 //    }
-  updateDisplay: function() {
+  main: function() {
     var tpl_src = $('#faq_tpl').html();
     var data = {my_var: "my_value"};
     var template = _.template(tpl_src);
-    var content = template(data);
+    this.rendered = template(data);
 
-    $('#content').html(content);
-    Controller.resetContentDisplay();
+    this.updateDisplay();
   }
+
 });
 
 $(document).ready(function () {

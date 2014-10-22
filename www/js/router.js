@@ -31,6 +31,6 @@ Router = function() {
       app.controller = new Controller();
     }
     app.controller.destination = destination;
-    app.controller.updateDisplay();
+    app.controller.main();
   }
 }
