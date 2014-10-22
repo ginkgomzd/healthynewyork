@@ -2,6 +2,7 @@
 var app = {
     // Application Constructor
     initialize: function() {
+        app.router = new Router();
         this.bindEvents();
     },
     // Bind Event Listeners
@@ -32,7 +33,7 @@ var app = {
 
         // handle all links
         $('a').bind('tap', function(e) {
-          app.route(e);
+          app.router.route(e);
         });
     },
     // deviceready Event Handler
@@ -63,47 +64,7 @@ var app = {
 
       return direction;
     },
-    /**
-     * Determines how to route requests. Very basic at present. As we start incorporating
-     * user-generated content, we may need additional processing to handle different
-     * types of requests or to handle invalid requests. Possibly this could be handled
-     * by returning app.updateDisplay()'s promise and doing damage control if the
-     * AJAX call fails.
-     *
-     * @param {Tap event} e
-     * @returns {undefined}
-     */
-    route: function(e) {
-      var el = $(e.currentTarget);
-      var destination = el.attr('href');
 
-      // don't try to route external links (i.e., those with a protocol ://); let them behave normally
-      if (!/:\/\//.test(destination)) {
-        e.preventDefault();
-        // TODO: we may need to do more URL processing at a later time, but for now we can pass through
-        app.updateDisplay(destination);
-      }
-    },
-    /**
-     * Updates content on the page and toggles active states for nav links. This
-     * helper function is called from app.route() and should not be called directly.
-     *
-     * @param {string} destination
-     * @returns {undefined}
-     */
-    updateDisplay: function(destination) {
-      // get the path minus any parameters
-      var q = destination.indexOf('?');
-      var basePathLength = (q === -1 ? destination.length : q);
-      var basePath = destination.substr(0, basePathLength);
-
-      $('#content').load(destination, function() {
-        $('.row-offcanvas').removeClass('active'); // any time a link is followed, close the off-canvas menu
-        $('nav a').removeClass('active');
-        $('nav a[href^="' + basePath + '"]').addClass('active');
-        app.manageDependencies();
-      });
-    },
     manageDependencies: function() {
       // clear any classes that might have been previously added by child pages (this is a reset)
       $('#content').removeClass().addClass('container');
