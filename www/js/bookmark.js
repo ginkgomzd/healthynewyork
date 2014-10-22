@@ -38,9 +38,7 @@ var bookmark = _.extend(new Controller(), {
             tx.executeSql('SELECT COUNT(*) AS cnt FROM bookmark WHERE content_id = ? AND content_table = ?',
               [content_id, content_table],
               function (tx, results) {
-                $.each(results.rows.item(0), function (key, value) {
-                  el.toggleClass('active', (results.rows.item(0).cnt === 1));
-                });
+                el.toggleClass('active', (results.rows.item(0).cnt === 1));
               });
           },
           localDB.installError,
