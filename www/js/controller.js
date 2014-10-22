@@ -15,17 +15,20 @@ Controller = function () {
   */
   this.updateDisplay = function() {
     var destination = this.destination;
-    // get the path minus any parameters
-    var q = destination.indexOf('?');
-    var basePathLength = (q === -1 ? destination.length : q);
-    var basePath = destination.substr(0, basePathLength);
-
-    $('#content').load(destination, function() {
-      $('.row-offcanvas').removeClass('active'); // any time a link is followed, close the off-canvas menu
-      $('nav a').removeClass('active');
-      $('nav a[href^="' + basePath + '"]').addClass('active');
-      app.manageDependencies();
-    });
+    $('#content').load(destination, this.resetContentDisplay());
   }
+
+  this.resetContentDisplay = function() {
+    // get the path minus any parameters
+    var q = this.destination.indexOf('?');
+    var basePathLength = (q === -1 ? this.destination.length : q);
+    var basePath = this.destination.substr(0, basePathLength);
+
+    $('.row-offcanvas').removeClass('active'); // any time a link is followed, close the off-canvas menu
+    $('nav a').removeClass('active');
+    $('nav a[href^="' + basePath + '"]').addClass('active');
+      app.manageDependencies();
+  }
+
 }
 

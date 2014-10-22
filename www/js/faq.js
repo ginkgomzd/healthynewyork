@@ -32,14 +32,13 @@ var faq = _.extend(new Controller(), {
 //      reader.readAsText(file);
 //    }
   updateDisplay: function() {
-    console.log('MZD: FAQ update Display');
     var tpl_src = $('#faq_tpl').html();
     var data = {my_var: "my_value"};
     var template = _.template(tpl_src);
     var content = template(data);
 
     $('#content').html(content);
-
+    Controller.resetContentDisplay();
   }
 });
 

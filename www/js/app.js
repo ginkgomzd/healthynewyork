@@ -32,7 +32,7 @@ var app = {
         // constantly listening for any newly added ones
 
         // handle all links
-        $('a').bind('tap', function(e) {
+        $('body').on('tap', 'a', function(e){
           app.router.route(e);
         });
     },
