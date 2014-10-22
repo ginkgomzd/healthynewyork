@@ -1,4 +1,4 @@
-var bookmark = {
+var bookmark = _.extend(new Controller(), {
     // Application Constructor
     initialize: function() {
         this.bindEvents();
@@ -68,7 +68,7 @@ var bookmark = {
         localDB.installSuccess
       );
     }
-};
+});
 
 $(document).ready(function () {
   bookmark.initialize();

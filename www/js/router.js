@@ -19,18 +19,16 @@ Router = function() {
         e.preventDefault();
         // TODO: we may need to do more URL processing at a later time, but for now we can pass through
         this.control(destination);
-        app.controller.updateDisplay();
       }
     }
 
   this.control = function(destination) {
-    if (destination) {
+    if (destination === 'pages/bookmarks.html') {
+      app.controller = bookmark;
+    } else if (destination) {
       app.controller = new Controller();
-      app.controller.destination = destination;
     }
+    app.controller.destination = destination;
+    app.controller.updateDisplay();
   }
-
 }
-
-
-
