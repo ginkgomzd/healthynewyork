@@ -67,12 +67,60 @@ var bookmark = _.extend(new Controller(), {
       );
     },
     main: function() {
-      var tpl_src = $('#faq_tpl').html();
-      var data = {my_var: "my_value"};
-      var template = _.template(tpl_src);
-      this.rendered = template(data);
+      this.fetchData();
+    },
+    /**
+     * Fetches all bookmarks
+     *
+     * @returns {undefined}
+     */
+    fetchData: function() {
+      this.data = {};
+      this.data.rows = []; // supplies data to the rows of the table
+      this.data.page_title = 'Bookmarks';
 
-      this.updateDisplay();
+      localDB.db.transaction(this.buildQueries,
+        // TODO: we need a generic error handler
+        function(tx, er){
+          console.log("Transaction ERROR: "+ er.message);
+        },
+        function(){
+          bookmark.bindData();
+          bookmark.updateDisplay();
+        }
+      );
+    },
+    buildQueries: function(tx) {
+      tx.executeSql(
+        'SELECT DISTINCT "import_id", "title", "type" FROM "content" \
+        INNER JOIN "bookmark" \
+        ON "import_id" = "content_id"',
+        [],
+        bookmark.buildRows
+      );
+    },
+    buildRows: function(tx, result) {
+      for(var i = 0; i < result.rows.length; i++) {
+        var item = result.rows.item(i);
+        bookmark.data.rows.push({
+          link_url: 'pages/faq.html?id=' + item.import_id,
+          title: item.title,
+          type: item.type
+        });
+      }
+    },
+    bindData: function(data) {
+      var src = $('#bookmark_table_row_tpl').html();
+      var row_tpl = _.template(src);
+      this.data.tbody = '';
+
+      $.each(this.data.rows, function() {
+        bookmark.data.tbody += row_tpl(this);
+      });
+
+      var tpl_src = $('#table_page_tpl').html();
+      var template = _.template(tpl_src);
+      this.rendered = template(this.data);
     }
 });
 
