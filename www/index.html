@@ -11,6 +11,7 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <link rel="stylesheet" type="text/css" href="css/search.css" />
+        <link rel="stylesheet" type="text/css" href="css/tables.css" />
         <title>Healthy New York</title>
     </head>
     <body>
@@ -107,8 +108,16 @@
 </script>
 
 
-
-
+      <script type="text/template" id="bookmark_table_row_tpl">
+        <tr>
+          <td><a href="<%= link_url %>"><%= title %></a></td>
+          <td><%= type %></td>
+          <%= bookmark_cell %>
+        </tr>
+      </script>
+      <script type="text/template" id="bookmark_cell">
+        <td class="toggle-fave <% if (status === 1) { %>active<% } %>" data-id="<%= content_id %>" data-table="<%= content_table %>"></td>
+      </script>
 
 
     </body>

@@ -28,9 +28,6 @@ var app = {
           }
         });
 
-        // TODO: it's not good enough to bind to existing anchor tags; we have be
-        // constantly listening for any newly added ones
-
         // handle all links
         $('body').on('tap', 'a', function(e){
           app.router.route(e);
@@ -63,15 +60,6 @@ var app = {
       }
 
       return direction;
-    },
-
-    manageDependencies: function() {
-      // clear any classes that might have been previously added by child pages (this is a reset)
-      $('#content').removeClass().addClass('container');
-
-      if ($('#content').find('table').length !== 0) {
-        $.getScript('js/tablePage.js');
-      }
     }
 };
 
