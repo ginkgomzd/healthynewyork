@@ -29,6 +29,8 @@ Router = function() {
       app.controller = faq;
     } else if (/^pages\/search\.html/.test(destination)) {
       app.controller = search;
+    } else if (destination === 'pages/ask.html') {
+      app.controller = ask;
     } else if (destination) {
       app.controller = new Controller();
     }
