@@ -28,9 +28,6 @@ var app = {
           }
         });
 
-        // TODO: it's not good enough to bind to existing anchor tags; we have be
-        // constantly listening for any newly added ones
-
         // handle all links
         $('body').on('tap', 'a', function(e){
           app.router.route(e);

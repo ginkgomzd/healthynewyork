@@ -12,7 +12,6 @@ var tablePage = {
   bindEvents: function() {
     // handle all links
     $('.toggle-fave').bind('tap', function(e) {
-      console.dir($(e.currentTarget));
       $(e.currentTarget).toggleClass('active');
 
       // TODO: database write

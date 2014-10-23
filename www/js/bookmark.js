@@ -3,18 +3,11 @@ var bookmark = _.extend(new Controller(), {
     initialize: function() {
         this.bindEvents();
     },
-    // Bind Event Listeners
-    //
-    // Bind any events that are required on startup. Common events are:
-    // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         // wait for device API libraries to load
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
-    // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call class methods, we
-    // must explicitly call 'bookmark.myMethod(...);'
+    // The scope of 'this' is the event.
     onDeviceReady: function() {
       // don't bind listeners until the device is ready (i.e., we have a database)
       $('.toggle-fave').bind('tap', function(e) {
@@ -25,25 +18,6 @@ var bookmark = _.extend(new Controller(), {
         } else {
           bookmark.save(el.data('id'), el.data('table'));
         }
-      });
-
-      // load up state from DB
-      $('.toggle-fave').each(function(){
-        var el = $(this);
-        var content_id = el.data('id');
-        var content_table = el.data('table');
-
-        localDB.db.transaction(
-          function(tx) {
-            tx.executeSql('SELECT COUNT(*) AS cnt FROM bookmark WHERE content_id = ? AND content_table = ?',
-              [content_id, content_table],
-              function (tx, results) {
-                el.toggleClass('active', (results.rows.item(0).cnt === 1));
-              });
-          },
-          localDB.installError,
-          localDB.installSuccess
-        );
       });
     },
     delete: function(content_id, content_table) {
