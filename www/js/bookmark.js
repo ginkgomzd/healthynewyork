@@ -4,13 +4,7 @@ var bookmark = _.extend(new Controller(), {
         this.bindEvents();
     },
     bindEvents: function() {
-        // wait for device API libraries to load
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-    },
-    // The scope of 'this' is the event.
-    onDeviceReady: function() {
-      // don't bind listeners until the device is ready (i.e., we have a database)
-      $('.toggle-fave').bind('tap', function(e) {
+      $('body').on('tap', '.toggle-fave', function(e){
         var el = $(e.currentTarget);
 
         if (el.is('.active')) {
@@ -18,6 +12,8 @@ var bookmark = _.extend(new Controller(), {
         } else {
           bookmark.save(el.data('id'), el.data('table'));
         }
+
+        el.toggleClass('active');
       });
     },
     delete: function(content_id, content_table) {
@@ -27,7 +23,7 @@ var bookmark = _.extend(new Controller(), {
             [content_id, content_table]);
         },
         localDB.installError,
-        localDB.installSuccess
+        bookmark.removeUnfavoritedItems
       );
     },
     save: function(content_id, content_table) {
@@ -104,6 +100,10 @@ var bookmark = _.extend(new Controller(), {
       var tpl_src = $('#table_page_tpl').html();
       var template = _.template(tpl_src);
       this.rendered = template(this.data);
+    },
+    removeUnfavoritedItems: function() {
+      // TODO: this selector should be... more selective
+      $('table.table .toggle-fave').not('active').parent('tr').remove();
     }
 });
 
