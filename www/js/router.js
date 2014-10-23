@@ -27,6 +27,8 @@ Router = function() {
       app.controller = bookmark;
     } else if (/^pages\/faq\.html/.test(destination)) {
       app.controller = faq;
+    } else if (/^pages\/search\.html/.test(destination)) {
+      app.controller = search;
     } else if (destination) {
       app.controller = new Controller();
     }
