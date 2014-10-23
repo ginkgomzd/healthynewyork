@@ -14,20 +14,6 @@ var faq = _.extend(new Controller(), {
   onDeviceReady: function() {
 //      window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, faq.gotFS, fail);
   },
-//    templateLoaded: function() {
-//      console.log("Read as text");
-//      console.log(evt.target.result);
-//      faq._tplFile = evt.target.result;
-//    },
-//    gotFS: function(fileSystem) {
-////      console.log(fileSystem.root.toURL());
-//      fileSystem.root.getFile('file:///data/data/org.younginvincibles.healthynewyork/pages/faq.tpl', null, faq.loadTemplate, fail);
-//    },
-//    loadTemplate: function(file) {
-//      var reader = new FileReader();
-//      reader.onloadend = faq.templateLoaded;
-//      reader.readAsText(file);
-//    }
   main: function() {
     this.content_type = 'Terms to Know';
     this.fetchData();
