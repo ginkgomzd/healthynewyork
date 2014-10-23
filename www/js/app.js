@@ -60,15 +60,6 @@ var app = {
       }
 
       return direction;
-    },
-
-    manageDependencies: function() {
-      // clear any classes that might have been previously added by child pages (this is a reset)
-      $('#content').removeClass().addClass('container');
-
-      if ($('#content').find('table').length !== 0) {
-        $.getScript('js/tablePage.js');
-      }
     }
 };
 
