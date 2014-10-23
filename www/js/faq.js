@@ -15,17 +15,18 @@ var faq = _.extend(new Controller(), {
 //      window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, faq.gotFS, fail);
   },
   main: function() {
-    this.content_type = 'Terms to Know';
-    this.fetchData();
+    faq.content_type = 'Terms to Know';
+    faq.qs = _.qs(faq.destination);
+    faq.fetchData();
   },
   // TODO: we can probably parameterize this to some extent; if this function could
   // accept type and ID args, we could build probably all the FAQ pages we need...
   // at least for lists and individual pages -- for fetching a list of categories
   // we might want a different function
   fetchData: function() {
-    this.data = {};
-    this.data.rows = [];
-    this.data.page_title = this.content_type;
+    faq.data = {};
+    faq.data.rows = [];
+    faq.data.page_title = this.content_type;
 
     localDB.db.transaction(this.buildQueries,
       // TODO: we need a generic error handler
@@ -39,29 +40,62 @@ var faq = _.extend(new Controller(), {
     );
   },
   bindData: function(data) {
+    if(faq.qs.display === 'content') {
+      faq.bindDataContent();
+    } else {
+      faq.bindDataTitles(data);
+    }
+  },
+  bindDataTitles: function(data) {
     var src = $('#faq_table_row_tpl').html();
     var row_tpl = _.template(src);
-    this.data.tbody = '';
+    faq.data.tbody = '';
 
-    $.each(this.data.rows, function() {
+    $.each(faq.data.rows, function() {
       faq.data.tbody += row_tpl(this);
     });
 
     var tpl_src = $('#table_page_tpl').html();
     var template = _.template(tpl_src);
-    this.rendered = template(this.data);
+    faq.rendered = template(faq.data);
+  },
+  bindDataContent: function(data) {
+    var src = $('#faq_conent_tpl').html();
+    var content_tpl = _.template(src);
+    faq.rendered = content_tpl(faq.data);
   },
   buildQueries: function(tx) {
-    tx.executeSql('SELECT "import_id", "title" FROM "content" WHERE type = ?',
+    if(faq.qs.display === 'content') {
+      faq.buildContentQueries(tx, faq.parseContentResult);
+    } else {
+      faq.buildTitleQueries(tx, faq.buildRows);
+    }
+  },
+  buildTitleQueries: function(tx, callback) {
+    tx.executeSql('SELECT import_id, title FROM content WHERE type = ?',
       [faq.content_type],
-      faq.buildRows
+      callback
+    );
+  },
+  buildContentQueries: function(tx, callback) {
+    tx.executeSql('SELECT * FROM content WHERE import_id = ?',
+      [faq.qs.cntId],
+      callback
     );
   },
   buildRows: function(tx, result) {
+    var baseUrl = 'pages/faq.html?';
     for(var i=0; i < result.rows.length; i++) {
       var item = result.rows.item(i);
       // TODO: this link_url is totally fake
-      faq.data.rows.push({title_text: item.title, link_url: item.import_id});
+      var contentUrl = baseUrl + 'display=content&cntId=' + item.import_id;
+      faq.data.rows.push({title_text: item.title, link_url: contentUrl});
+    }
+  },
+  parseContentResult: function(tx, result) {
+    for(var i=0; i < result.rows.length; i++) {
+      faq.data.title_text = result.rows.item(i).title;
+      faq.data.body = result.rows.item(i).body;
     }
   }
 });
