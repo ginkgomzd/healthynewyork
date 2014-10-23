@@ -112,10 +112,12 @@
         <tr>
           <td><a href="<%= link_url %>"><%= title %></a></td>
           <td><%= type %></td>
-          <td class="toggle-fave"></td>
+          <%= bookmark_cell %>
         </tr>
       </script>
-
+      <script type="text/template" id="bookmark_cell">
+        <td class="toggle-fave" data-id="<%= content_id %>" data-table="<%= content_table %>"></td>
+      </script>
 
 
     </body>

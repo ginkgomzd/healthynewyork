@@ -77,18 +77,26 @@ var bookmark = _.extend(new Controller(), {
       for(var i = 0; i < result.rows.length; i++) {
         var item = result.rows.item(i);
         bookmark.data.rows.push({
-          link_url: 'pages/faq.html?id=' + item.import_id,
+          id: item.import_id,
           title: item.title,
           type: item.type
         });
       }
     },
     bindData: function(data) {
+      var bookmark_cell_src = $('#bookmark_cell').html();
+      var bookmark_cell_tpl = _.template(bookmark_cell_src);
+
       var src = $('#bookmark_table_row_tpl').html();
       var row_tpl = _.template(src);
       this.data.tbody = '';
 
       $.each(this.data.rows, function() {
+        this.link_url = 'pages/faq.html?id=' + this.id;
+        this.bookmark_cell = bookmark_cell_tpl({
+          content_id: this.id,
+          content_table: 'content'
+        });
         bookmark.data.tbody += row_tpl(this);
       });
 
