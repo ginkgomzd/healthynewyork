@@ -116,7 +116,7 @@
         </tr>
       </script>
       <script type="text/template" id="bookmark_cell">
-        <td class="toggle-fave" data-id="<%= content_id %>" data-table="<%= content_table %>"></td>
+        <td class="toggle-fave <% if (status === 1) { %>active<% } %>" data-id="<%= content_id %>" data-table="<%= content_table %>"></td>
       </script>
 
 

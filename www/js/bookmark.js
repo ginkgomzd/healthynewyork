@@ -95,7 +95,8 @@ var bookmark = _.extend(new Controller(), {
         this.link_url = 'pages/faq.html?id=' + this.id;
         this.bookmark_cell = bookmark_cell_tpl({
           content_id: this.id,
-          content_table: 'content'
+          content_table: 'content',
+          status: 1
         });
         bookmark.data.tbody += row_tpl(this);
       });
