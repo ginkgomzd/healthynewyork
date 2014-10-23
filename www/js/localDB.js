@@ -29,8 +29,12 @@ var localDB = {
         if ( !result.hasOwnProperty('rows')
           || result.rows.length < 1
           || localDB.version !== result.rows.item(0).version)  {
-          localDB.db.transaction(localDB.install, localDB.installError,
-            localDB.db.transaction(localDB.markInstalled));
+          localDB.db.transaction(localDB.install,
+            function(e){
+              alert('localDB::TX::install ERROR'+e.message);
+
+            }
+          );
         } else {
           console.log('Confirmed DB Install, version: ' + localDB.version);
         }
@@ -38,7 +42,6 @@ var localDB = {
     install: function(tx) {
       tx.executeSql('CREATE TABLE IF NOT EXISTS bookmark (content_id INTEGER, content_table TEXT, PRIMARY KEY(content_id, content_table))');
       // TODO: import_id is a stupid name and we should enforce uniqueness
-      tx.executeSql('DROP TABLE content');
       tx.executeSql('CREATE TABLE IF NOT EXISTS content ( \
         import_id INTEGER, \
         type TEXT, \
@@ -83,9 +86,11 @@ var localDB = {
       tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "body") VALUES(?, ?, ?, ?)', [34, 'Where to Go For Help ', 'Appealing an Insurance Company Decision', '<p>If your health insurance company doesn’t pay for a specific health care provider or service, you have the right to appeal the decision and have it reviewed by an independent third party.</p>\n\n\n\n\n<p>Your insurance company must first notify you in writing within a set amount of time (based on the type of claim you filed) to explain why they denied coverage. They also must let you know how you can appeal their decisions.</p>\n\n\n\n\n<p>If the timeline for the standard appeals process would seriously put your life at risk, or risk your ability to fully function, you also can file an appeal that would get you a quicker (or “expedited”) decision. If you meet the standards for an expedited external review, the final decision about your appeal must come as quickly as your medical condition requires, and no later than 72 hours after your request for external review is received.</p>\n\n\n\n\n<p>If you have questions, contact the Marketplace Call Center at 1-800-318-2596. (TTY: 1-855-889-4325.)</p>\n\n\n\n\n<p><a href="https://www.healthcare.gov/appeal-insurance-company-decision/">Learn more about the appeals process.</a></p>']);
       tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "body") VALUES(?, ?, ?, ?)', [36, 'Compare Costs', 'Prioritize In-Network Doctors', '<p>Most health plans give you the best deal on services when you see a doctor who has a contract with your health plan. While you may be able to see doctors who don’t contract with your plan, visiting an “in-network” provider usually means you’ll have lower out-of-pocket costs.</p>\n\n\n\n\n<h2>Finding a doctor in your plan</h2>\n\n\n\n\n<p>To find out if your doctors and other health care providers are covered by your new Marketplace plan, or to find a covered provider if you don’t have one yet:</p>\n\n\n\n\n<ol>\n<li>Visit your health plan’s website and check their provider directory, which is a list of the doctors, hospitals, and other health care providers that your plan contracts with to provide care.</li>\n<li>See your health plan’s provider directory. You can get this by contacting your plan, visiting the plan’s website, or using a link that you’ll find on the plan description in your Marketplace account.</li>\n<li>Call your insurer to ask about specific providers. This number is on your insurance card and the insurer’s website.</li>\n<li>Call your doctor’s office. They can tell you if they accept your health plan.</li>\n<li>Call the Marketplace Call Center at 1-800-318-2596 (TTY: 1-855-889-4325). A trained representative can help you find your insurer’s number</li>\n</ol>']);
       tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "body") VALUES(?, ?, ?, ?)', [37, 'Compare Costs', 'Research Covered Prescriptions', '<p>Health plans will help pay the cost of certain prescription medications. You may be able to buy other medications, but medications on your plan’s “formulary” (approved list) usually will be less expensive for you.</p>\n\n\n\n\n<h2>Does my new insurance plan cover my prescription?</h2>\n\n\n\n\n<p>To find out which prescriptions are covered through your new Marketplace plan:</p>\n\n\n\n\n<ul>\n<li><strong>Visit your insurer’s website</strong> to review a list of prescriptions your plan covers</li>\n<li><strong>See your Summary of Benefits and Coverage</strong>, which you can get directly from your insurance company, or by using a link that appears in the detailed description of your plan in your Marketplace account.</li>\n<li><a href="http://marketplace.cms.gov/outreach-and-education/contact-health-plan.pdf"><strong>Call your insurer directly (PDF)</strong></a> to find out what is covered. Have your plan information available. The number is available on your insurance card the insurer\'s website, or the detailed plan description in your Marketplace account.</li>\n<li><strong>Review any coverage materials</strong> that your plan mailed to you.</li>\n</ul>']);
+
+      localDB.markInstalled(tx);
     },
     installError: function(err) {
-      alert("Install error");
+      alert("LocalDB:: Install error");
     },
     installSuccess: function() {
 //      alert("success!");
