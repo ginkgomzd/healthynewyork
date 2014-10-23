@@ -22,7 +22,7 @@ var bookmark = _.extend(new Controller(), {
           tx.executeSql('DELETE FROM bookmark WHERE content_id = ? AND content_table = ?',
             [content_id, content_table]);
         },
-        localDB.installError,
+        function() {console.log('bookmarks::delete SQL ERROR')},
         bookmark.removeUnfavoritedItems
       );
     },
@@ -32,7 +32,7 @@ var bookmark = _.extend(new Controller(), {
           tx.executeSql('INSERT INTO bookmark (content_id, content_table) VALUES (?, ?)',
             [content_id, content_table]);
         },
-        localDB.installError,
+        function() {console.log('bookmarks::save SQL ERROR')},
         localDB.installSuccess
       );
     },
