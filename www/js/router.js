@@ -25,12 +25,12 @@ Router = function() {
   this.control = function(destination) {
     if (destination === 'pages/bookmarks.html') {
       app.controller = bookmark;
-    } else if (destination ==='pages/faq.html') {
+    } else if (/^pages\/faq\.html/.test(destination)) {
       app.controller = faq;
     } else if (destination) {
       app.controller = new Controller();
     }
     app.controller.destination = destination;
-    app.controller.updateDisplay();
+    app.controller.main();
   }
 }

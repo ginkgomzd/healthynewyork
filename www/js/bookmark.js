@@ -65,6 +65,14 @@ var bookmark = _.extend(new Controller(), {
         localDB.installError,
         localDB.installSuccess
       );
+    },
+    main: function() {
+      var tpl_src = $('#faq_tpl').html();
+      var data = {my_var: "my_value"};
+      var template = _.template(tpl_src);
+      this.rendered = template(data);
+
+      this.updateDisplay();
     }
 });
 

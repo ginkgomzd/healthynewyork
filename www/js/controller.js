@@ -5,6 +5,7 @@
  */
 Controller = function () {
   this.destination = '';
+  this.rendered = {};
 
 /**
   * Updates content on the page and toggles active states for nav links. This
@@ -15,7 +16,8 @@ Controller = function () {
   */
   this.updateDisplay = function() {
     var destination = this.destination;
-    $('#content').load(destination, this.resetContentDisplay());
+    $('#content').html(this.rendered);
+    this.resetContentDisplay();
   }
 
   this.resetContentDisplay = function() {

@@ -21,12 +21,16 @@ var localDB = {
     },
     install: function(tx) {
       tx.executeSql('CREATE TABLE IF NOT EXISTS bookmark (content_id INTEGER, content_table TEXT, PRIMARY KEY(content_id, content_table))');
+      // TODO: import_id is a stupid name and we should enforce uniqueness
       tx.executeSql('CREATE TABLE IF NOT EXISTS content ( \
         import_id INTEGER, \
         type TEXT, \
         title TEXT, \
         body TEXT)'
       );
+
+      // TODO: we're loading this data in pretty much on every load... we need some
+      // sort of check (or a separate install process)
       tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "body") VALUES(?, ?, ?, ?)', [1, 'FAQ', 'What is a pre-existing condition?', '<p>Ipsum lorem dolor banana. Link to <a href="2">other content in this sheet</a>. Link to <a href="http://example.org">external content</a>.</p><p>The end</p>']);
       tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "body") VALUES(?, ?, ?, ?)', [2, 'Health Checklist', 'Get Insurance', '<p> Congratulations on getting health coverage - it is a big step for your health! If you are not insured, check out healthcare.gov to learn how to get started. </p>']);
       tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "body") VALUES(?, ?, ?, ?)', [3, 'Health Checklist', 'Understand Where to Go for Care', '<p> Although you can get health care many different places, including the emergency department, it’s best for you to get routine care and recommended preventive services from a primary care provider. There are some big differences between visits to your primary care provider and visits to the emergency department, such as cost, time spent waiting for care, and follow up. </p> <p> You can find primary care providers in offices, clinics, and health centers nationwide. Primary care providers work with patients every day to ensure they get the right preventive services, manage their chronic conditions, and improve their health and well-being. Some places may offer services and supports that vary based on the needs of the community they serve, like community-based services and supports, mental health, dental, vision services,  transportation, and language interpretation. </p> <p> In an Emergency Department, you\'ll won\'t see your standard primary care provider. A Emergency Department visit differs from a primary care provider visit in these key ways: </p> <ul><li>You’ll likely pay a copay, co-insurance, and have to meet your \ndeductible before your health plan pays for your costs, especially if it’s not \nan emergency. Your copay may be between $50 and $150. </li> \n<li> You should only go when you’re injured or very sick. </li> \n<li>You may wait for several hours before you’re seen if it’s not an \nemergency.</li> \n<li> You’ll see the provider who is working that day. </li> \n<li>The provider who sees you probably won’t have access to\nyour health records. </li> \n<li>The provider may not know what chronic conditions\nyou have.</li> \n<li>The provider will only check the urgent problem you came\nin to treat but might not ask about other concerns. </li> \n<li> When your visit is over you will be discharged with instructions to \nfollow up with your primary care provider and/or specialist. There may \nnot be any follow-up support. </li></ul>']);
