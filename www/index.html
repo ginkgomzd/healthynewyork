@@ -67,16 +67,23 @@
         <script type="text/javascript" src="js/faq.js"></script>
         <script type="text/javascript" src="js/app.js"></script>
 
-<script type="text/template" id="faq_tpl">
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Frequently Asked Questions</title>
-  </head>
-  <body>
-    TPL LOADED
-    <%= my_var %>
-  </body>
-        </script>
+<script type="text/template" id="table_page_tpl">
+    <h1 class="text-center"><%= page_title %></h1>
+    <table class="table table-striped">
+      <tbody><%= tbody %></tbody>
+    </table>
+</script>
+<script type="text/template" id="table_row_tpl">
+  <tr><%= columns %></tr>
+</script>
+<script type="text/template" id="faq_table_row_tpl">
+  <tr><td><a href="<%= link_url %>"><%= title_text %></a></td></tr>
+</script>
+
+
+
+
+
+
     </body>
 </html>
