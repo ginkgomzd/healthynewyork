@@ -25,7 +25,10 @@ Router = function() {
   this.control = function(destination) {
     if (destination === 'pages/bookmarks.html') {
       app.controller = bookmark;
-    } else if (/^pages\/faq\.html/.test(destination)) {
+    } else if (/^pages\/faq\.html/.test(destination)
+      // next line is a placeholder to facilitate navigation for the demo
+      || destination === 'pages/coverage_info.html'
+    ) {
       app.controller = faq;
     } else if (/^pages\/search\.html/.test(destination)) {
       app.controller = search;
