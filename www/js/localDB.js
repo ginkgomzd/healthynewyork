@@ -1,4 +1,5 @@
 var localDB = {
+    version: '0.0.1',
     // Application Constructor
     initialize: function() {
         this.bindEvents();
@@ -17,11 +18,27 @@ var localDB = {
     // must explicitly call 'localDB.myMethod(...);'
     onDeviceReady: function() {
       localDB.db = window.openDatabase("healthy", "1.0", "Healthy New York", 1000000);
-      localDB.db.transaction(localDB.install, localDB.installError, localDB.installSuccess);
+
+      localDB.db.transaction(localDB.checkVersion);
+    },
+    checkVersion: function(tx) {
+        tx.executeSql('SELECT version FROM installed ORDER BY timestamp DESC LIMIT 1', [],
+          localDB.confirmInstall, localDB.confirmInstall);
+    },
+    confirmInstall: function(tx, result) {
+        if ( !result.hasOwnProperty('rows')
+          || result.rows.length < 1
+          || localDB.version !== result.rows.item(0).version)  {
+          localDB.db.transaction(localDB.install, localDB.installError,
+            localDB.db.transaction(localDB.markInstalled));
+        } else {
+          console.log('Confirmed DB Install, version: ' + localDB.version);
+        }
     },
     install: function(tx) {
       tx.executeSql('CREATE TABLE IF NOT EXISTS bookmark (content_id INTEGER, content_table TEXT, PRIMARY KEY(content_id, content_table))');
       // TODO: import_id is a stupid name and we should enforce uniqueness
+      tx.executeSql('DROP TABLE content');
       tx.executeSql('CREATE TABLE IF NOT EXISTS content ( \
         import_id INTEGER, \
         type TEXT, \
@@ -72,6 +89,11 @@ var localDB = {
     },
     installSuccess: function() {
 //      alert("success!");
+    },
+    markInstalled: function(tx) {
+      tx.executeSql('CREATE TABLE IF NOT EXISTS installed (timestamp INTEGER, version TEXT)');
+      tx.executeSql("INSERT INTO installed (timestamp, version) VALUES ( strftime('%s','now'), ?)", [localDB.version]);
+      console.log('Finished DB Install, version: ' + localDB.version);
     }
 };
 
