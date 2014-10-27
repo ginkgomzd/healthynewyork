@@ -103,7 +103,7 @@ var bookmark = _.extend(new Controller(), {
     },
     removeUnfavoritedItems: function() {
       // TODO: this selector should be... more selective
-      $('table.table .toggle-fave').not('active').parent('tr').remove();
+      $('table.table .toggle-fave').not('.active').parent('tr').remove();
     }
 });
 

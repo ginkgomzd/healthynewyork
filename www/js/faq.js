@@ -59,7 +59,15 @@ var faq = _.extend(new Controller(), {
     var template = _.template(tpl_src);
     faq.rendered = template(faq.data);
   },
-  bindDataContent: function(data) {
+  bindDataContent: function() {
+    var btn_src = $('#bookmark_btn_tpl').html();
+    var btn_tpl = _.template(btn_src);
+    faq.data.bookmark_btn = btn_tpl({
+      content_id: faq.qs.cntId,
+      content_table: 'content',
+      status: faq.data.status
+    });
+
     var src = $('#faq_conent_tpl').html();
     var content_tpl = _.template(src);
     faq.rendered = content_tpl(faq.data);
@@ -78,7 +86,11 @@ var faq = _.extend(new Controller(), {
     );
   },
   buildContentQueries: function(tx, callback) {
-    tx.executeSql('SELECT * FROM content WHERE import_id = ?',
+    tx.executeSql(
+        'SELECT * FROM content \
+          LEFT JOIN bookmark \
+          ON content.import_id = bookmark.content_id \
+          WHERE import_id = ?',
       [faq.qs.cntId],
       callback
     );
@@ -96,6 +108,7 @@ var faq = _.extend(new Controller(), {
     for(var i=0; i < result.rows.length; i++) {
       faq.data.title_text = result.rows.item(i).title;
       faq.data.body = result.rows.item(i).body;
+      faq.data.status = (result.rows.item(i).content_id === null ? 0 : 1);
     }
   }
 });

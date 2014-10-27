@@ -90,6 +90,7 @@
 <script type="text/template" id="faq_conent_tpl">
   <h1 class="text-center"><%= title_text %></h1>
   <div class="content"><%= body %></div>
+  <%= bookmark_btn %>
 </script>
 <script type="text/template" id="search_form_tpl">
   <form id="search" class="form-inline" role="form">
@@ -122,6 +123,11 @@
       </script>
       <script type="text/template" id="bookmark_cell">
         <td class="toggle-fave <% if (status === 1) { %>active<% } %>" data-id="<%= content_id %>" data-table="<%= content_table %>"></td>
+      </script>
+      <script type="text/template" id="bookmark_btn_tpl">
+        <button class="btn btn-default btn-block toggle-fave <% if (status === 1) { %>active<% } %>" data-id="<%= content_id %>" data-table="<%= content_table %>">
+          <% if (status === 1) { %>Remove from favorites<% } else { %>Add to favorites<% } %>
+        </button>
       </script>
       <script type="text/template" id="ask_form_tpl">
         <h1 class="text-center">Send us your question!</h1>
