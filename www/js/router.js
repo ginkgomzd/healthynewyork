@@ -32,7 +32,7 @@ Router = function() {
       // next line is a placeholder to facilitate navigation for the demo
       || destination === 'pages/coverage_info.html'
     ) {
-      app.controller = faq;
+      app.controller = coverage_info;
     } else if (/^pages\/search\.html/.test(destination)) {
       app.controller = search;
     } else if (destination === 'pages/ask.html') {
