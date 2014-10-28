@@ -20,10 +20,13 @@ Router = function() {
         // TODO: we may need to do more URL processing at a later time, but for now we can pass through
         this.control(destination);
       }
-    }
+    };
 
   this.control = function(destination) {
-    if (destination === 'pages/bookmarks.html') {
+    var controller = this.getControllerByName(destination);
+    if (controller !== false) {
+      app.controller = controller;
+    } else if (destination === 'pages/bookmarks.html') {
       app.controller = bookmark;
     } else if (/^pages\/faq\.html/.test(destination)
       // next line is a placeholder to facilitate navigation for the demo
@@ -41,5 +44,21 @@ Router = function() {
     }
     app.controller.destination = destination;
     app.controller.main();
-  }
-}
+  };
+
+  /**
+   * Duck test, since we can't really check inheritance
+   *
+   * @param {string} controller name
+   * @returns {mixed} The controller object on success, boolean false otherwise
+   */
+  this.getControllerByName = function (controller) {
+    // window[controller] is a variable variable, like double dollar signs in PHP
+    var c = window[controller];
+    if (c !== null && typeof c === "object" && 'updateDisplay' in c) {
+      return c;
+    } else {
+      return false;
+    }
+  };
+};
