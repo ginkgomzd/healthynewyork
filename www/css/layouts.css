@@ -1,0 +1,43 @@
+/* contains page-specific styles */
+#content.coverage_info a {
+  color: #FFFFFF;
+  font-style: italic;
+}
+
+#content.coverage_info .container-fluid {
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#content.coverage_info .container-fluid:nth-child(odd) {
+  text-align: left;
+}
+
+#content.coverage_info .container-fluid:nth-child(even) {
+  text-align: right;
+}
+
+#content.coverage_info .health_checklist {
+  background-image: url('../img/bnr_stethoscope.png');
+}
+
+#content.coverage_info .insurance_basics {
+  background-image: url('../img/bnr_dictionary.png');
+}
+
+#content.coverage_info .money_saving_tips {
+  background-image: url('../img/bnr_money.png');
+}
+
+#content.coverage_info .health_care_rights {
+  background-image: url('../img/bnr_tools.png');
+}
+
+#content.coverage_info .container-fluid a {
+  display: inline-block;
+  height: 100%;
+  margin: 0;
+  padding-top: 10px;
+  text-shadow: 1px 1px #000000;
+  width: 100%;
+}
