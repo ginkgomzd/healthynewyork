@@ -23,7 +23,8 @@ Router = function() {
     };
 
   this.control = function(destination) {
-    var controller = this.getControllerByName(destination);
+    var destinationBase = destination.substring(0, destination.indexOf('?'));
+    var controller = this.getControllerByName(destinationBase);
     if (controller !== false) {
       app.controller = controller;
     } else if (destination === 'pages/bookmarks.html') {
