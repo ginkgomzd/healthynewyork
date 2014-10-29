@@ -19,7 +19,14 @@ Controller = function () {
     var contentClasses = this.setContentClasses();
     $('#content').removeClass().addClass(contentClasses);
     this.resetContentDisplay();
+    this.postUpdateDisplay();
   };
+
+  /**
+   * Abstract method for children to implement should it be necessary to call
+   * custom JS, etc., after the content is updated.
+   */
+  this.postUpdateDisplay = function() {};
 
   this.resetContentDisplay = function() {
     // get the path minus any parameters
