@@ -172,11 +172,11 @@ body {
     background-position: center;
   }
 
-  nav a[href^="pages/coverage_info.html"] {
+  nav a[href^="coverage_info"] {
     background-image: url('../img/ic_menu_find_holo_dark.png');
   }
 
-  nav a[href^="pages/coverage_info.html"].active {
+  nav a[href^="coverage_info"].active {
     background-image: url('../img/ic_menu_find_holo_light.png');
   }
 

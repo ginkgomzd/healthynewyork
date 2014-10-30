@@ -29,11 +29,6 @@ Router = function() {
       app.controller = controller;
     } else if (destination === 'pages/bookmarks.html') {
       app.controller = bookmark;
-    } else if (/^pages\/faq\.html/.test(destination)
-      // next line is a placeholder to facilitate navigation for the demo
-      || destination === 'pages/coverage_info.html'
-    ) {
-      app.controller = coverage_info;
     } else if (/^pages\/search\.html/.test(destination)) {
       app.controller = search;
     } else if (destination === 'pages/ask.html') {
