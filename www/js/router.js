@@ -23,7 +23,13 @@ Router = function() {
     };
 
   this.control = function(destination) {
-    var destinationBase = destination.substring(0, destination.indexOf('?'));
+    var q = destination.indexOf('?');
+    if (q === -1) {
+      var destinationBase = destination;
+    } else {
+      var destinationBase = destination.substring(0, q);
+    }
+
     var controller = this.getControllerByName(destinationBase);
     if (controller !== false) {
       app.controller = controller;
