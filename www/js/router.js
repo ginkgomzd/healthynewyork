@@ -1,24 +1,20 @@
 
 Router = function() {
   /**
-  * Determines how to route requests. Very basic at present. As we start incorporating
-  * user-generated content, we may need additional processing to handle different
-  * types of requests or to handle invalid requests. Possibly this could be handled
-  * by returning app.updateDisplay()'s promise and doing damage control if the
-  * AJAX call fails.
-  *
-  * @param {Tap event} e
-  * @returns {undefined}
-  */
+   * Determines how to route requests.
+   *
+   * @param {Tap event} e
+   */
   this.route = function(e) {
+      e.preventDefault();
       var el = $(e.currentTarget);
       var destination = el.attr('href');
 
-      // don't try to route external links (i.e., those with a protocol ://); let them behave normally
+      // don't try to route external links (i.e., those with a protocol ://); pass them to the system browser
       if (!/:\/\//.test(destination)) {
-        e.preventDefault();
-        // TODO: we may need to do more URL processing at a later time, but for now we can pass through
         this.control(destination);
+      } else {
+        window.open(destination, '_system');
       }
     };
 
