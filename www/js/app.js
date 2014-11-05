@@ -33,12 +33,8 @@ var app = {
           app.router.route(e);
         });
     },
-    // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call class methods, we
-    // must explicitly call 'app.myMethod(...);'
     onDeviceReady: function() {
-        // TODO
+        coverage_info.main();
     },
     /**
      * Depends on jQuery mobile's swipe event. Presently reports on horizontal
