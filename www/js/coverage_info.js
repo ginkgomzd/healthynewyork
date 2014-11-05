@@ -21,7 +21,7 @@ var coverage_info = _.extend(new Controller(), {
     $.each(this.data.rows, function() {
       coverage_info.rendered += row_tpl({
         container_class: this.content_type,
-        link_url: 'faq?content_type=' + this.content_type,
+        link_url: 'content_list?content_type=' + this.content_type + '&page_title=' + this.title,
         link_text: this.title
       });
     });

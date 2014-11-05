@@ -70,7 +70,8 @@
         <script type="text/javascript" src="js/router.js"></script>
         <script type="text/javascript" src="js/localDB.js"></script>
         <script type="text/javascript" src="js/bookmark.js"></script>
-        <script type="text/javascript" src="js/faq.js"></script>
+        <script type="text/javascript" src="js/content_leaf.js"></script>
+        <script type="text/javascript" src="js/content_list.js"></script>
         <script type="text/javascript" src="js/search.js"></script>
         <script type="text/javascript" src="js/app.js"></script>
         <script type="text/javascript" src="js/ask.js"></script>
@@ -86,10 +87,10 @@
 <script type="text/template" id="table_row_tpl">
   <tr><%= columns %></tr>
 </script>
-<script type="text/template" id="faq_table_row_tpl">
+<script type="text/template" id="content_list_table_row_tpl">
   <tr><td><a href="<%= link_url %>"><%= title_text %></a></td></tr>
 </script>
-<script type="text/template" id="faq_conent_tpl">
+<script type="text/template" id="content_leaf_tpl">
   <h1 class="text-center"><%= title_text %></h1>
   <div class="content"><%= body %></div>
   <%= bookmark_btn %>
