@@ -88,7 +88,7 @@ var bookmark = _.extend(new Controller(), {
       this.data.tbody = '';
 
       $.each(this.data.rows, function() {
-        this.link_url = 'pages/faq.html?id=' + this.id;
+        this.link_url = 'faq?id=' + this.id;
         this.bookmark_cell = bookmark_cell_tpl({
           content_id: this.id,
           content_table: 'content',

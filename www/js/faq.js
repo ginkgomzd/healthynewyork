@@ -19,10 +19,6 @@ var faq = _.extend(new Controller(), {
     faq.qs = _.qs(faq.destination);
     faq.fetchData();
   },
-  // TODO: we can probably parameterize this to some extent; if this function could
-  // accept type and ID args, we could build probably all the FAQ pages we need...
-  // at least for lists and individual pages -- for fetching a list of categories
-  // we might want a different function
   fetchData: function() {
     faq.data = {};
     faq.data.rows = [];
@@ -40,7 +36,7 @@ var faq = _.extend(new Controller(), {
     );
   },
   bindData: function(data) {
-    if(faq.qs.display === 'content') {
+    if(faq.qs.hasOwnProperty('id')) {
       faq.bindDataContent();
     } else {
       faq.bindDataTitles(data);
@@ -63,7 +59,7 @@ var faq = _.extend(new Controller(), {
     var btn_src = $('#bookmark_btn_tpl').html();
     var btn_tpl = _.template(btn_src);
     faq.data.bookmark_btn = btn_tpl({
-      content_id: faq.qs.cntId,
+      content_id: faq.qs.id,
       content_table: 'content',
       status: faq.data.status
     });
@@ -73,7 +69,7 @@ var faq = _.extend(new Controller(), {
     faq.rendered = content_tpl(faq.data);
   },
   buildQueries: function(tx) {
-    if(faq.qs.display === 'content') {
+    if(faq.qs.hasOwnProperty('id')) {
       faq.buildContentQueries(tx, faq.parseContentResult);
     } else {
       faq.buildTitleQueries(tx, faq.buildRows);
@@ -81,7 +77,7 @@ var faq = _.extend(new Controller(), {
   },
   buildTitleQueries: function(tx, callback) {
     tx.executeSql('SELECT import_id, title FROM content WHERE type = ?',
-      [faq.content_type],
+      [faq.qs.content_type],
       callback
     );
   },
@@ -91,16 +87,15 @@ var faq = _.extend(new Controller(), {
           LEFT JOIN bookmark \
           ON content.import_id = bookmark.content_id \
           WHERE import_id = ?',
-      [faq.qs.cntId],
+      [faq.qs.id],
       callback
     );
   },
   buildRows: function(tx, result) {
-    var baseUrl = 'pages/faq.html?';
+    var baseUrl = 'faq?';
     for(var i=0; i < result.rows.length; i++) {
       var item = result.rows.item(i);
-      // TODO: this link_url is totally fake
-      var contentUrl = baseUrl + 'display=content&cntId=' + item.import_id;
+      var contentUrl = baseUrl + 'id=' + item.import_id;
       faq.data.rows.push({title_text: item.title, link_url: contentUrl});
     }
   },
