@@ -33,16 +33,21 @@ var content_list = _.extend(new Controller(), {
     content_list.rendered = template(content_list.data);
   },
   buildQueries: function(tx) {
-    tx.executeSql('SELECT import_id, title FROM content WHERE type = ?',
+    tx.executeSql('SELECT import_id, title, link FROM content WHERE type = ?',
       [content_list.qs.content_type],
       content_list.parseResult
     );
   },
   parseResult: function(tx, result) {
-    var baseUrl = 'content_leaf?';
+    var contentUrl = '';
+
     for(var i=0; i < result.rows.length; i++) {
       var item = result.rows.item(i);
-      var contentUrl = baseUrl + 'id=' + item.import_id;
+      if(typeof item.link === 'string' && item.link.length > 0) {
+        contentUrl = item.link;
+      } else {
+        contentUrl = 'content_leaf?id=' + item.import_id;
+      }
       content_list.data.rows.push({title_text: item.title, link_url: contentUrl});
     }
   }
