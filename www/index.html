@@ -12,10 +12,11 @@
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <link rel="stylesheet" type="text/css" href="css/search.css" />
         <link rel="stylesheet" type="text/css" href="css/tables.css" />
+        <link rel="stylesheet" type="text/css" href="css/layouts.css" />
         <title>Healthy New York</title>
     </head>
     <body>
-        <div class="row row-offcanvas row-offcanvas-left">
+        <div id="display" class="row-offcanvas row-offcanvas-left">
           <div class="col-xs-12 col-sm-9" id="main">
             <div class="navbar-offcanvas" id="navbar-top">
               <a id="toggle-offcanvas" class="btn btn-xs"></a>
@@ -34,7 +35,7 @@
               <div class="container">
                 <ul class="list-inline row">
                   <li class="col-xs-3">
-                    <a class="btn btn-primary btn-xs" href="pages/coverage_info.html"></a>
+                    <a class="btn btn-primary btn-xs" href="coverage_info"></a>
                   </li>
                   <li class="col-xs-3">
                     <a class="btn btn-primary btn-xs" href="pages/ask.html"></a>
@@ -52,7 +53,7 @@
           <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
             <nav class="container">
               <ul class="nav">
-                <li class="list-group-item active"><a href="pages/coverage_info.html">Coverage Information</a></li>
+                <li class="list-group-item active"><a href="coverage_info">Coverage Information</a></li>
                 <li class="list-group-item"><a href="pages/ask.html">Ask a Question</a></li>
                 <li class="list-group-item"><a href="pages/bookmarks.html">Bookmarks</a></li>
                 <li class="list-group-item"><a href="pages/schedule_appt.html">Schedule an Appointment</a></li>
@@ -69,11 +70,13 @@
         <script type="text/javascript" src="js/router.js"></script>
         <script type="text/javascript" src="js/localDB.js"></script>
         <script type="text/javascript" src="js/bookmark.js"></script>
-        <script type="text/javascript" src="js/faq.js"></script>
+        <script type="text/javascript" src="js/content_leaf.js"></script>
+        <script type="text/javascript" src="js/content_list.js"></script>
         <script type="text/javascript" src="js/search.js"></script>
         <script type="text/javascript" src="js/app.js"></script>
         <script type="text/javascript" src="js/ask.js"></script>
         <script type="text/javascript" src="js/schedule.js"></script>
+        <script type="text/javascript" src="js/coverage_info.js"></script>
 
 <script type="text/template" id="table_page_tpl">
     <h1 class="text-center"><%= page_title %></h1>
@@ -84,10 +87,10 @@
 <script type="text/template" id="table_row_tpl">
   <tr><%= columns %></tr>
 </script>
-<script type="text/template" id="faq_table_row_tpl">
+<script type="text/template" id="content_list_table_row_tpl">
   <tr><td><a href="<%= link_url %>"><%= title_text %></a></td></tr>
 </script>
-<script type="text/template" id="faq_conent_tpl">
+<script type="text/template" id="content_leaf_tpl">
   <h1 class="text-center"><%= title_text %></h1>
   <div class="content"><%= body %></div>
   <%= bookmark_btn %>
@@ -150,6 +153,11 @@
       </script>
       <script type="text/template" id="schedule_tpl">
         <p>The ZocDoc integration will go here.</p>
+      </script>
+      <script type="text/template" id="coverage_info_row_tpl">
+        <div class="container-fluid <%= container_class %>">
+          <a class="h1" href="<%= link_url %>"><%= link_text %></a>
+        </div>
       </script>
     </body>
 </html>

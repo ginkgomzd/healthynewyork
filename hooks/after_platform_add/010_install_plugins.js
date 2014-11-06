@@ -5,6 +5,7 @@
 // add your plugins to this list--either the identifier, the filesystem location or the URL
 var pluginlist = [
     "org.apache.cordova.dialogs",
+    "org.apache.cordova.inappbrowser",
     "org.apache.cordova.network-information"
 ];
 
@@ -12,11 +13,11 @@ var pluginlist = [
 
 var fs = require('fs');
 var path = require('path');
-var sys = require('sys')
+var sys = require('sys');
 var exec = require('child_process').exec;
 
 function puts(error, stdout, stderr) {
-    sys.puts(stdout)
+    sys.puts(stdout);
 }
 
 pluginlist.forEach(function(plug) {

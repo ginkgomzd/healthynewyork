@@ -1,5 +1,15 @@
+/* contains general styles (p, h1, etc.) and styles that apply to the template */
+
 * {
     -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
+html,
+body,
+#display,
+#main,
+#content {
+  height:100%;
 }
 
 body {
@@ -9,7 +19,6 @@ body {
     background-color:#28589C;
     font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
     font-size:12px;
-    height:100%;
     margin:0px;
     padding:0px;
     width:100%;
@@ -25,7 +34,8 @@ body {
 
 #content {
   color: #FFFFFF;
-  margin: 70px 0;
+  padding-top: 54px;
+  padding-bottom: 98px;
 }
 
 #sidebar {
@@ -162,11 +172,11 @@ body {
     background-position: center;
   }
 
-  nav a[href^="pages/coverage_info.html"] {
+  nav a[href^="coverage_info"] {
     background-image: url('../img/ic_menu_find_holo_dark.png');
   }
 
-  nav a[href^="pages/coverage_info.html"].active {
+  nav a[href^="coverage_info"].active {
     background-image: url('../img/ic_menu_find_holo_light.png');
   }
 
