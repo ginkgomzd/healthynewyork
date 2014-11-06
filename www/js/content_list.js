@@ -45,5 +45,6 @@ var content_list = _.extend(new Controller(), {
       var contentUrl = baseUrl + 'id=' + item.import_id;
       content_list.data.rows.push({title_text: item.title, link_url: contentUrl});
     }
-  }
+  },
+  usesBackButton: true
 });

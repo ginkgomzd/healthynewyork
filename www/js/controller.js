@@ -5,6 +5,7 @@
 Controller = function () {
   this.destination = '';
   this.rendered = {};
+  this.usesBackButton = false;
 
 /**
   * Updates content on the page and toggles active states for nav links. This
@@ -60,9 +61,7 @@ Controller = function () {
    * @returns {undefined}
    */
   this.setBackButton = function(controller) {
-    var controllersWithBackButton = ['content_leaf', 'content_list'];
-
-    if (controllersWithBackButton.indexOf(controller) !== -1) {
+    if (this.usesBackButton === true) {
       var href = app.router.clickStack[app.router.clickStack.length - 2];
       $('#back').attr('href', href).show();
       $('#toggle-offcanvas').hide();
