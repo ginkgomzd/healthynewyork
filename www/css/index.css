@@ -122,12 +122,18 @@ body {
   }
 
   #navbar-top a {
+    background-repeat: no-repeat;
+    background-size: 100%;
     height: 24px;
     width: 24px;
   }
 
   #toggle-offcanvas {
-    background: url('../img/hamburger.png') no-repeat;
+    background-image: url('../img/hamburger.png');
+  }
+
+  #back {
+    background-image: url('../img/back_arrow.png');
   }
 
   #nav-search {

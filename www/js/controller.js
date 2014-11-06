@@ -1,6 +1,5 @@
-
 /**
- * Parent constructor for our Applicatin Controller Class.
+ * Parent constructor for our Application Controller Class.
  * @returns {undefined}
  */
 Controller = function () {
@@ -33,6 +32,7 @@ Controller = function () {
     var q = this.destination.indexOf('?');
     var basePathLength = (q === -1 ? this.destination.length : q);
     var basePath = this.destination.substr(0, basePathLength);
+    this.setBackButton(basePath);
 
     $('.row-offcanvas').removeClass('active'); // any time a link is followed, close the off-canvas menu
     $('nav a').removeClass('active');
@@ -51,5 +51,24 @@ Controller = function () {
     }
 
     return result;
+  };
+
+  /**
+   * Toggles between the hamburger and back icons, setting the back URL as needed
+   *
+   * @param {string} controller
+   * @returns {undefined}
+   */
+  this.setBackButton = function(controller) {
+    var controllersWithBackButton = ['content_leaf', 'content_list'];
+
+    if (controllersWithBackButton.indexOf(controller) !== -1) {
+      var href = app.router.clickStack[app.router.clickStack.length - 2];
+      $('#back').attr('href', href).show();
+      $('#toggle-offcanvas').hide();
+    } else {
+      $('#back').hide();
+      $('#toggle-offcanvas').show();
+    }
   };
 };
