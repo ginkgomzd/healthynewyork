@@ -46,5 +46,6 @@ var content_leaf = _.extend(new Controller(), {
       content_leaf.data.body = result.rows.item(i).body;
       content_leaf.data.status = (result.rows.item(i).content_id === null ? 0 : 1);
     }
-  }
+  },
+  usesBackButton: true
 });
