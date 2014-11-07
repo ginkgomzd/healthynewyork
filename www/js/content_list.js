@@ -44,7 +44,9 @@ var content_list = _.extend(new Controller(), {
     for(var i=0; i < result.rows.length; i++) {
       var item = result.rows.item(i);
       if(typeof item.link === 'string' && item.link.length > 0) {
-        contentUrl = item.link;
+        urlParts = $.parseJSON(item.link);
+        contentUrl = urlParts.controller + '?' + 'content_type=' + urlParts.content_type
+          + '&page_title=' + urlParts.page_title;
       } else {
         contentUrl = 'content_leaf?id=' + item.import_id;
       }
