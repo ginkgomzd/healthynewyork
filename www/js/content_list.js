@@ -7,6 +7,7 @@ var content_list = _.extend(new Controller(), {
     this.data = {};
     this.data.rows = [];
     this.data.page_title = this.qs.page_title;
+    this.data.table_class = this.qs.content_type;
 
     localDB.db.transaction(this.buildQueries,
       // TODO: we need a generic error handler
@@ -20,20 +21,27 @@ var content_list = _.extend(new Controller(), {
     );
   },
   bindData: function(data) {
-    var src = $('#content_list_table_row_tpl').html();
-    var row_tpl = _.template(src);
     content_list.data.tbody = '';
 
-    $.each(content_list.data.rows, function() {
-      content_list.data.tbody += row_tpl(this);
-    });
+    if (content_list.qs.content_type === 'health_checklist') {
+      // TODO
+    } else {
+      var src = $('#content_list_table_row_tpl').html();
+      var row_tpl = _.template(src);
 
+      var i = 1;
+      $.each(content_list.data.rows, function() {
+        var row_data = this;
+        row_data.icon_inner = (content_list.qs.content_type === 'money_saving_tips' ? i++ : '');
+        content_list.data.tbody += row_tpl(row_data);
+      });
+    }
     var tpl_src = $('#table_page_tpl').html();
     var template = _.template(tpl_src);
     content_list.rendered = template(content_list.data);
   },
   buildQueries: function(tx) {
-    tx.executeSql('SELECT import_id, title, link FROM content WHERE type = ?',
+    tx.executeSql('SELECT import_id, title, link, icon_class FROM content WHERE type = ?',
       [content_list.qs.content_type],
       content_list.parseResult
     );
@@ -50,8 +58,16 @@ var content_list = _.extend(new Controller(), {
       } else {
         contentUrl = 'content_leaf?id=' + item.import_id;
       }
-      content_list.data.rows.push({title_text: item.title, link_url: contentUrl});
+      content_list.data.rows.push({title_text: item.title, link_url: contentUrl, icon_class: item.icon_class});
     }
   },
-  usesBackButton: true
+  usesBackButton: true,
+
+  /**
+   * @returns {String} One or more space-separated classes to be added to the class
+   * attribute of the content element
+   */
+  setContentClasses: function() {
+    return 'content_list';
+  }
 });
