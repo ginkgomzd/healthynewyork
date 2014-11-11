@@ -4,9 +4,11 @@
 
 // add your plugins to this list--either the identifier, the filesystem location or the URL
 var pluginlist = [
+// appear to be built in reverse
+// putting net-info here to be built-later to resolve problem on ios -- MZD
+    "org.apache.cordova.network-information",
     "org.apache.cordova.dialogs",
-    "org.apache.cordova.inappbrowser",
-    "org.apache.cordova.network-information"
+    "org.apache.cordova.inappbrowser"
 ];
 
 // no need to configure below
