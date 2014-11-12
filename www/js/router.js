@@ -37,8 +37,6 @@ Router = function() {
       app.controller = bookmark;
     } else if (/^pages\/search\.html/.test(destination)) {
       app.controller = search;
-    } else if (destination === 'pages/ask.html') {
-      app.controller = ask;
     } else if (destination === 'pages/schedule_appt.html') {
       app.controller = schedule;
     } else if (destination) {

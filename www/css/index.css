@@ -186,7 +186,7 @@ body {
     background-image: url('../img/ic_menu_find_holo_light.png');
   }
 
-  nav a[href^="pages/ask.html"] {
+  nav a[href^="ask"] {
     background-image: url('../img/ic_menu_help.png');
   }
 
