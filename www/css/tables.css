@@ -67,19 +67,19 @@ table.table .toggle-fave.active {
 }
 
 #content.content_list table td.icon span.icon_first_aid {
-  /* TODO */
+  background-image: url('../img/icon_first_aid.png');
 }
 
 #content.content_list table td.icon span.icon_thermometer {
-  /* TODO */
+  background-image: url('../img/icon_thermometer.png');
 }
 
 #content.content_list table td.icon span.icon_stethoscope {
-  /* TODO */
+  background-image: url('../img/icon_stethoscope.png');
 }
 
 #content.content_list table td.icon span.icon_caduceus {
-  /* TODO */
+  background-image: url('../img/icon_caduceus.png');
 }
 
 #content.content_list table td.link {
