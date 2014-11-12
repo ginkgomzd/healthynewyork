@@ -211,11 +211,11 @@ body {
   }
 
   nav a[href^="pages/inbox.html"] {
-    background-image: url('../img/ic_menu_help.png'); /* placeholder image */
+    background-image: url('../img/ic_menu_inbox.png');
   }
 
   nav a[href^="pages/settings.html"] {
-    background-image: url('../img/ic_menu_help.png'); /* placeholder image */
+    background-image: url('../img/ic_menu_settings.png');
   }
 
   h1, .h1 {
