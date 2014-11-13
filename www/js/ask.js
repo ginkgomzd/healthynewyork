@@ -16,6 +16,9 @@ var ask = _.extend(new Controller(), {
   handleSubmit: function(e){
     e.preventDefault();
 
+    // reset error registry
+    ask.formErrors = {};
+
     ask.formFields.email = {
       element: $('form#ask [name="email"]'),
       googleName: "entry.1020011979"
