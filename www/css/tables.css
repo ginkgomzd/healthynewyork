@@ -62,8 +62,20 @@ table.table .toggle-fave.active {
   width: 52px;
 }
 
+#content.content_list table.insurance_basics td.icon,
+#content.content_list table.health_care_rights td.icon
+{
+  padding-bottom: 7px;
+  padding-right: 7px;
+}
+
 #content.content_list table td.icon span {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
   display: inline-block;
+  height: 100%;
+  width: 100%;
 }
 
 #content.content_list table td.icon span.icon_first_aid {
