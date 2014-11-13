@@ -48,6 +48,7 @@ var bookmark = _.extend(new Controller(), {
       this.data = {};
       this.data.rows = []; // supplies data to the rows of the table
       this.data.page_title = 'Bookmarks';
+      this.data.table_class = 'table-striped';
 
       localDB.db.transaction(this.buildQueries,
         // TODO: we need a generic error handler

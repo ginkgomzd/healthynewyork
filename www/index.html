@@ -83,7 +83,7 @@
 
 <script type="text/template" id="table_page_tpl">
     <h1 class="text-center"><%= page_title %></h1>
-    <table class="table table-striped">
+    <table class="table <%= table_class %>">
       <tbody><%= tbody %></tbody>
     </table>
 </script>
@@ -91,7 +91,19 @@
   <tr><%= columns %></tr>
 </script>
 <script type="text/template" id="content_list_table_row_tpl">
-  <tr><td><a href="<%= link_url %>"><%= title_text %></a></td></tr>
+  <tr>
+    <td class="icon"><span class="<%= icon_class %>"><%= icon_inner %></span></td>
+    <td class="link"><a href="<%= link_url %>"><%= title_text %></a></td>
+  </tr>
+</script>
+<script type="text/template" id="health_checklist_table_row_tpl">
+  <tr>
+    <td class="icon"><span class="<%= icon_class %>"><%= icon_inner %></span></td>
+    <td class="link"><a href="<%= link_url %>"><%= title_text %></a></td>
+    <td class="spacer"></td>
+    <td class="icon"><span class="<%= icon_class_2 %>"><%= icon_inner_2 %></span></td>
+    <td class="link"><a href="<%= link_url_2 %>"><%= title_text_2 %></a></td>
+  </tr>
 </script>
 <script type="text/template" id="content_leaf_tpl">
   <h1 class="text-center"><%= title_text %></h1>
