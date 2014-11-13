@@ -41,3 +41,13 @@
   text-shadow: 1px 1px #000000;
   width: 100%;
 }
+
+#zocdoc_frame {
+  height: 102%;
+  width: 108%;
+  margin-left: -4%;
+  margin-right: 0;
+  margin-top: 1%;
+  margin-bottom: 0px;
+  padding: 0px;
+}
