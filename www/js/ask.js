@@ -2,7 +2,7 @@ var ask = _.extend(new Controller(), {
   formFields: {},
   formErrors: {},
   initialize: function() {
-      this.bindEvents();
+    this.bindEvents();
   },
   bindEvents: function() {
     $('body').on('submit', 'form#ask', this.handleSubmit);
@@ -29,7 +29,14 @@ var ask = _.extend(new Controller(), {
     if (ask.formValidate() === true) {
       ask.formPost();
     } else {
-      // TODO
+      $('#modal .modal-title').empty().html('<h1>Question not submitted</h1>');
+      $('#modal .modal-body').empty().html('<p>Please correct the following errors:</p><ul></ul>');
+
+      $.each(ask.formErrors, function (k, v){
+        $('#modal .modal-body ul').append('<li>' + v + '</li>');
+      });
+
+      $('#modal').modal('show');
     }
   },
   /**
@@ -58,15 +65,19 @@ var ask = _.extend(new Controller(), {
       data[this.googleName] = this.value;
     });
 
-    // todo: success/failure handlers
     var result = $.post(
       'https://docs.google.com/forms/d/1RguP0c51sn8RZn5h2urGJl4WR8g_O4xJMOtThEIViZg/formResponse',
-      data
-    )
-      .fail(function(jqXHR, status, error) {
-        alert(status + ": " + error);
+      data,
+      function() {
+        $('#modal .modal-title').empty().html('<h1>Question Submitted</h1>');
+        $('#modal .modal-body').empty().html('<p>Thanks for your question. We will respond within two (2) business days.</p>');
+        $('#modal').modal('show');
       }
-    );
+    ).fail(function(jqXHR, status, error) {
+      $('#modal .modal-title').empty().html('<h1>Connection Error</h1>');
+      $('#modal .modal-body').empty().html('<p>Could not connect to server. Check your network connection.</p>');
+      $('#modal').modal('show');
+    });
   },
   /**
    * Checks for a valid email address and question at least one character long.
