@@ -24,6 +24,10 @@ body {
     width:100%;
 }
 
+#modal {
+  color: #000000;
+}
+
 .row-offcanvas {
   margin: 0;
 }
