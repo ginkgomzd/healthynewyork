@@ -39,7 +39,7 @@
                     <a class="btn btn-primary btn-xs" href="coverage_info"></a>
                   </li>
                   <li class="col-xs-3">
-                    <a class="btn btn-primary btn-xs" href="pages/ask.html"></a>
+                    <a class="btn btn-primary btn-xs" href="ask"></a>
                   </li>
                   <li class="col-xs-3">
                     <a class="btn btn-primary btn-xs" href="pages/bookmarks.html"></a>
@@ -55,7 +55,7 @@
             <nav class="container">
               <ul class="nav">
                 <li class="list-group-item active"><a href="coverage_info">Coverage Information</a></li>
-                <li class="list-group-item"><a href="pages/ask.html">Ask a Question</a></li>
+                <li class="list-group-item"><a href="ask">Ask a Question</a></li>
                 <li class="list-group-item"><a href="pages/bookmarks.html">Bookmarks</a></li>
                 <li class="list-group-item"><a href="pages/schedule_appt.html">Schedule an Appointment</a></li>
                 <li class="list-group-item"><a href="pages/inbox.html">Inbox</a></li>
@@ -69,6 +69,7 @@
         <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/lib/underscore.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/utils.js"></script>
         <script type="text/javascript" src="js/controller.js"></script>
         <script type="text/javascript" src="js/router.js"></script>
         <script type="text/javascript" src="js/localDB.js"></script>
@@ -126,7 +127,7 @@
         <li>What do I do if I can't afford health insurance?</li>
       </ol>
       <div class="text-center">
-        <a href="pages/ask.html" class="btn btn-default">Send us your question!</a>
+        <a href="ask" class="btn btn-default">Send us your question!</a>
       </div>
     </div> <!-- /#search_results -->
 </script>
@@ -150,7 +151,7 @@
       <script type="text/template" id="ask_form_tpl">
         <h1 class="text-center">Send us your question!</h1>
         <p>We will respond within two (2) business days.</p>
-        <form role="form">
+        <form role="form" id="ask">
           <div class="form-group">
             <input class="form-control" type="email" placeholder="e-mail address" name="email" />
           </div>
@@ -174,5 +175,14 @@
           <a class="h1" href="<%= link_url %>"><%= link_text %></a>
         </div>
       </script>
+
+      <div id="modal" class="modal fade" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-title" id="modalLabel"></div>
+            <div class="modal-body"></div>
+          </div>
+        </div>
+      </div>
     </body>
 </html>

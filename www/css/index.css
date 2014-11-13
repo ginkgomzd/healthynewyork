@@ -24,6 +24,10 @@ body {
     width:100%;
 }
 
+#modal {
+  color: #000000;
+}
+
 .row-offcanvas {
   margin: 0;
 }
@@ -186,7 +190,7 @@ body {
     background-image: url('../img/ic_menu_find_holo_light.png');
   }
 
-  nav a[href^="pages/ask.html"] {
+  nav a[href^="ask"] {
     background-image: url('../img/ic_menu_help.png');
   }
 

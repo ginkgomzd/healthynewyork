@@ -32,6 +32,19 @@ var app = {
         $('body').on('tap', 'a', function(e){
           app.router.route(e);
         });
+
+        // initialize modal widget
+        $('#modal').modal({
+          show: false
+        });
+
+        // vertically center modals
+        $('body').on('shown.bs.modal', '#modal', function(){
+          var total_height = $('body').height();
+          var dialog_height = $('#modal .modal-dialog').height();
+          var margin = (total_height - dialog_height)/2;
+          $('#modal .modal-dialog').css('margin-top', margin);
+        });
     },
     onDeviceReady: function() {
         coverage_info.main();
