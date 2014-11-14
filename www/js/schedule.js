@@ -1,4 +1,5 @@
 var schedule = _.extend(new Controller(), {
+  formFields: {},
   initialize: function() {
     this.bindEvents();
   },
@@ -78,12 +79,38 @@ var schedule = _.extend(new Controller(), {
     });
   },
   /**
+   * Handles the submission of the ask a question form
    *
    * @param {jQuery event} e
    * @returns {undefined}
    */
   handleSubmit: function(e) {
+    e.preventDefault();
 
+    schedule.formFields.insurance_carrier = {
+      element: $('form#schedule [name="insurance_carrier"]')
+    };
+    schedule.formFields.insurance_plan = {
+      element: $('form#schedule [name="insurance_plan"]')
+    };
+    schedule.getFormValues();
+    schedule.showResults();
+  },
+  showResults: function () {
+    $('form#schedule').hide();
+    var qs = '';
+    $.each(this.formFields, function(k, v) {
+      qs += k + '=' + v + '&';
+    });
+    $('#zocdoc_frame').show().attr('src','http://www.zocdoc.com/search'+'?'+ qs);
+  },
+  /**
+   * Get values for each form field.
+   */
+  getFormValues: function() {
+    $.each(this.formFields, function(k, v) {
+      schedule.formFields[k].value = v.element.val();
+    });
   },
   main: function() {
     this.renderTpl();
@@ -94,9 +121,6 @@ var schedule = _.extend(new Controller(), {
     var content_tpl = _.template(src);
     this.rendered = content_tpl();
     this.updateDisplay();
-
-    qs='dr_specialty=&address=&insurance_carrier=400&refine_search=Find+a+Doctor';
-    $('#zocdoc_frame').attr('src','http://www.zocdoc.com/'+'?'+ qs);
   }
 });
 

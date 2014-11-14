@@ -43,6 +43,7 @@
 }
 
 #zocdoc_frame {
+  display: none;
   height: 102%;
   width: 108%;
   margin-left: -4%;
