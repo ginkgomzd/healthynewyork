@@ -168,7 +168,21 @@
         </ol>
       </script>
       <script type="text/template" id="schedule_tpl">
-        <iframe id='zocdoc_frame'></iframe>
+        <h1 class="text-center">Search for a Physician</h1>
+        <form role="form" id="schedule">
+          <div class="form-group">
+            <select class="form-control" name="insurance_carrier">
+              <option value="-1">Select your insurance carrier</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <select class="form-control" name="insurance_plan">
+              <option value="-1">Select your insurance plan</option>
+            </select>
+          </div>
+          <input class="btn" type="submit" value="Search" />
+        </form>
+        <iframe id="zocdoc_frame"></iframe>
       </script>
       <script type="text/template" id="coverage_info_row_tpl">
         <div class="container-fluid <%= container_class %>">
