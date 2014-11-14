@@ -100,9 +100,9 @@ var schedule = _.extend(new Controller(), {
     $('form#schedule').hide();
     var qs = '';
     $.each(this.formFields, function(k, v) {
-      qs += k + '=' + v + '&';
+      qs += k + '=' + v.value + '&';
     });
-    $('#zocdoc_frame').show().attr('src','http://www.zocdoc.com/search'+'?'+ qs);
+    $('#zocdoc_frame').show().attr('src','http://www.zocdoc.com/search/'+'?'+ qs);
 
     // configure the back button to bring back the form
     $('#toggle-offcanvas').hide();
