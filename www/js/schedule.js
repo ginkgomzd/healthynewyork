@@ -141,6 +141,9 @@ var schedule = _.extend(new Controller(), {
     $('body').on('tap', '#back', function(e){
       app.router.route(e);
     });
+  },
+  setContentClasses: function() {
+    return '';
   }
 });
 
