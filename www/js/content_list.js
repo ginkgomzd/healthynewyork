@@ -21,6 +21,9 @@ var content_list = _.extend(new Controller(), {
     );
   },
   bindData: function(data) {
+    var tpl_src = $('#table_page_tpl').html();
+    var template = _.template(tpl_src);
+
     content_list.data.tbody = '';
 
     if (content_list.qs.content_type === 'health_checklist') {
@@ -36,8 +39,6 @@ var content_list = _.extend(new Controller(), {
         content_list.data.tbody += row_tpl(row_data);
       });
     }
-    var tpl_src = $('#table_page_tpl').html();
-    var template = _.template(tpl_src);
     content_list.rendered = template(content_list.data);
   },
   bindDataChecklist: function(data) {

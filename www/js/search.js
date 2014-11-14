@@ -2,12 +2,13 @@ var search = _.extend(new Controller(), {
   whereClause: new String,
   fromClause: 'FROM content',
   selectClause: new String,
+  zeroRows: false,
+  renderedResults: {},
   main: function() {
     ctl = search;
     ctl.qs = _.qs(ctl.destination);
 
     ctl.renderTpl();
-//    ctl.fetchData();
     ctl.updateDisplay();
   },
   initialize: function() {
@@ -20,17 +21,16 @@ var search = _.extend(new Controller(), {
   },
   handleSubmit: function(e) {
     e.preventDefault();
-    console.log('Form Submit');
-    input = $('form#search input')[0];
+    search.zeroRows = true;
     if (search.validateForm() === false) {
       search.noResults();
-    } else {
-      input = $('form#search input')[0];
-      search.doSearch(input);
+      return;
     }
+    search.data = {rows: [], tbody: {} };
+    search.doSearch($('form#search input#search_terms')[0]);
   },
   validateForm: function() {
-    input = $('form#search input')[0];
+    input = $('form#search input#search_terms')[0];
     if (input.value === "") {
       console.log('validateForm::no query received');
       return false;
@@ -42,20 +42,61 @@ var search = _.extend(new Controller(), {
     $('#no_search_results').show();
   },
   showResults: function() {
+    if (search.zeroRows) {
+      search.noResults();
+      return;
+    }
+    var results = $('#search_results');
+    results.empty();
+    results.html(search.renderedResults);
+
     $('#no_search_results').hide();
-    $('#search_results').show();
+    results.show();
   },
   doSearch: function(input) {
-    search.buildWhere(input.value.split(' '));
-    search.selectClause = 'SELECT id, title';
-    sql = search.buildQuery(
-            search.selectClause, search.fromClause, search.whereClause);
-    console.log(sql);
-
-    search.showResults();
+    localDB.db.transaction(this.doQuery,
+      function(er){
+        console.log("Transaction ERROR: "+ er.message);
+      },
+      function(){
+        search.bindData();
+        search.showResults();
+      }
+    );
   },
-  buildQuery: function(select, from, where) {
-    return select+' '+from+' '+where;
+  bindData: function() {
+    var tpl_src = $('#table_search_tpl').html();
+    var template = _.template(tpl_src);
+    var src = $('#content_list_table_row_tpl').html();
+    var row_tpl = _.template(src);
+
+    $.each(search.data.rows, function() {
+      search.data.tbody += row_tpl(this);
+    });
+    search.renderedResults = template(search.data);
+  },
+  doQuery: function(tx) {
+    tx.executeSql(search.buildQuery(), [],
+    search.queryCallback);
+  },
+  queryCallback: function(tx, result) {
+    search.zeroRows = (result.rows.length === 0);
+
+    for(var i=0; i < result.rows.length; i++) {
+      var item = result.rows.item(i);
+      contentUrl = content_list.createContentUrl(item);
+      search.data.rows.push(
+        { title_text: item.title,
+          link_url: contentUrl,
+          icon_class: '',
+          icon_inner: ''
+        });
+    }
+  },
+  buildQuery: function() {
+    search.buildWhere(input.value.split(' '));
+    search.selectClause = 'SELECT import_id, title';
+    return search.selectClause+' '+search.fromClause+' '+search.whereClause;
   },
   buildWhere: function(searchTerms) {
     search.whereClause = 'WHERE ';
@@ -72,28 +113,7 @@ var search = _.extend(new Controller(), {
     }
     return '('+parts.join(' AND ')+')';
   },
-//  fetchData: function() {
-//    ctl.data = {};
-//    ctl.data.rows = [];
-//    faq.data.page_title = this.content_type;
-//
-//    localDB.db.transaction(this.buildQueries,
-//      // TODO: we need a generic error handler
-//      function(tx, er){
-//        console.log("Transaction ERROR: "+ er.message);
-//      },
-//      function(){
-//        ctl.bindData();
-//        ctl.updateDisplay();
-//      }
-//    );
-//  },
-  // Bind Event Listeners
-  //
-  // Bind any events that are required on startup. Common events are:
-  // 'load', 'deviceready', 'offline', and 'online'.
   bindEvents: function() {
-    // handle form submissions
     $('body').on('submit', 'form#search',this.handleSubmit);
   }
 });
