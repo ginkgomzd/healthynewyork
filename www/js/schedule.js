@@ -14,12 +14,12 @@ var schedule = _.extend(new Controller(), {
   getInsuranceCarriers: function() {
     return [
       {
-        id: 7,
+        id: 300,
         name: 'Aetna'
       },
       {
-        id: 8,
-        name: 'BlueCross BlueShield'
+        id: 1109,
+        name: 'Blue Choice Health Plan'
       }
     ];
   },
@@ -29,30 +29,30 @@ var schedule = _.extend(new Controller(), {
    */
   getInsurancePlans: function() {
     var carrier = $('form#schedule select[name="insurance_carrier"]').val();
-    if (carrier === '7') {
+    if (carrier === '300') {
       return [
         {
-          id: 901,
-          name: 'Aetna HMO'
+          id: 11187,
+          name: 'Aetna Advantage PD'
         },
         {
-          id: 702,
-          name: 'Aetna PPO'
+          id: 8252,
+          name: 'Aetna Basic HMO'
         }
       ];
-    } else if (carrier === '8') {
+    } else if (carrier === '1109') {
       return [
         {
-          id: 777,
-          name: 'BlueCross PPO'
+          id: 9309,
+          name: 'BlueCard PPO/EPO'
         },
         {
-          id: 202,
-          name: 'BlueCross HMO'
+          id: 9310,
+          name: 'BludeCard Traditional'
         },
         {
-          id: 111,
-          name: 'BlueCross ABC'
+          id: 9303,
+          name: 'BlueChoice Advantage'
         }
       ];
     }
