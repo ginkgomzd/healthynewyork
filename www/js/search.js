@@ -115,6 +115,9 @@ var search = _.extend(new Controller(), {
   },
   bindEvents: function() {
     $('body').on('submit', 'form#search',this.handleSubmit);
+  },
+  setContentClasses: function() {
+    return '';
   }
 });
 

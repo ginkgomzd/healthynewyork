@@ -114,14 +114,14 @@
   <%= bookmark_btn %>
 </script>
 <script type="text/template" id="search_form_tpl">
-  <form id="search" class="form-inline" role="form">
+  <div class="container-fluid">
+    <form id="search" class="form-inline" role="form">
       <div class="form-group">
         <label class="sr-only" for="search_terms">Type your question</label>
         <input type="text" class="form-control" id="search_terms" placeholder="Type your question">
       </div>
       <button id="search_submit" type="submit" class="btn btn-default btn-icon-search"></button>
     </form>
-    <div id="search_results"></div>
     <div id="no_search_results">
       <h2 class="text-center">Search Results</h2>
       <p>Sorry, no results found. You can ask our experts by sending us a question.
@@ -130,6 +130,8 @@
         <a href="ask" class="btn btn-default">Send us your question!</a>
       </div>
     </div> <!-- /#no_search_results -->
+  </div> <!-- /.container-fluid -->
+  <div id="search_results"></div>
 </script>
 
 
