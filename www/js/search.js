@@ -26,7 +26,7 @@ var search = _.extend(new Controller(), {
       search.noResults();
       return;
     }
-    search.data = {rows: [], tbody: {} };
+    search.data = {rows: [], tbody: new String };
     search.doSearch($('form#search input#search_terms')[0]);
   },
   validateForm: function() {

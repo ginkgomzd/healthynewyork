@@ -89,8 +89,8 @@
     </table>
 </script>
 <script type="text/template" id="table_search_tpl">
-  <table class="table">
-      <tbody>XX<%= tbody %>XX</tbody>
+  <table class="table table-striped">
+      <tbody><%= tbody %></tbody>
     </table>
 </script>
 <script type="text/template" id="table_row_tpl">
@@ -120,7 +120,7 @@
   <form id="search" class="form-inline" role="form">
       <div class="form-group">
         <label class="sr-only" for="search_terms">Type your question</label>
-        <input type="text" value="patient" class="form-control" id="search_terms" placeholder="Type your question">
+        <input type="text" class="form-control" id="search_terms" placeholder="Type your question">
       </div>
       <button id="search_submit" type="submit" class="btn btn-default btn-icon-search"></button>
     </form>
