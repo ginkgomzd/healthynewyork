@@ -47,7 +47,9 @@ var app = {
         });
     },
     onDeviceReady: function() {
-        coverage_info.main();
+      // load the coverage info page; faking a tap gets us the icon highlighting
+      // as well as back-button functionality
+      $('.navbar-offcanvas-bottom a[href^="coverage_info"]').trigger('tap');
     },
     /**
      * Depends on jQuery mobile's swipe event. Presently reports on horizontal
