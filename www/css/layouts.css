@@ -1,4 +1,8 @@
 /* contains page-specific styles */
+#search {
+  margin-top: 10px;
+}
+
 #content.coverage_info a {
   color: #FFFFFF;
   font-style: italic;
