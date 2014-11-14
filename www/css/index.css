@@ -185,35 +185,35 @@ body {
   }
 
   nav a[href^="coverage_info"] {
-    background-image: url('../img/ic_menu_find_holo_dark.png');
+    background-image: url('../img/nav_home.png');
   }
 
   nav a[href^="coverage_info"].active {
-    background-image: url('../img/ic_menu_find_holo_light.png');
+    background-image: url('../img/nav_home_active.png');
   }
 
   nav a[href^="ask"] {
-    background-image: url('../img/ic_menu_help.png');
+    background-image: url('../img/nav_ask.png');
   }
 
-  nav a[href^="pages/ask.html"].active {
-    background-image: url('../img/ic_menu_help_holo_light.png');
+  nav a[href^="ask"].active {
+    background-image: url('../img/nav_ask_active.png');
   }
 
   nav a[href^="pages/bookmarks.html"] {
-    background-image: url('../img/ic_menu_add.png');
+    background-image: url('../img/nav_bookmark.png');
   }
 
   nav a[href^="pages/bookmarks.html"].active {
-    background-image: url('../img/ic_menu_add_dark.png');
+    background-image: url('../img/nav_bookmark_active.png');
   }
 
   nav a[href^="pages/schedule_appt.html"] {
-    background-image: url('../img/ic_menu_my_calendar_dark.png');
+    background-image: url('../img/nav_schedule.png');
   }
 
   nav a[href^="pages/schedule_appt.html"].active {
-    background-image: url('../img/ic_menu_my_calendar_dark.png');
+    background-image: url('../img/nav_schedule_active.png');
   }
 
   nav a[href^="pages/inbox.html"] {
