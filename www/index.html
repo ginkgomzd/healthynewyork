@@ -115,7 +115,7 @@
   <form id="search" class="form-inline" role="form">
       <div class="form-group">
         <label class="sr-only" for="search_term">Type your question</label>
-        <input type="text" class="form-control" id="search_term" placeholder="Type your question">
+        <input type="text" value="doctor please" class="form-control" id="search_term" placeholder="Type your question">
       </div>
       <button id="search_submit" type="submit" class="btn btn-default btn-icon-search"></button>
     </form>
@@ -130,6 +130,14 @@
         <a href="ask" class="btn btn-default">Send us your question!</a>
       </div>
     </div> <!-- /#search_results -->
+    <div id="no_search_results">
+      <h2 class="text-center">Search Results</h2>
+      <p>Sorry, no results found. You can ask our experts by sending us a question.
+      </p>
+      <div class="text-center">
+        <a href="ask" class="btn btn-default">Send us your question!</a>
+      </div>
+    </div> <!-- /#no_search_results -->
 </script>
 
 

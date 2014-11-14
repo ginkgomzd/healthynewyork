@@ -16,6 +16,6 @@ form .btn-icon-search {
   width: 34px;
 }
 
-#search_results {
+#search_results,#no_search_results{
   display: none;
 }
