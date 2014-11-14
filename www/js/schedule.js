@@ -103,6 +103,10 @@ var schedule = _.extend(new Controller(), {
       qs += k + '=' + v + '&';
     });
     $('#zocdoc_frame').show().attr('src','http://www.zocdoc.com/search'+'?'+ qs);
+
+    // configure the back button to bring back the form
+    $('#toggle-offcanvas').hide();
+    $('#back').show().on('tap', this.setBackButtonPostSubmit);
   },
   /**
    * Get values for each form field.
@@ -121,6 +125,22 @@ var schedule = _.extend(new Controller(), {
     var content_tpl = _.template(src);
     this.rendered = content_tpl();
     this.updateDisplay();
+  },
+  setBackButtonPostSubmit: function(e) {
+    // disable all listeners for this event
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    $('#zocdoc_frame').hide();
+    $('form#schedule').show();
+
+    // remove this (and all other) listener(s)
+    $('#back').off('tap');
+
+    // turn back on the routing listener
+    $('body').on('tap', '#back', function(e){
+      app.router.route(e);
+    });
   }
 });
 
