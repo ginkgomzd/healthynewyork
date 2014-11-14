@@ -25,15 +25,18 @@ table,
   color: #000000;
 }
 
-table.table .toggle-fave {
-  background-image: url('../img/btn_star_off_normal_holo_dark.png');
+table.table .toggle-fave span {
+  background-image: url('../img/btn_fave.png');
   background-repeat: no-repeat;
   background-position: center;
-  width: 48px;
+  background-size: cover;
+  display: inline-block;
+  height: 22px;
+  width: 22px;
 }
 
-table.table .toggle-fave.active {
-  background-image: url('../img/btn_star_big_on_pressed.png');
+table.table .toggle-fave.active span {
+  background-image: url('../img/btn_fave_active.png');
 }
 
 #content.content_list {
