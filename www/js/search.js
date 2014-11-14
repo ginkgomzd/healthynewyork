@@ -26,7 +26,7 @@ var search = _.extend(new Controller(), {
       search.noResults();
       return;
     }
-    search.data = {rows: [], tbody: new String };
+    search.data = {rows: [], tbody: new String, table_class: 'table-striped' };
     search.doSearch($('form#search input#search_terms')[0]);
   },
   validateForm: function() {
@@ -65,7 +65,7 @@ var search = _.extend(new Controller(), {
     );
   },
   bindData: function() {
-    var tpl_src = $('#table_search_tpl').html();
+    var tpl_src = $('#table_page_tpl').html();
     var template = _.template(tpl_src);
     var src = $('#content_list_table_row_tpl').html();
     var row_tpl = _.template(src);

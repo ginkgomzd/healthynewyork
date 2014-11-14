@@ -83,13 +83,10 @@
         <script type="text/javascript" src="js/coverage_info.js"></script>
 
 <script type="text/template" id="table_page_tpl">
-    <h1 class="text-center"><%= page_title %></h1>
+    <% if (typeof page_title === 'string' && page_title.length > 0) { %>
+      <h1 class="text-center"><%= page_title %></h1>
+    <% } %>
     <table class="table <%= table_class %>">
-      <tbody><%= tbody %></tbody>
-    </table>
-</script>
-<script type="text/template" id="table_search_tpl">
-  <table class="table table-striped">
       <tbody><%= tbody %></tbody>
     </table>
 </script>
