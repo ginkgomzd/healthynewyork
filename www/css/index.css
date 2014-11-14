@@ -173,13 +173,15 @@ body {
   }
 
   #sidebar nav a {
-    background-position: left;
+    background-position: 5px center;
+    background-size: 30px 30px;
     padding-left: 48px;
   }
 
   nav a {
     background-repeat: no-repeat;
     background-position: center;
+    background-size: 45px 45px;
   }
 
   nav a[href^="coverage_info"] {
