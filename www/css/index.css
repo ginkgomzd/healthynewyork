@@ -40,6 +40,7 @@ body {
   color: #FFFFFF;
   padding-top: 54px;
   padding-bottom: 98px;
+  overflow:auto;
 }
 
 #sidebar {
