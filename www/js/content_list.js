@@ -26,19 +26,16 @@ var content_list = _.extend(new Controller(), {
 
     content_list.data.tbody = '';
 
-    if (content_list.qs.content_type === 'health_checklist') {
-      content_list.data.tbody += content_list.bindDataChecklist(content_list.data);
-    } else {
-      var src = $('#content_list_table_row_tpl').html();
-      var row_tpl = _.template(src);
+    var src = $('#content_list_table_row_tpl').html();
+    var row_tpl = _.template(src);
 
-      var i = 1;
-      $.each(content_list.data.rows, function() {
-        var row_data = this;
-        row_data.icon_inner = (content_list.qs.content_type === 'money_saving_tips' ? i++ : '');
-        content_list.data.tbody += row_tpl(row_data);
-      });
-    }
+    var i = 1;
+    $.each(content_list.data.rows, function() {
+      var row_data = this;
+      row_data.icon_inner = (content_list.qs.content_type === 'money_saving_tips' ? i++ : '');
+      content_list.data.tbody += row_tpl(row_data);
+    });
+    
     content_list.rendered = template(content_list.data);
   },
   bindDataChecklist: function(data) {
