@@ -32,7 +32,7 @@ var content_list = _.extend(new Controller(), {
     var i = 1;
     $.each(content_list.data.rows, function() {
       var row_data = this;
-      row_data.icon_inner = (content_list.qs.content_type === 'money_saving_tips' ? i++ : '');
+      row_data.icon_inner = (content_list.qs.has_icons == 'true' ? '' : i++);
       content_list.data.tbody += row_tpl(row_data);
     });
     
