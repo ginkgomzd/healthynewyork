@@ -7,10 +7,10 @@ var coverage_info = _.extend(new Controller(), {
   fetchData: function() {
     this.data = {};
     this.data.rows = [
-      {content_type: 'health_checklist', title: 'Health Checklist'},
-      {content_type: 'insurance_basics', title: 'Insurance Basics'},
-      {content_type: 'money_saving_tips', title: 'Money-Saving Tips'},
-      {content_type: 'health_care_rights', title: 'Health Care Rights'}
+      {content_type: 'health_checklist', title: 'Health Checklist', has_icons: false},
+      {content_type: 'insurance_basics', title: 'Insurance Basics', has_icons: true},
+      {content_type: 'money_saving_tips', title: 'Money-Saving Tips', has_icons: false},
+      {content_type: 'health_care_rights', title: 'Health Care Rights', has_icons: true}
     ];
   },
   render: function(data) {
@@ -21,7 +21,7 @@ var coverage_info = _.extend(new Controller(), {
     $.each(this.data.rows, function() {
       coverage_info.rendered += row_tpl({
         container_class: this.content_type,
-        link_url: 'content_list?content_type=' + this.content_type + '&page_title=' + this.title,
+        link_url: 'content_list?content_type=' + this.content_type + '&page_title=' + this.title + '&has_icons=' + this.has_icons,
         link_text: this.title
       });
     });
