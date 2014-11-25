@@ -101,11 +101,6 @@ table.table .toggle-fave.active span {
   border-radius: 0px 30px 30px 0;
 }
 
-#content.content_list table.health_checklist td.link {
-  font-size: 0.75em;
-  width: 35%;
-}
-
 #content.content_list table td.spacer {
   background: transparent;
 }
