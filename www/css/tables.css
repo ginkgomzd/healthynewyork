@@ -24,6 +24,10 @@ table,
 .table>tbody>tr>td a {
   color: #000000;
 }
+.table>tbody>tr>td a  {
+  position: relative;
+  display:block;
+  padding: 10px 150px 10px 10px;
 
 table.table .toggle-fave span {
   background-image: url('../img/btn_fave.png');
