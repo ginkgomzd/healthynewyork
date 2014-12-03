@@ -75,8 +75,7 @@ var bookmark = _.extend(new Controller(), {
         var item = result.rows.item(i);
         bookmark.data.rows.push({
           id: item.import_id,
-          title: item.title,
-          type: item.type
+          title: item.title
         });
       }
     },
