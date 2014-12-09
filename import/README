@@ -1,0 +1,20 @@
+
+GENERATE SQLITE tx.ExecuteSql() calls for the content table
+
+two files with different formats, handled by the same script:
+Be sure to create CSV's using "Quote All fields".
+
+main content file, with fields:
+import_id,type,title,deleted,body,Related content tags
+
+litsing content file with fields:
+"import_id","type","title","link","icon_class"
+
+file formats are completely flexible though.
+
+Note that "deleted" and "Related content tags" will be excluded from the import.
+Deleted is respected to ignore rows however.
+
+
+$> yiny_generate_inserts.php <input-csv> | xclip
+
