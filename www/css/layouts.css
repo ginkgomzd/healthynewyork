@@ -46,9 +46,17 @@
   width: 100%;
 }
 
+#zocdoc_wrapper {
+    width:100%;
+    height: 100%;
+    overflow: scroll !important;
+    -webkit-overflow-scrolling:touch !important;
+}
+
 #zocdoc_frame {
   border: 0;
   display: none;
   height: 100%;
   width: 100%;
+  
 }
