@@ -180,7 +180,9 @@
             <input class="btn" type="submit" value="Search" />
           </form>
         </div>
-        <iframe id="zocdoc_frame"></iframe>
+        <div id="zocdoc_wrapper">
+            <iframe id="zocdoc_frame" scrolling="yes" frameborder="0"></iframe>
+        </div>
       </script>
       <script type="text/template" id="coverage_info_row_tpl">
         <div class="container-fluid <%= container_class %>">
