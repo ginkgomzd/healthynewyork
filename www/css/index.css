@@ -24,6 +24,10 @@ body {
     width:100%;
 }
 
+a {
+  color: #ea3e3b;
+}
+
 #modal {
   color: #000000;
 }
