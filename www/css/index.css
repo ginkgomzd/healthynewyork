@@ -66,11 +66,15 @@ a {
 }
 
 /* bootstrap style overrides */
-.btn-primary, .btn-primary.active {
+.btn.btn-primary, .btn.btn-primary.active {
   background-color: #E8E8E9;
   border-color: #FFFFFF;
   height: 58px;
   width: 58px;
+}
+
+.btn {
+    background-color: #99BBDD;
 }
 
 /* Landscape layout (with min-width) */
@@ -143,6 +147,7 @@ a {
   }
 
   #back {
+    background-color: #FFFFFF;
     background-image: url('../img/back_arrow.png');
   }
 
@@ -152,6 +157,7 @@ a {
   }
 
   .btn-icon-search {
+    background-color: #FFFFFF;
     background-image: url('../img/ic_menu_search_holo_light.png');
     background-repeat: no-repeat;
     background-size: 100%;
