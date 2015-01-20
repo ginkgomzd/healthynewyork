@@ -8,33 +8,66 @@ var bookmark = _.extend(new Controller(), {
         var el = $(e.currentTarget);
 
         if (el.is('.active')) {
-          bookmark.delete(el.data('id'), el.data('table'));
+          bookmark.delete(el);
         } else {
-          bookmark.save(el.data('id'), el.data('table'));
+          bookmark.save(el);
         }
-
-        el.toggleClass('active');
       });
     },
-    delete: function(content_id, content_table) {
+
+    /**
+     * @param {object} el The clicked element. Must have content_id and content_table
+     *        properties for the DB interaction. The element is passed along to
+     *        bookmark.updateButton, which handles representing state to the user.
+     */
+    delete: function(el) {
       localDB.db.transaction(
         function(tx) {
           tx.executeSql('DELETE FROM bookmark WHERE content_id = ? AND content_table = ?',
-            [content_id, content_table]);
+            [el.data('id'), el.data('table')]);
         },
-        function() {console.log('bookmarks::delete SQL ERROR')},
-        bookmark.removeUnfavoritedItems
+        function() {console.log('bookmarks::delete SQL ERROR');},
+        bookmark.updateButton(el)
       );
     },
-    save: function(content_id, content_table) {
+
+    /**
+     * @param {object} el The clicked element. Must have content_id and content_table
+     *        properties for the DB interaction. The element is passed along to
+     *        bookmark.updateButton, which handles representing state to the user.
+     */
+    save: function(el) {
       localDB.db.transaction(
         function(tx) {
           tx.executeSql('INSERT INTO bookmark (content_id, content_table) VALUES (?, ?)',
-            [content_id, content_table]);
+            [el.data('id'), el.data('table')]);
         },
-        function() {console.log('bookmarks::save SQL ERROR')},
-        localDB.installSuccess
+        function() {console.log('bookmarks::save SQL ERROR');},
+        bookmark.updateButton(el)
       );
+    },
+    updateButton: function(button) {
+      // do this for both buttons and stars on the bookmarks page
+      button.toggleClass('active');
+
+      // check to make sure this is a button (i.e., at the bottom of a page of content),
+      // not a star on the bookmarks page
+      if (button.is('button')) {
+        // use a little animation to clue in the user that something is happening
+        var fontsize = button.css('font-size');
+        var txt = button.is('.active') ? 'Remove from favorites' : 'Add to favorites';
+
+        // we don't want the button to resize, just the text within it
+        var height = button.css('height');
+        button.css('min-height', height);
+
+        button.animate({"font-size": '0px'}, {duration: 100, complete: function() {
+          button.text(txt).animate({"font-size": fontsize}, 100);
+        }});
+      } else {
+        // clean up the bookmarks page
+        bookmark.removeUnfavoritedItems();
+      }
     },
     main: function() {
       this.fetchData();
