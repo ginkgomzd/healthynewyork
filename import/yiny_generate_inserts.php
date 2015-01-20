@@ -77,14 +77,14 @@ while (!feof($fd) ) {
    ***/
 
     if (is_numeric($type)) {
-      $line[$type] = str_replace(' ', '_', strtolower($line[$type]));
+      $line[$type] = str_replace(' ', '_', strtolower(trim($line[$type])));
     }
 
     if(is_numeric($link)) {
       /*** '{"controller": "content_list", "content_type": "compare_costs", "page_title": "Compare Costs"}' ***/
       $fmt =  '{"controller": "content_list", "content_type": "%s", "page_title": "%s"}';
       $page_title = $line[$field_map['title']['index']];
-      $line[$link] = sprintf($fmt, str_replace(' ', '_', strtolower($page_title)), $page_title);
+      $line[$link] = sprintf($fmt, str_replace(' ', '_', strtolower(trim($page_title))), $page_title);
     }
 
       /* content_leaf?id= */
