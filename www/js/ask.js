@@ -75,6 +75,7 @@ var ask = _.extend(new Controller(), {
         $('#modal .modal-title').empty().html('<h1>Question Submitted</h1>');
         $('#modal .modal-body').empty().html('<p>Thanks for your question. We will respond within two (2) business days.</p>');
         $('#modal').modal('show');
+        $('form#ask .form-control').val('');
       }
     ).fail(function(jqXHR, status, error) {
       $('#modal .modal-title').empty().html('<h1>Connection Error</h1>');
