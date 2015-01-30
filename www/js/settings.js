@@ -6,7 +6,7 @@ var settingsBase = {
   },
   bindEvents: function() {
     $('body').on('submit', 'form#settings', this.handleSubmit);
-    $('body').on('change', 'form select[name="insurance_carrier"]', this.populateInsurancePlans);
+    $('body').on('change', 'form select[name="insurance_carrier"]', settings.populateInsurancePlans);
   },
   /**
    * Handles the submission of the settings a question form
@@ -85,6 +85,8 @@ var settingsBase = {
   },
   bindData: function(tx, result) {
     settings.setFormValues(result.rows);
+    settings.populateInsuranceCarriers();
+    settings.populateInsurancePlans();
   },
   /**
    * Update form model from user entry
@@ -104,15 +106,15 @@ var settingsBase = {
    * @returns none
    */
   setFormValues: function(values) {
-    if (Object.keys(settings.formFields).length === 0) {
-      settings.findFormElements();
-    }
+    settings.findFormElements();
+
     if (values !== null) {
       for(var i = 0; i < values.length; i++) {
         var item = values.item(i);
         switch (item.key) {
           case 'email':
             settings.formFields.email.value = item.value;
+            settings.formFields.email.element.val(item.value);
             break;
           case 'provider':
             settings.formFields.provider.value = item.value;
@@ -122,13 +124,11 @@ var settingsBase = {
             break;
           case 'zipcode':
             settings.formFields.zipcode.value = item.value;
+            settings.formFields.zipcode.element.val(item.value);
             break;
         }
       }
     }
-    $.each(this.formFields, function(k, v) {
-      $(v.element).val(v.value);
-    });
   },
   /**
    * Initialize form model with references to DOM elements
@@ -139,10 +139,10 @@ var settingsBase = {
       element: $('form#settings [name="email"]')
     };
     settings.formFields.provider = {
-      element: $('form#settings [name="provider"]'),
+      element: $('form#settings [name="insurance_carrier"]'),
     };
     settings.formFields.plan = {
-      element: $('form#settings [name="plan"]'),
+      element: $('form#settings [name="insurance_plan"]'),
     };
     settings.formFields.zipcode = {
       element: $('form#settings [name="zipcode"]'),
@@ -157,8 +157,6 @@ var settingsBase = {
     var content_tpl = _.template(src);
     this.rendered = content_tpl();
     this.updateDisplay();
-    this.populateInsuranceCarriers();
-    this.populateInsurancePlans();
   },
   /**
    * Checks for a valid email address and question at least one character long.
@@ -184,23 +182,25 @@ var settingsBase = {
    */
   populateInsuranceCarriers: function() {
     var carriers = schedule.getInsuranceCarriers();
-    console.dir(carriers);
+    var select = $('form select[name="insurance_carrier"]');
     $.each(carriers, function(){
       var opt = '<option value="' + this.id + '">' + this.name + '</option>';
-      $('form select[name="insurance_carrier"]').append(opt);
+      select.append(opt);
     });
+    select.val(settings.formFields.provider.value);
   },
   /**
    * This is a placeholder function to populate the list of insurance plans the user may select.
    */
-  populateInsurancePlans: function() {;
-//    $('form select[name="insurance_plan"] option:not(:first)').remove();
+  populateInsurancePlans: function() {
+    $('form select[name="insurance_plan"] option:not(:first)').remove();
     var plans = schedule.getInsurancePlans();
-    console.dir(plans);
+    var select = $('form select[name="insurance_plan"]');
     $.each(plans, function(){
       var opt = '<option value="' + this.id + '">' + this.name + '</option>';
-      $('form select[name="insurance_plan"]').append(opt);
+      select.append(opt);
     });
+    select.val(settings.formFields.plan.value);
   }
 };
 
