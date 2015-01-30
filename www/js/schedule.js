@@ -5,7 +5,7 @@ var schedule = _.extend(new Controller(), {
   },
   bindEvents: function() {
     $('body').on('submit', 'form#schedule', this.handleSubmit);
-    $('body').on('change', 'form#schedule select[name="insurance_carrier"]', this.populateInsurancePlans);
+    $('body').on('change', 'form select[name="insurance_carrier"]', this.populateInsurancePlans);
   },
   /**
    * This is a placeholder function to retrieve the list of insurance carriers the user may select;
@@ -28,7 +28,7 @@ var schedule = _.extend(new Controller(), {
    * the real thing will probably do a DB lookup.
    */
   getInsurancePlans: function() {
-    var carrier = $('form#schedule select[name="insurance_carrier"]').val();
+    var carrier = $('form select[name="insurance_carrier"]').val();
     if (carrier === '300') {
       return [
         {
@@ -55,6 +55,8 @@ var schedule = _.extend(new Controller(), {
           name: 'BlueChoice Advantage'
         }
       ];
+    } else {
+      return [];
     }
   },
   /**
@@ -64,18 +66,18 @@ var schedule = _.extend(new Controller(), {
     var carriers = this.getInsuranceCarriers();
     $.each(carriers, function(){
       var opt = '<option value="' + this.id + '">' + this.name + '</option>';
-      $('form#schedule select[name="insurance_carrier"]').append(opt);
+      $('form select[name="insurance_carrier"]').append(opt);
     });
   },
   /**
    * This is a placeholder function to populate the list of insurance plans the user may select.
    */
   populateInsurancePlans: function() {;
-    $('form#schedule select[name="insurance_plan"] option:not(:first)').remove();
+    $('form select[name="insurance_plan"] option:not(:first)').remove();
     var plans = schedule.getInsurancePlans();
     $.each(plans, function(){
       var opt = '<option value="' + this.id + '">' + this.name + '</option>';
-      $('form#schedule select[name="insurance_plan"]').append(opt);
+      $('form select[name="insurance_plan"]').append(opt);
     });
   },
   /**
@@ -88,10 +90,10 @@ var schedule = _.extend(new Controller(), {
     e.preventDefault();
 
     schedule.formFields.insurance_carrier = {
-      element: $('form#schedule [name="insurance_carrier"]')
+      element: $('form [name="insurance_carrier"]')
     };
     schedule.formFields.insurance_plan = {
-      element: $('form#schedule [name="insurance_plan"]')
+      element: $('form [name="insurance_plan"]')
     };
     schedule.getFormValues();
     schedule.showResults();
