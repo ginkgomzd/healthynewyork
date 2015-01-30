@@ -6,6 +6,7 @@ var settingsBase = {
   },
   bindEvents: function() {
     $('body').on('submit', 'form#settings', this.handleSubmit);
+    $('body').on('change', 'form select[name="insurance_carrier"]', this.populateInsurancePlans);
   },
   /**
    * Handles the submission of the settings a question form
@@ -156,6 +157,8 @@ var settingsBase = {
     var content_tpl = _.template(src);
     this.rendered = content_tpl();
     this.updateDisplay();
+    this.populateInsuranceCarriers();
+    this.populateInsurancePlans();
   },
   /**
    * Checks for a valid email address and question at least one character long.
@@ -175,6 +178,29 @@ var settingsBase = {
     }
 
     return (Object.keys(this.formErrors).length === 0);
+  },
+  /**
+   * This is a placeholder function to populate the list of insurance carriers the user may select.
+   */
+  populateInsuranceCarriers: function() {
+    var carriers = schedule.getInsuranceCarriers();
+    console.dir(carriers);
+    $.each(carriers, function(){
+      var opt = '<option value="' + this.id + '">' + this.name + '</option>';
+      $('form select[name="insurance_carrier"]').append(opt);
+    });
+  },
+  /**
+   * This is a placeholder function to populate the list of insurance plans the user may select.
+   */
+  populateInsurancePlans: function() {;
+//    $('form select[name="insurance_plan"] option:not(:first)').remove();
+    var plans = schedule.getInsurancePlans();
+    console.dir(plans);
+    $.each(plans, function(){
+      var opt = '<option value="' + this.id + '">' + this.name + '</option>';
+      $('form select[name="insurance_plan"]').append(opt);
+    });
   }
 };
 
