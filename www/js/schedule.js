@@ -1,4 +1,4 @@
-var schedule = _.extend(new Controller(), {
+var scheduleBase =  {
   formFields: {},
   initialize: function() {
     this.bindEvents();
@@ -147,7 +147,9 @@ var schedule = _.extend(new Controller(), {
   setContentClasses: function() {
     return '';
   }
-});
+}
+
+var schedule = _.extend(new Controller(), scheduleBase);
 
 $(document).ready(function () {
   schedule.initialize();
