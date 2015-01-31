@@ -64,10 +64,16 @@ var scheduleBase =  {
    */
   populateInsuranceCarriers: function() {
     var carriers = this.getInsuranceCarriers();
+    $('form select[name="insurance_carrier"] option:not(:first)').remove();
+    var select = $('form select[name="insurance_carrier"]');
     $.each(carriers, function(){
       var opt = '<option value="' + this.id + '">' + this.name + '</option>';
-      $('form select[name="insurance_carrier"]').append(opt);
+      select.append(opt);
     });
+
+    if (schedule.formFields.hasOwnProperty('insurance_carrier')) {
+      select.val(schedule.formFields.insurance_carrier.value);
+    }
   },
   /**
    * This is a placeholder function to populate the list of insurance plans the user may select.
@@ -75,10 +81,15 @@ var scheduleBase =  {
   populateInsurancePlans: function() {;
     $('form select[name="insurance_plan"] option:not(:first)').remove();
     var plans = schedule.getInsurancePlans();
+    var select = $('form select[name="insurance_plan"]');
     $.each(plans, function(){
       var opt = '<option value="' + this.id + '">' + this.name + '</option>';
-      $('form select[name="insurance_plan"]').append(opt);
+      select.append(opt);
     });
+
+    if (typeof schedule.formFields.hasOwnProperty('insurance_plan')) {
+      select.val(schedule.formFields.insurance_plan.value);
+    }
   },
   /**
    * Handles the submission of the ask a question form
@@ -118,9 +129,24 @@ var scheduleBase =  {
       schedule.formFields[k].value = v.element.val();
     });
   },
+  /**
+   * Initialize form model with references to DOM elements
+   * @returns {undefined}
+   */
+  findFormElements: function() {
+    console.log('findFormElements');
+    schedule.formFields.insurance_carrier = {
+      element: $('form [name="insurance_carrier"]'),
+    };
+    schedule.formFields.insurance_plan = {
+      element: $('form [name="insurance_plan"]'),
+    };
+    console.log(schedule.formFields);
+  },
   main: function() {
     this.renderTpl();
     this.populateInsuranceCarriers();
+    this.fetchProfileData();
   },
   renderTpl: function() {
     var src = $('#schedule_tpl').html();
@@ -146,6 +172,45 @@ var scheduleBase =  {
   },
   setContentClasses: function() {
     return '';
+  },
+  /**
+  * Fetches all settings
+  * @returns {undefined}
+  */
+  fetchProfileData: function() {
+    localDB.db.transaction(
+      function(tx){
+        tx.executeSql(
+          'SELECT "key", "value" FROM "personal_info" \
+          WHERE profile_id = "0" AND (key = "plan" OR key = "provider")',
+          [],
+          schedule.fillSavedSelections
+        )
+      },
+      function(tx, er){
+        console.log("Transaction ERROR: "+ er.message);
+      }
+    );
+  },
+  fillSavedSelections: function(tx, result) {
+    schedule.findFormElements();
+
+    for(var i = 0; i < result.rows.length; i++) {
+      var item = result.rows.item(i);
+      switch (item.key) {
+        case 'provider':
+          console.log('fillSavedSelections::provider' + item.value)
+          schedule.formFields.insurance_carrier.value = item.value;
+          break;
+        case 'plan':
+          console.log('fillSavedSelections::carrier' + item.value)
+          schedule.formFields.insurance_plan.value = item.value;
+          break;
+      }
+    }
+
+    schedule.populateInsuranceCarriers();
+    schedule.populateInsurancePlans();
   }
 }
 
