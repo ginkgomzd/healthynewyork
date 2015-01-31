@@ -39,11 +39,11 @@ var app = {
         });
 
         // vertically center modals
-        $('body').on('shown.bs.modal', '#modal', function(){
+        $('body').on('shown.bs.modal', '.modal', function(){
           var total_height = $('body').height();
-          var dialog_height = $('#modal .modal-dialog').height();
+          var dialog_height = $('.modal .modal-dialog').height();
           var margin = (total_height - dialog_height)/2;
-          $('#modal .modal-dialog').css('margin-top', margin);
+          $('.modal .modal-dialog').css('margin-top', margin);
         });
     },
     onDeviceReady: function() {

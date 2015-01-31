@@ -5,7 +5,9 @@ var scheduleBase =  {
   },
   bindEvents: function() {
     $('body').on('submit', 'form#schedule', this.handleSubmit);
-    $('body').on('change', 'form select[name="insurance_carrier"]', this.populateInsurancePlans);
+    $('body').on('change', 'form#schedule select[name="insurance_carrier"]', this.populateInsurancePlans);
+    $('body').on('change', 'form#schedule select[name="insurance_plan"]', this.askSaveSelection);
+    $('body').on('click', '#saveCancel #modal-save', this.saveToProfile);
   },
   /**
    * This is a placeholder function to retrieve the list of insurance carriers the user may select;
@@ -134,14 +136,12 @@ var scheduleBase =  {
    * @returns {undefined}
    */
   findFormElements: function() {
-    console.log('findFormElements');
     schedule.formFields.insurance_carrier = {
       element: $('form [name="insurance_carrier"]'),
     };
     schedule.formFields.insurance_plan = {
       element: $('form [name="insurance_plan"]'),
     };
-    console.log(schedule.formFields);
   },
   main: function() {
     this.renderTpl();
@@ -199,11 +199,9 @@ var scheduleBase =  {
       var item = result.rows.item(i);
       switch (item.key) {
         case 'provider':
-          console.log('fillSavedSelections::provider' + item.value)
           schedule.formFields.insurance_carrier.value = item.value;
           break;
         case 'plan':
-          console.log('fillSavedSelections::carrier' + item.value)
           schedule.formFields.insurance_plan.value = item.value;
           break;
       }
@@ -211,6 +209,34 @@ var scheduleBase =  {
 
     schedule.populateInsuranceCarriers();
     schedule.populateInsurancePlans();
+  },
+  askSaveSelection: function(e) {
+    if ($(e.target).val() === schedule.formFields.insurance_plan.value) {
+      return; // don't alert
+    }
+
+    $('#saveCancel .modal-title').empty().html('<h1>Remember Selection?</h1>');
+    $('#saveCancel .modal-body').empty().html('<p>To save time, click Save to remember this selection.</p>');
+    $('#saveCancel').modal('show');
+
+  },
+  saveToProfile: function() {
+    var profile_id = '0';
+    schedule.getFormValues();
+    localDB.db.transaction(
+      function(tx) {
+        tx.executeSql('INSERT or REPLACE into personal_info (profile_id, key, value) VALUES (?, ?, ?)',
+          [profile_id, 'provider', schedule.formFields.insurance_carrier.value]);
+
+        tx.executeSql('INSERT or REPLACE into personal_info (profile_id, key, value) VALUES (?, ?, ?)',
+          [profile_id, 'plan', schedule.formFields.insurance_plan.value]);
+      },
+      function(tx, err) {
+        console.log('schedule::saveToProfile SQL ERROR');
+        console.log(err.message);
+      },
+      settings.confirmSaved()
+    );
   }
 }
 

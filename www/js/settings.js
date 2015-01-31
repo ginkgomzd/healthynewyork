@@ -6,7 +6,7 @@ var settingsBase = {
   },
   bindEvents: function() {
     $('body').on('submit', 'form#settings', this.handleSubmit);
-    $('body').on('change', 'form select[name="insurance_carrier"]', settings.populateInsurancePlans);
+    $('body').on('change', 'form#settings select[name="insurance_carrier"]', settings.populateInsurancePlans);
   },
   /**
    * Handles the submission of the settings a question form
