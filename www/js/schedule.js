@@ -8,6 +8,7 @@ var scheduleBase =  {
     $('body').on('change', 'form#schedule select[name="insurance_carrier"]', this.populateInsurancePlans);
     $('body').on('change', 'form#schedule select[name="insurance_plan"]', this.askSaveSelection);
     $('body').on('click', '#saveCancel #modal-save', this.saveToProfile);
+    $('body').on('change', '#saveCancel .dont-nag-me', this.dontNag);
   },
   /**
    * This is a placeholder function to retrieve the list of insurance carriers the user may select;
@@ -211,7 +212,7 @@ var scheduleBase =  {
     schedule.populateInsurancePlans();
   },
   askSaveSelection: function(e) {
-    if ($(e.target).val() === schedule.formFields.insurance_plan.value) {
+    if ( app.dontNagMe === 1 || $(e.target).val() === schedule.formFields.insurance_plan.value) {
       return; // don't alert
     }
 
@@ -237,6 +238,13 @@ var scheduleBase =  {
       },
       settings.confirmSaved()
     );
+  },
+  dontNag: function(e) {
+    if ($(e.target).is(':checked')) {
+      app.dontNagMe = 1;
+    } else {
+      app.dontNagMe = 0;
+    }
   }
 }
 

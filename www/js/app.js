@@ -71,7 +71,8 @@ var app = {
       }
 
       return direction;
-    }
+    },
+    dontNagMe: 0
 };
 
 _.qs = function (request) {
