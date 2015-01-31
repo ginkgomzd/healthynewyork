@@ -136,16 +136,16 @@ var settingsBase = {
    */
   findFormElements: function() {
     settings.formFields.email = {
-      element: $('form#settings [name="email"]')
+      element: $('form [name="email"]')
     };
     settings.formFields.provider = {
-      element: $('form#settings [name="insurance_carrier"]'),
+      element: $('form [name="insurance_carrier"]'),
     };
     settings.formFields.plan = {
-      element: $('form#settings [name="insurance_plan"]'),
+      element: $('form [name="insurance_plan"]'),
     };
     settings.formFields.zipcode = {
-      element: $('form#settings [name="zipcode"]'),
+      element: $('form [name="zipcode"]'),
     };
   },
   main: function() {
