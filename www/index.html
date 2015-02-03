@@ -54,7 +54,7 @@
                 <li class="list-group-item"><a href="pages/bookmarks.html">Bookmarks</a></li>
                 <li class="list-group-item"><a href="pages/schedule_appt.html">Schedule an Appointment</a></li>
                 <li class="list-group-item"><a href="pages/inbox.html">Inbox</a></li>
-                <li class="list-group-item"><a href="pages/settings.html">Settings</a></li>
+                <li class="list-group-item"><a href="settings">Settings</a></li>
               </ul>
             </nav>
           </div><!-- /#sidebar -->
@@ -74,6 +74,7 @@
         <script type="text/javascript" src="js/search.js"></script>
         <script type="text/javascript" src="js/app.js"></script>
         <script type="text/javascript" src="js/ask.js"></script>
+        <script type="text/javascript" src="js/settings.js"></script>
         <script type="text/javascript" src="js/schedule.js"></script>
         <script type="text/javascript" src="js/coverage_info.js"></script>
 
@@ -163,6 +164,30 @@
           <li><a href="content_leaf?id=24">What's a "Network?"</a></li>
         </ol>
       </script>
+      <script type="text/template" id="settings_form_tpl">
+        <h1 class="text-center">Manage Your Personal Settings</h1>
+        <p>Forms will be pre-filled with the information you provide below.</p>
+        <form role="form" id="settings">
+          <div class="form-group">
+            <input class="form-control" type="email" placeholder="e-mail address" name="email" />
+          </div>
+          <div class="form-group">
+            <select class="form-control" name="insurance_carrier">
+              <option value="-1">Select your insurance carrier</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <select class="form-control" name="insurance_plan">
+              <option value="-1">Select your insurance plan</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <input class="form-control" type="text" placeholder="Zip Code" name="zipcode" />
+          </div>
+          <input class="btn" type="submit" value="Save" />
+        </form>
+
+      </script>
       <script type="text/template" id="schedule_tpl">
         <div class="container-fluid">
           <h1 class="text-center">Search for a Physician</h1>
@@ -197,6 +222,19 @@
             <div class="modal-body"></div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="saveCancel" class="modal fade" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-title" id="modalLabel"></div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+              <input type="checkbox" id="saveCancelDontNag" class="dont-nag-me" value="1" /><label for="saveCancelDontNag">Don't ask again</label>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" id="modal-save" class="btn btn-default" data-dismiss="modal">Save</button>
             </div>
           </div>
         </div>

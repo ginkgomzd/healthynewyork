@@ -50,6 +50,13 @@ var localDB = {
         link TEXT)'
       );
 
+      tx.executeSql('CREATE TABLE IF NOT EXISTS personal_info ( \
+      profile_id INTEGER NOT NULL DEFAULT 0, \
+      key TEXT NOT NULL, \
+      value TEXT NULL, \
+      PRIMARY KEY(profile_id, key) \
+      );')
+
       /** Content Inserts **/
 tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "body") VALUES (?,?,?,?)', [2, 'health_checklist', 'Get Insurance', '<p> Congratulations on getting health coverage - it is a big step for your health! If you are not insured, check out healthcare.gov to learn how to get started. </p>']);
 tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "body") VALUES (?,?,?,?)', [3, 'health_checklist', 'Understand Where to Go for Care', '<p> Although you can get health care many different places, including the Emergency Department, it’s best for you to get routine care and recommended preventive services from a primary care provider. There are some big differences between visits to your primary care provider and visits to the Emergency Department, such as cost, time spent waiting for care, and follow up. </p> <p> You can find primary care providers in offices, clinics, and health centers nationwide. Primary care providers work with patients every day to ensure they get the right preventive services, manage their chronic conditions, and improve their health and well-being. Some places may offer services and supports that vary based on the needs of the community they serve, like community-based services and supports, mental health, dental, vision services,  transportation, and language interpretation. </p> <p> In an Emergency Department, you\'ll won\'t see your standard primary care provider. An Emergency Department visit differs from a primary care provider visit in these key ways: </p> <ul><li>You’ll likely pay a copay, co-insurance, and have to meet your deductible before your health plan pays for your costs, especially if it’s not an emergency. Your copay may be between $50 and $150. </li> <li> You should only go when you’re injured or very sick. </li> <li>You may wait for several hours before you’re seen if it’s not an emergency.</li> <li> You’ll see the provider who is working that day. </li> <li>The provider who sees you probably won’t have access toyour health records. </li> <li>The provider may not know what chronic conditionsyou have.</li> <li>The provider will only check the urgent problem you camein to treat but might not ask about other concerns. </li> <li> When your visit is over you will be discharged with instructions to follow up with your primary care provider and/or specialist. There may not be any follow-up support. </li></ul>']);

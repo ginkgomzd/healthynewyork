@@ -23,6 +23,10 @@ Router = function() {
     };
 
   this.control = function(destination) {
+    if (typeof destination === 'undefined') {
+      return;
+    }
+
     var q = destination.indexOf('?');
     if (q === -1) {
       var destinationBase = destination;

@@ -1,4 +1,4 @@
-var schedule = _.extend(new Controller(), {
+var scheduleBase =  {
   formFields: {},
   initialize: function() {
     this.bindEvents();
@@ -6,6 +6,9 @@ var schedule = _.extend(new Controller(), {
   bindEvents: function() {
     $('body').on('submit', 'form#schedule', this.handleSubmit);
     $('body').on('change', 'form#schedule select[name="insurance_carrier"]', this.populateInsurancePlans);
+    $('body').on('change', 'form#schedule select[name="insurance_plan"]', this.askSaveSelection);
+    $('body').on('click', '#saveCancel #modal-save', this.saveToProfile);
+    $('body').on('change', '#saveCancel .dont-nag-me', this.dontNag);
   },
   /**
    * This is a placeholder function to retrieve the list of insurance carriers the user may select;
@@ -28,7 +31,7 @@ var schedule = _.extend(new Controller(), {
    * the real thing will probably do a DB lookup.
    */
   getInsurancePlans: function() {
-    var carrier = $('form#schedule select[name="insurance_carrier"]').val();
+    var carrier = $('form select[name="insurance_carrier"]').val();
     if (carrier === '300') {
       return [
         {
@@ -55,6 +58,8 @@ var schedule = _.extend(new Controller(), {
           name: 'BlueChoice Advantage'
         }
       ];
+    } else {
+      return [];
     }
   },
   /**
@@ -62,21 +67,32 @@ var schedule = _.extend(new Controller(), {
    */
   populateInsuranceCarriers: function() {
     var carriers = this.getInsuranceCarriers();
+    $('form select[name="insurance_carrier"] option:not(:first)').remove();
+    var select = $('form select[name="insurance_carrier"]');
     $.each(carriers, function(){
       var opt = '<option value="' + this.id + '">' + this.name + '</option>';
-      $('form#schedule select[name="insurance_carrier"]').append(opt);
+      select.append(opt);
     });
+
+    if (schedule.formFields.hasOwnProperty('insurance_carrier')) {
+      select.val(schedule.formFields.insurance_carrier.value);
+    }
   },
   /**
    * This is a placeholder function to populate the list of insurance plans the user may select.
    */
   populateInsurancePlans: function() {;
-    $('form#schedule select[name="insurance_plan"] option:not(:first)').remove();
+    $('form select[name="insurance_plan"] option:not(:first)').remove();
     var plans = schedule.getInsurancePlans();
+    var select = $('form select[name="insurance_plan"]');
     $.each(plans, function(){
       var opt = '<option value="' + this.id + '">' + this.name + '</option>';
-      $('form#schedule select[name="insurance_plan"]').append(opt);
+      select.append(opt);
     });
+
+    if (typeof schedule.formFields.hasOwnProperty('insurance_plan')) {
+      select.val(schedule.formFields.insurance_plan.value);
+    }
   },
   /**
    * Handles the submission of the ask a question form
@@ -88,10 +104,10 @@ var schedule = _.extend(new Controller(), {
     e.preventDefault();
 
     schedule.formFields.insurance_carrier = {
-      element: $('form#schedule [name="insurance_carrier"]')
+      element: $('form [name="insurance_carrier"]')
     };
     schedule.formFields.insurance_plan = {
-      element: $('form#schedule [name="insurance_plan"]')
+      element: $('form [name="insurance_plan"]')
     };
     schedule.getFormValues();
     schedule.showResults();
@@ -116,9 +132,22 @@ var schedule = _.extend(new Controller(), {
       schedule.formFields[k].value = v.element.val();
     });
   },
+  /**
+   * Initialize form model with references to DOM elements
+   * @returns {undefined}
+   */
+  findFormElements: function() {
+    schedule.formFields.insurance_carrier = {
+      element: $('form [name="insurance_carrier"]'),
+    };
+    schedule.formFields.insurance_plan = {
+      element: $('form [name="insurance_plan"]'),
+    };
+  },
   main: function() {
     this.renderTpl();
     this.populateInsuranceCarriers();
+    this.fetchProfileData();
   },
   renderTpl: function() {
     var src = $('#schedule_tpl').html();
@@ -144,8 +173,82 @@ var schedule = _.extend(new Controller(), {
   },
   setContentClasses: function() {
     return '';
+  },
+  /**
+  * Fetches all settings
+  * @returns {undefined}
+  */
+  fetchProfileData: function() {
+    localDB.db.transaction(
+      function(tx){
+        tx.executeSql(
+          'SELECT "key", "value" FROM "personal_info" \
+          WHERE profile_id = "0" AND (key = "plan" OR key = "provider")',
+          [],
+          schedule.fillSavedSelections
+        )
+      },
+      function(tx, er){
+        console.log("Transaction ERROR: "+ er.message);
+      }
+    );
+  },
+  fillSavedSelections: function(tx, result) {
+    schedule.findFormElements();
+
+    for(var i = 0; i < result.rows.length; i++) {
+      var item = result.rows.item(i);
+      switch (item.key) {
+        case 'provider':
+          schedule.formFields.insurance_carrier.value = item.value;
+          break;
+        case 'plan':
+          schedule.formFields.insurance_plan.value = item.value;
+          break;
+      }
+    }
+
+    schedule.populateInsuranceCarriers();
+    schedule.populateInsurancePlans();
+  },
+  askSaveSelection: function(e) {
+    if ( app.dontNagMe === 1 || $(e.target).val() === schedule.formFields.insurance_plan.value) {
+      return; // don't alert
+    }
+
+    $('#saveCancel .modal-title').empty().html('<h1>Remember Selection?</h1>');
+    $('#saveCancel .modal-body').empty().html('<p>To save time, click Save to remember this selection.</p>');
+    $('#saveCancel').modal('show');
+
+  },
+  saveToProfile: function() {
+    var profile_id = '0';
+    schedule.getFormValues();
+    localDB.db.transaction(
+      function(tx) {
+        tx.executeSql('INSERT or REPLACE into personal_info (profile_id, key, value) VALUES (?, ?, ?)',
+          [profile_id, 'provider', schedule.formFields.insurance_carrier.value]);
+
+        tx.executeSql('INSERT or REPLACE into personal_info (profile_id, key, value) VALUES (?, ?, ?)',
+          [profile_id, 'plan', schedule.formFields.insurance_plan.value]);
+      },
+      function(tx, err) {
+        console.log('schedule::saveToProfile SQL ERROR');
+        console.log(err.message);
+      },
+      settings.confirmSaved()
+    );
+  },
+  dontNag: function(e) {
+    if ($(e.target).is(':checked')) {
+      app.dontNagMe = 1;
+    } else {
+      app.dontNagMe = 0;
+    }
   }
-});
+}
+
+var schedule = _.extend(new Controller(), scheduleBase);
 
 $(document).ready(function () {
   schedule.initialize();
