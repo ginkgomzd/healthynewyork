@@ -2,16 +2,39 @@ var coverage_info = _.extend(new Controller(), {
   main: function() {
     this.qs = _.qs(this.destination);
     this.fetchData();
-    this.render();
   },
   fetchData: function() {
-    this.data = {};
-    this.data.rows = [
-      {content_type: 'health_checklist', title: 'Health Checklist', has_icons: false},
-      {content_type: 'insurance_basics', title: 'Insurance Basics', has_icons: true},
-      {content_type: 'money_saving_tips', title: 'Money-Saving Tips', has_icons: false},
-      {content_type: 'health_care_rights', title: 'Health Care Rights', has_icons: true}
-    ];
+      this.data = {};
+      this.data.rows = []; // supplies data to the rows of the table
+
+      localDB.db.transaction(this.buildQueries,
+        // TODO: we need a generic error handler
+        function(tx, er){
+          console.log("Transaction ERROR: "+ er.message);
+        },
+        function(){
+          coverage_info.render();
+        }
+      );
+  },
+  buildQueries: function(tx) {
+    tx.executeSql(
+      'SELECT "import_id", "title", "icon_class" FROM "content" \
+      WHERE "type" = ?',
+      ['coverage_info'],
+      coverage_info.buildRows
+    );
+  },
+  buildRows: function(tx, result) {
+    for(var i = 0; i < result.rows.length; i++) {
+      var item = result.rows.item(i);
+      coverage_info.data.rows.push({
+        id: item.import_id,
+        content_type: item.type,
+        title: item.title,
+        class: item.icon_class
+      });
+    }
   },
   render: function(data) {
     var src = $('#coverage_info_row_tpl').html();
@@ -20,8 +43,8 @@ var coverage_info = _.extend(new Controller(), {
 
     $.each(this.data.rows, function() {
       coverage_info.rendered += row_tpl({
-        container_class: this.content_type,
-        link_url: 'content_list?content_type=' + this.content_type + '&page_title=' + this.title + '&has_icons=' + this.has_icons,
+        container_class: this.class,
+        link_url: '/node/' + this.id,
         link_text: this.title
       });
     });

@@ -2,7 +2,6 @@
 var app = {
     // Application Constructor
     initialize: function() {
-        app.router = new Router();
         this.bindEvents();
     },
     // Bind Event Listeners
@@ -12,6 +11,9 @@ var app = {
     bindEvents: function() {
         // wait for device API libraries to load
         document.addEventListener('deviceready', this.onDeviceReady, false);
+
+        // wait for the database
+        $(document).on('dbInstallConfirmed', this.onDbInstallConfirmed);
 
         // wire up off-canvas menu
         $('#toggle-offcanvas').bind('tap', function () {
@@ -28,11 +30,6 @@ var app = {
           }
         });
 
-        // handle all links
-        $('body').on('tap', 'a', function(e){
-          app.router.route(e);
-        });
-
         // initialize modal widget
         $('#modal').modal({
           show: false
@@ -47,9 +44,13 @@ var app = {
         });
     },
     onDeviceReady: function() {
-      // load the coverage info page; faking a tap gets us the icon highlighting
-      // as well as back-button functionality
-      $('.navbar-offcanvas-bottom a[href^="coverage_info"]').trigger('tap');
+      localDB.initialize();
+    },
+    onDbInstallConfirmed: function() {
+      app.router = new Router();
+      app.router.initialize();
+
+      routie('coverage_info');
     },
     /**
      * Depends on jQuery mobile's swipe event. Presently reports on horizontal
@@ -106,9 +107,8 @@ _.qs = function (request) {
        result[temp[0]] = temp[1];
    }
    return result;
-}
+};
 
 $(document).ready(function () {
   app.initialize();
-
 });

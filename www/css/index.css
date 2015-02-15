@@ -197,43 +197,43 @@ a {
     background-size: 45px 45px;
   }
 
-  nav a[href^="coverage_info"] {
+  nav a[href^="#coverage_info"] {
     background-image: url('../img/nav_home.png');
   }
 
-  nav a[href^="coverage_info"].active {
+  nav a[href^="#coverage_info"].active {
     background-image: url('../img/nav_home_active.png');
   }
 
-  nav a[href^="ask"] {
+  nav a[href^="#ask"] {
     background-image: url('../img/nav_ask.png');
   }
 
-  nav a[href^="ask"].active {
+  nav a[href^="#ask"].active {
     background-image: url('../img/nav_ask_active.png');
   }
 
-  nav a[href^="pages/bookmarks.html"] {
+  nav a[href^="#bookmarks"] {
     background-image: url('../img/nav_bookmark.png');
   }
 
-  nav a[href^="pages/bookmarks.html"].active {
+  nav a[href^="bookmarks"].active {
     background-image: url('../img/nav_bookmark_active.png');
   }
 
-  nav a[href^="pages/schedule_appt.html"] {
+  nav a[href^="#schedule_appt"] {
     background-image: url('../img/nav_schedule.png');
   }
 
-  nav a[href^="pages/schedule_appt.html"].active {
+  nav a[href^="#schedule_appt"].active {
     background-image: url('../img/nav_schedule_active.png');
   }
 
-  nav a[href^="pages/inbox.html"] {
+  nav a[href^="#inbox"] {
     background-image: url('../img/inbox.png');
   }
 
-  nav a[href^="pages/settings.html"] {
+  nav a[href^="#settings"] {
     background-image: url('../img/wrench.png');
   }
 

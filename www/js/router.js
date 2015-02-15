@@ -3,6 +3,33 @@ Router = function() {
    * @see this.setClickStack
    */
   this.clickStack = [];
+
+  this.initialize = function() {
+    routie({
+      'ask': function() {
+        ask.main();
+      },
+      'bookmarks': function() {
+        bookmark.main();
+      },
+      'coverage_info': function() {
+        coverage_info.main();
+      },
+      'inbox': function() {
+        console.log('not yet implemented');
+      },
+      'schedule_appt': function() {
+        schedule.main();
+      },
+      'search': function() {
+        search.main();
+      },
+      'settings': function() {
+        settings.main();
+      }
+    });
+  };
+
   /**
    * Determines how to route requests.
    *
@@ -21,34 +48,6 @@ Router = function() {
         window.open(destination, '_system');
       }
     };
-
-  this.control = function(destination) {
-    if (typeof destination === 'undefined') {
-      return;
-    }
-
-    var q = destination.indexOf('?');
-    if (q === -1) {
-      var destinationBase = destination;
-    } else {
-      var destinationBase = destination.substring(0, q);
-    }
-
-    var controller = this.getControllerByName(destinationBase);
-    if (controller !== false) {
-      app.controller = controller;
-    } else if (destination === 'pages/bookmarks.html') {
-      app.controller = bookmark;
-    } else if (/^pages\/search\.html/.test(destination)) {
-      app.controller = search;
-    } else if (destination === 'pages/schedule_appt.html') {
-      app.controller = schedule;
-    } else if (destination) {
-      app.controller = new Controller();
-    }
-    app.controller.destination = destination;
-    app.controller.main();
-  };
 
   /**
    * Duck test, since we can't really check inheritance
@@ -82,5 +81,5 @@ Router = function() {
     } else {
       this.clickStack = this.clickStack.slice(0, index + 1);
     }
-  }
+  };
 };

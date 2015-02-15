@@ -38,6 +38,8 @@ var localDB = {
         } else {
           console.log('Confirmed DB Install, version: ' + localDB.version);
         }
+
+        $(document).trigger('dbInstallConfirmed');
     },
     install: function(tx) {
       tx.executeSql('CREATE TABLE IF NOT EXISTS bookmark (content_id INTEGER, content_table TEXT, PRIMARY KEY(content_id, content_table))');
@@ -102,6 +104,12 @@ tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "ico
 tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "icon_class") VALUES (?,?,?,?,?)', [40, 'insurance_basics', 'Where to Go for Help', '{"controller": "content_list", "content_type": "where_to_go_for_help", "page_title": "Where to Go for Help"}', '']);
 tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "icon_class") VALUES (?,?,?,?,?)', [41, 'money_saving_tips', 'Compare Costs', '{"controller": "content_list", "content_type": "compare_costs", "page_title": "Compare Costs"}', '']);
 tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "icon_class") VALUES (?,?,?,?,?)', [42, 'how_insurance_works', 'How Insurance Works', '{"controller": "content_list", "content_type": "how_insurance_works", "page_title": "How Insurance Works"}', 'icon_stethoscope']);
+
+// build the app landing page
+tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "icon_class") VALUES (?,?,?,?, ?)', [43, 'coverage_info', 'Health Checklist', '{"controller": "content_list", "content_type": "health_checklist", "page_title": "Health Checklist"}', 'health_checklist']);
+tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "icon_class") VALUES (?,?,?,?, ?)', [44, 'coverage_info', 'Insurance Basics', '{"controller": "content_list", "content_type": "insurance_basics", "page_title": "Insurance Basics"}', 'insurance_basics']);
+tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "icon_class") VALUES (?,?,?,?, ?)', [45, 'coverage_info', 'Money-Saving Tips', '{"controller": "content_list", "content_type": "money_saving_tips", "page_title": "Money-Saving Tips"}', 'money_saving_tips']);
+tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "icon_class") VALUES (?,?,?,?, ?)', [46, 'coverage_info', 'Health Care Rights', '{"controller": "content_list", "content_type": "health_care_rights", "page_title": "Health Care Rights"}', 'health_care_rights']);
 /** END Content Inserts **/
 
       localDB.installInsCarriersPlansFromServer(tx);
@@ -125,7 +133,3 @@ tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "ico
       console.log('Finished DB Install, version: ' + localDB.version);
     }
 };
-
-$(document).ready(function () {
-  localDB.initialize();
-});
