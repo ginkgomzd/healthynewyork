@@ -102,19 +102,6 @@ var app = {
     insCarriersPlans: []
 };
 
-_.qs = function (request) {
-  var queryString = request.substring( request.indexOf('?') + 1 );
-  var result = {}, params, temp, i, l;
-   // Split into key/value pairs
-   params = queryString.split("&");
-   // Convert the array of strings into an object
-   for ( i = 0, l = params.length; i < l; i++ ) {
-       temp = params[i].split('=');
-       result[temp[0]] = temp[1];
-   }
-   return result;
-};
-
 $(document).ready(function () {
   app.initialize();
 });

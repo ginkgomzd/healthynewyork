@@ -6,7 +6,6 @@ var search = _.extend(new Controller(), {
   renderedResults: {},
   main: function() {
     ctl = search;
-    ctl.qs = _.qs(ctl.destination);
 
     ctl.renderTpl();
     ctl.updateDisplay();
