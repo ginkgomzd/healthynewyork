@@ -1,4 +1,5 @@
 var settingsBase = {
+  activePath: '#settings',
   formFields: {},
   formErrors: {},
   initialize: function() {

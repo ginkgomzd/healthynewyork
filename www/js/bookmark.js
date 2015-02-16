@@ -1,4 +1,5 @@
 var bookmark = _.extend(new Controller(), {
+    activePath: '#bookmark',
     // Application Constructor
     initialize: function() {
         this.bindEvents();

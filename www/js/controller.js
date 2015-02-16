@@ -3,7 +3,13 @@
  * @returns {undefined}
  */
 Controller = function () {
-  this.destination = '';
+  /**
+   * @var {String} activePath If a child controller sets this, the app navigation
+   * state is updated accordingly when the controller is loaded. This determines
+   * which icons light up. If it is not set, the previous state persists. activePath
+   * should not be set by generic controllers like content_leaf or content_list.
+   */
+  this.activePath = null;
   this.rendered = {};
   this.usesBackButton = false;
 
@@ -15,6 +21,9 @@ Controller = function () {
    */
   this.control = function() {
     app.router.setClickStack();
+    if (this.activePath !== null) {
+      app.activePath = this.activePath;
+    }
 
     app.controller = this;
     app.controller.main.apply(app.controller, arguments); // pass on arguments (e.g., node id) to the controller's main method
@@ -39,7 +48,7 @@ Controller = function () {
     $('#content').html(this.rendered);
     var contentClasses = this.setContentClasses();
     $('#content').removeClass().addClass(contentClasses);
-    this.resetContentDisplay();
+    this.updateNavDisplay();
     this.postUpdateDisplay();
   };
 
@@ -49,16 +58,12 @@ Controller = function () {
    */
   this.postUpdateDisplay = function() {};
 
-  this.resetContentDisplay = function() {
-    // get the path minus any parameters
-    var q = this.destination.indexOf('?');
-    var basePathLength = (q === -1 ? this.destination.length : q);
-    var basePath = this.destination.substr(0, basePathLength);
-    this.setBackButton(basePath);
+  this.updateNavDisplay = function() {
+    this.setBackButton();
 
     $('.row-offcanvas').removeClass('active'); // any time a link is followed, close the off-canvas menu
     $('nav a').removeClass('active');
-    $('nav a[href^="' + basePath + '"]').addClass('active');
+    $('nav a[href^="' + app.activePath + '"]').addClass('active');
   };
 
   /**

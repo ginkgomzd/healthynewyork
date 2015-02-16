@@ -1,4 +1,5 @@
 var coverage_info = _.extend(new Controller(), {
+  activePath: '#coverage_info',
   main: function() {
     this.qs = _.qs(this.destination);
     this.fetchData();

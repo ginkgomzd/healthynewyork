@@ -1,5 +1,11 @@
 
 var app = {
+
+  /**
+   * @var {String} activePath Stores the active path in the app navigation; i.e.,
+   * it determines which icons light up. Should be set by controllers.
+   */
+  activePath: null,
     // Application Constructor
     initialize: function() {
         this.bindEvents();

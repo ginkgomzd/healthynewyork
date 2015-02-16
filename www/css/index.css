@@ -213,19 +213,19 @@ a {
     background-image: url('../img/nav_ask_active.png');
   }
 
-  nav a[href^="#bookmarks"] {
+  nav a[href^="#bookmark"] {
     background-image: url('../img/nav_bookmark.png');
   }
 
-  nav a[href^="bookmarks"].active {
+  nav a[href^="bookmark"].active {
     background-image: url('../img/nav_bookmark_active.png');
   }
 
-  nav a[href^="#schedule_appt"] {
+  nav a[href^="#schedule"] {
     background-image: url('../img/nav_schedule.png');
   }
 
-  nav a[href^="#schedule_appt"].active {
+  nav a[href^="#schedule"].active {
     background-image: url('../img/nav_schedule_active.png');
   }
 

@@ -1,4 +1,5 @@
 var scheduleBase =  {
+  activePath: '#schedule',
   formFields: {},
   /**
    * @type Array Insurance carriers, in the format [{id=,name=,plans={id=,name=}}]
