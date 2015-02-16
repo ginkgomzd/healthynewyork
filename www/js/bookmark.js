@@ -82,7 +82,7 @@ var bookmark = _.extend(new Controller(), {
       this.data = {};
       this.data.rows = []; // supplies data to the rows of the table
       this.data.page_title = 'Bookmarks';
-      this.data.table_class = 'table-striped';
+      this.data.content_type = 'table-striped'; // this has a funny name; it's used to set a class on the table
 
       localDB.db.transaction(this.buildQueries,
         // TODO: we need a generic error handler
@@ -122,7 +122,7 @@ var bookmark = _.extend(new Controller(), {
       this.data.tbody = '';
 
       $.each(this.data.rows, function() {
-        this.link_url = 'content_leaf?id=' + this.id;
+        this.link_url = '#node/' + this.id;
         this.bookmark_cell = bookmark_cell_tpl({
           content_id: this.id,
           content_table: 'content',
