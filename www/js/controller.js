@@ -7,6 +7,27 @@ Controller = function () {
   this.rendered = {};
   this.usesBackButton = false;
 
+  /**
+   * This function is invoked to pass control of the application from one controller
+   * to another.
+   *
+   * It takes care of some app-state housekeeping then calls the controller's main method.
+   */
+  this.control = function() {
+    app.router.setClickStack();
+
+    app.controller = this;
+    app.controller.main.apply(app.controller, arguments); // pass on arguments (e.g., node id) to the controller's main method
+  };
+
+  /**
+   * Abstract method for children to implement. In the main method you probably want to do
+   * stuff like fetch data from the database or instantiate a view.
+   */
+  this.main = function() {
+    console.log('Application error: controller failed to implement main method');
+  };
+
 /**
   * Updates content on the page and toggles active states for nav links. This
   * helper function is called from the controller and should not be called directly.
@@ -60,7 +81,7 @@ Controller = function () {
    * @param {string} controller
    * @returns {undefined}
    */
-  this.setBackButton = function(controller) {
+  this.setBackButton = function() {
     if (this.usesBackButton === true) {
       var href = app.router.clickStack[app.router.clickStack.length - 2];
       $('#back').attr('href', href).show();

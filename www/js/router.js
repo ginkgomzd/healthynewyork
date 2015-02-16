@@ -7,13 +7,17 @@ Router = function() {
   this.initialize = function() {
     var router = this;
     routie({
-      'content_leaf/:id': content_leaf.main,
-      'content_list/:id': content_list.main,
+      'content_leaf/:id': function(id) {
+        content_leaf.control(id);
+      },
+      'content_list/:id': function(id) {
+        content_list.control(id);
+      },
       'node/:id': this.routeNode,
       '*': function(controller) {
         c = router.getControllerByName(controller);
         if (c !== false) {
-          c.main();
+          c.control();
         } else {
           console.log('Route for ' + controller + ' not implemented');
         }
@@ -94,10 +98,11 @@ Router = function() {
    * @param {string} destination
    * @returns {undefined}
    */
-  this.setClickStack = function (destination) {
-    var index = this.clickStack.indexOf(destination);
+  this.setClickStack = function () {
+    var route = '#' + window.location.hash.substring(1);
+    var index = this.clickStack.indexOf(route);
     if (index === -1) {
-      this.clickStack.push(destination);
+      this.clickStack.push(route);
     } else {
       this.clickStack = this.clickStack.slice(0, index + 1);
     }
