@@ -12,9 +12,7 @@ Router = function() {
       'bookmarks': function() {
         bookmark.main();
       },
-      'content_leaf/:id': function() {
-        console.log('not yet implemented');
-      },
+      'content_leaf/:id': content_leaf.main,
       'content_list/:id': content_list.main,
       'coverage_info': function() {
         coverage_info.main();
