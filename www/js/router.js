@@ -12,12 +12,17 @@ Router = function() {
       'bookmarks': function() {
         bookmark.main();
       },
+      'content_leaf/:id': function() {
+        console.log('not yet implemented');
+      },
+      'content_list/:id': content_list.main,
       'coverage_info': function() {
         coverage_info.main();
       },
       'inbox': function() {
         console.log('not yet implemented');
       },
+      'node/:id': this.routeNode,
       'schedule_appt': function() {
         schedule.main();
       },
@@ -28,6 +33,35 @@ Router = function() {
         settings.main();
       }
     });
+  };
+
+/**
+ * Determines whether a node is a list or a leaf and routes it accordingly
+ *
+ * @param {Int} id Node ID
+ */
+  this.routeNode = function(id) {
+    localDB.db.transaction(
+      function(tx) {
+        tx.executeSql(
+          'SELECT "link" FROM "content" WHERE "import_id" =  ?',
+          [id],
+          function(tx, result) {
+            if (result.rows.length < 1) {
+              console.log('Could not route request; node ID invalid or no such node.');
+            } else {
+              var item = result.rows.item(0);
+              if (item.link === null) {
+                routie('content_leaf/' + id);
+              } else {
+                routie('content_list/' + id);
+              }
+            }
+          }
+        );
+      },
+      function() {console.log('Could not route request; node lookup failed.');}
+    );
   };
 
   /**

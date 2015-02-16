@@ -101,8 +101,8 @@ tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "body") VALU
 
 tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "icon_class") VALUES (?,?,?,?,?)', [38, 'insurance_basics', 'Terms to Know', '{"controller": "content_list", "content_type": "terms_to_know", "page_title": "Terms to Know"}', 'icon_thermometer']);
 tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "icon_class") VALUES (?,?,?,?,?)', [39, 'insurance_basics', 'Types of Plans', '{"controller": "content_list", "content_type": "types_of_plans", "page_title": "Types of Plans"}', 'icon_first_aid']);
-tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "icon_class") VALUES (?,?,?,?,?)', [40, 'insurance_basics', 'Where to Go for Help', '{"controller": "content_list", "content_type": "where_to_go_for_help", "page_title": "Where to Go for Help"}', '']);
-tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "icon_class") VALUES (?,?,?,?,?)', [41, 'money_saving_tips', 'Compare Costs', '{"controller": "content_list", "content_type": "compare_costs", "page_title": "Compare Costs"}', '']);
+tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "icon_class") VALUES (?,?,?,?,?)', [40, 'insurance_basics', 'Where to Go for Help', '{"controller": "content_list", "content_type": "where_to_go_for_help", "page_title": "Where to Go for Help"}', null]);
+tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "icon_class") VALUES (?,?,?,?,?)', [41, 'money_saving_tips', 'Compare Costs', '{"controller": "content_list", "content_type": "compare_costs", "page_title": "Compare Costs"}', null]);
 tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "icon_class") VALUES (?,?,?,?,?)', [42, 'how_insurance_works', 'How Insurance Works', '{"controller": "content_list", "content_type": "how_insurance_works", "page_title": "How Insurance Works"}', 'icon_stethoscope']);
 
 // build the app landing page

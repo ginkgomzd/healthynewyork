@@ -44,7 +44,7 @@ var coverage_info = _.extend(new Controller(), {
     $.each(this.data.rows, function() {
       coverage_info.rendered += row_tpl({
         container_class: this.class,
-        link_url: '/node/' + this.id,
+        link_url: '#node/' + this.id,
         link_text: this.title
       });
     });
