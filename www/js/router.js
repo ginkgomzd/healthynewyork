@@ -5,30 +5,18 @@ Router = function() {
   this.clickStack = [];
 
   this.initialize = function() {
+    var router = this;
     routie({
-      'ask': function() {
-        ask.main();
-      },
-      'bookmarks': function() {
-        bookmark.main();
-      },
       'content_leaf/:id': content_leaf.main,
       'content_list/:id': content_list.main,
-      'coverage_info': function() {
-        coverage_info.main();
-      },
-      'inbox': function() {
-        console.log('not yet implemented');
-      },
       'node/:id': this.routeNode,
-      'schedule_appt': function() {
-        schedule.main();
-      },
-      'search': function() {
-        search.main();
-      },
-      'settings': function() {
-        settings.main();
+      '*': function(controller) {
+        c = router.getControllerByName(controller);
+        if (c !== false) {
+          c.main();
+        } else {
+          console.log('Route for ' + controller + ' not implemented');
+        }
       }
     });
   };
