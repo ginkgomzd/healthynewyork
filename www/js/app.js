@@ -35,7 +35,7 @@ var app = {
         $(document).on('mousedown', 'a', function(e) {
           var el = $(this);
           var url = el.attr('href');
-          if (url.indexOf('://') !== -1) {
+          if (url && (url.indexOf('://') !== -1)) {
             e.preventDefault();
             window.open(url, '_system');
           }
