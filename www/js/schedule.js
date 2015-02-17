@@ -169,7 +169,7 @@ var scheduleBase =  {
 
     // configure the back button to bring back the form
     $('#toggle-offcanvas').hide();
-    $('#back').show().on('tap', this.setBackButtonPostSubmit);
+    $('#back').show().on('tap.schedule', this.setBackButtonPostSubmit);
   },
   /**
    * Get values for each form field.
@@ -200,18 +200,16 @@ var scheduleBase =  {
   setBackButtonPostSubmit: function(e) {
     // disable all listeners for this event
     e.preventDefault();
-    e.stopImmediatePropagation();
 
     $('#zocdoc_frame').hide();
     $('form#schedule').show();
 
-    // remove this (and all other) listener(s)
-    $('#back').off('tap');
+    $('#toggle-offcanvas').show();
 
-    // turn back on the routing listener
-    $('body').on('tap', '#back', function(e){
-      app.router.route(e);
-    });
+    // TODO: The listener is only unregistered if the user clicks the back button;
+    // if the user navigates away from the page, e.g., via the navigation menu,
+    // the listener stays attached and breaks the back-button functionality.
+    $('#back').off('tap.schedule', this.setBackButtonPostSubmit).hide();
   },
   setContentClasses: function() {
     return '';

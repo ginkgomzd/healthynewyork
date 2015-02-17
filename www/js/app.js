@@ -21,6 +21,26 @@ var app = {
         // wait for the database
         $(document).on('dbInstallConfirmed', this.onDbInstallConfirmed);
 
+        // Open external links in the system browser
+        //
+        // If this code looks familiar/suspicious, it should. This is very similar
+        // to the code we were using before to route requests through the query string,
+        // which was subject to a race condition. One potentially significant
+        // difference is that the event is different; I believe that mousedown
+        // fires earlier than tap. I've also changed the internal/external check to
+        // use indexOf instead a regex, which should also be faster. Mitigating the danger
+        // to some extent is the fact if we do fall prey to a race condition, the app
+        // won't crash. Instead the URL will be opened by the app webview rather
+        // than the system browser, which isn't so bad.
+        $(document).on('mousedown', 'a', function(e) {
+          var el = $(this);
+          var url = el.attr('href');
+          if (url.indexOf('://') !== -1) {
+            e.preventDefault();
+            window.open(url, '_system');
+          }
+        });
+
         // wire up off-canvas menu
         $('#toggle-offcanvas').bind('tap', function () {
           $('.row-offcanvas').toggleClass('active');

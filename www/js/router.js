@@ -55,25 +55,6 @@ Router = function() {
   };
 
   /**
-   * Determines how to route requests.
-   *
-   * @param {Tap event} e
-   */
-  this.route = function(e) {
-      e.preventDefault();
-      var el = $(e.currentTarget);
-      var destination = el.attr('href');
-      this.setClickStack(destination);
-
-      // don't try to route external links (i.e., those with a protocol ://); pass them to the system browser
-      if (!/:\/\//.test(destination)) {
-        this.control(destination);
-      } else {
-        window.open(destination, '_system');
-      }
-    };
-
-  /**
    * Duck test, since we can't really check inheritance
    *
    * @param {string} controller name
