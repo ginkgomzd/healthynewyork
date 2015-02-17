@@ -14,12 +14,12 @@ Router = function() {
         content_list.control(id);
       },
       'node/:id': this.routeNode,
-      '*': function(controller) {
-        c = router.getControllerByName(controller);
-        if (c !== false) {
-          c.control();
-        } else {
-          console.log('Route for ' + controller + ' not implemented');
+      '*': function(controllerName) {
+        controller = router.getControllerByName(controllerName);
+        if (controller !== false) {
+          controller.control();
+        } else if (controllerName !== '') {
+          console.log('Route for ' + controllerName + ' not implemented');
         }
       }
     });
