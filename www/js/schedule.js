@@ -10,63 +10,102 @@ var scheduleBase =  {
     $('body').on('click', '#saveCancel #modal-save', this.saveToProfile);
     $('body').on('change', '#saveCancel .dont-nag-me', this.dontNag);
   },
+  main: function() {
+    this.renderTpl();
+    this.fetchInsuranceCarriers();
+    this.fetchProfileData();
+  },
   /**
-   * This is a placeholder function to retrieve the list of insurance carriers the user may select;
-   * the real thing will probably do a DB lookup.
+   * Get the carriers array from the db
+   */
+  fetchInsuranceCarriers: function() {
+    console.log("Checkpoint");
+    localDB.db.transaction(
+      function(tx){
+        tx.executeSql(
+          'SELECT "value" FROM "settings" WHERE key="insurance_plans"',
+          [],
+          schedule.fillInsuranceCarriers,
+          function(tx, er){
+            console.log("Transaction ERROR: "+ er.message);
+          }
+        )
+      }
+    );
+  },
+  /**
+   * Called from fetchInsuranceCarriers when db query finishes
+   */
+  fillInsuranceCarriers: function(tx, result) {
+    schedule.findFormElements();
+
+    for(var i = 0; i < result.rows.length; i++) {
+      var item = result.rows.item(i);
+      schedule.insurance_carriers = JSON.parse(item.value);
+      break;
+    }
+    schedule.populateInsuranceCarriers();
+    schedule.populateInsurancePlans();
+  },
+  /**
+  * Fetches all saved settings from db
+  * @returns {undefined}
+  */
+  fetchProfileData: function() {
+    localDB.db.transaction(
+      function(tx){
+        tx.executeSql(
+          'SELECT "key", "value" FROM "personal_info" \
+          WHERE profile_id = "0" AND (key = "plan" OR key = "provider")',
+          [],
+          schedule.fillSavedSelections
+        )
+      },
+      function(tx, er){
+        console.log("Transaction ERROR: "+ er.message);
+      }
+    );
+  },
+  /**
+   * Called from fetchProfileData when db query finishes
+   */
+  fillSavedSelections: function(tx, result) {
+    schedule.findFormElements();
+
+    for(var i = 0; i < result.rows.length; i++) {
+      var item = result.rows.item(i);
+      switch (item.key) {
+        case 'provider':
+          schedule.formFields.insurance_carrier.value = item.value;
+          break;
+        case 'plan':
+          schedule.formFields.insurance_plan.value = item.value;
+          break;
+      }
+    }
+    schedule.populateInsuranceCarriers();
+    schedule.populateInsurancePlans();
+  },
+  /**
+   * Get an array of insurance carriers, in the format [{id=,name=,plans={id=,name=}}]
    */
   getInsuranceCarriers: function() {
-    return [
-      {
-        id: 300,
-        name: 'Aetna'
-      },
-      {
-        id: 1109,
-        name: 'Blue Choice Health Plan'
-      }
-    ];
+    return schedule.insurance_carriers;
   },
   /**
-   * This is a placeholder function to retrieve the list of insurance plans the user may select;
-   * the real thing will probably do a DB lookup.
+   * Get an array of insurance plans, in the format [{id=,name=}]
    */
   getInsurancePlans: function() {
-    var carrier = $('form select[name="insurance_carrier"]').val();
-    if (carrier === '300') {
-      return [
-        {
-          id: 11187,
-          name: 'Aetna Advantage PD'
-        },
-        {
-          id: 8252,
-          name: 'Aetna Basic HMO'
-        }
-      ];
-    } else if (carrier === '1109') {
-      return [
-        {
-          id: 9309,
-          name: 'BlueCard PPO/EPO'
-        },
-        {
-          id: 9310,
-          name: 'BludeCard Traditional'
-        },
-        {
-          id: 9303,
-          name: 'BlueChoice Advantage'
-        }
-      ];
-    } else {
-      return [];
-    }
+    var carrier_id = $('form select[name="insurance_carrier"]').val();
+    $.each(schedule.insurance_carriers, function() { if (this['id']==carrier_id) { carrier=this; } });
+    carrier['plans'].shift(); // unset the first plan, b/c it's "Choose a plan".
+    return carrier['plans'];
   },
   /**
-   * This is a placeholder function to populate the list of insurance carriers the user may select.
+   * Populate the list of insurance carriers the user may select.
    */
   populateInsuranceCarriers: function() {
-    var carriers = this.getInsuranceCarriers();
+    var carriers = schedule.getInsuranceCarriers();
     $('form select[name="insurance_carrier"] option:not(:first)').remove();
     var select = $('form select[name="insurance_carrier"]');
     $.each(carriers, function(){
@@ -74,12 +113,15 @@ var scheduleBase =  {
       select.append(opt);
     });
 
-    if (schedule.formFields.hasOwnProperty('insurance_carrier')) {
+    if (schedule.formFields.hasOwnProperty('insurance_carrier') && schedule.formFields.insurance_carrier.value) {
       select.val(schedule.formFields.insurance_carrier.value);
+    } else {
+      select.val(-1);
     }
+
   },
   /**
-   * This is a placeholder function to populate the list of insurance plans the user may select.
+   * Populate the list of insurance plans the user may select.
    */
   populateInsurancePlans: function() {;
     $('form select[name="insurance_plan"] option:not(:first)').remove();
@@ -90,8 +132,12 @@ var scheduleBase =  {
       select.append(opt);
     });
 
-    if (typeof schedule.formFields.hasOwnProperty('insurance_plan')) {
+    if (typeof schedule.formFields.hasOwnProperty('insurance_plan') && schedule.formFields.insurance_plan.value
+      && $("form select[name='insurance_plan'] option[value='"+schedule.formFields.insurance_plan.value+"']").length > 0)
+    {
       select.val(schedule.formFields.insurance_plan.value);
+    } else {
+      select.val(-1);
     }
   },
   /**
@@ -144,11 +190,6 @@ var scheduleBase =  {
       element: $('form [name="insurance_plan"]'),
     };
   },
-  main: function() {
-    this.renderTpl();
-    this.populateInsuranceCarriers();
-    this.fetchProfileData();
-  },
   renderTpl: function() {
     var src = $('#schedule_tpl').html();
     var content_tpl = _.template(src);
@@ -173,43 +214,6 @@ var scheduleBase =  {
   },
   setContentClasses: function() {
     return '';
-  },
-  /**
-  * Fetches all settings
-  * @returns {undefined}
-  */
-  fetchProfileData: function() {
-    localDB.db.transaction(
-      function(tx){
-        tx.executeSql(
-          'SELECT "key", "value" FROM "personal_info" \
-          WHERE profile_id = "0" AND (key = "plan" OR key = "provider")',
-          [],
-          schedule.fillSavedSelections
-        )
-      },
-      function(tx, er){
-        console.log("Transaction ERROR: "+ er.message);
-      }
-    );
-  },
-  fillSavedSelections: function(tx, result) {
-    schedule.findFormElements();
-
-    for(var i = 0; i < result.rows.length; i++) {
-      var item = result.rows.item(i);
-      switch (item.key) {
-        case 'provider':
-          schedule.formFields.insurance_carrier.value = item.value;
-          break;
-        case 'plan':
-          schedule.formFields.insurance_plan.value = item.value;
-          break;
-      }
-    }
-
-    schedule.populateInsuranceCarriers();
-    schedule.populateInsurancePlans();
   },
   askSaveSelection: function(e) {
     if ( app.dontNagMe === 1 || $(e.target).val() === schedule.formFields.insurance_plan.value) {
