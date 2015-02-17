@@ -25,7 +25,7 @@ var search = _.extend(new Controller(), {
       search.noResults();
       return;
     }
-    search.data = {rows: [], tbody: new String, table_class: 'table-striped' };
+    search.data = {rows: [], tbody: new String, content_type: 'table-striped' };
     search.doSearch($('form#search input#search_terms')[0]);
   },
   validateForm: function() {
@@ -83,12 +83,11 @@ var search = _.extend(new Controller(), {
 
     for(var i=0; i < result.rows.length; i++) {
       var item = result.rows.item(i);
-      contentUrl = content_list.createContentUrl(item);
       search.data.rows.push(
         { title_text: item.title,
-          link_url: contentUrl,
-          icon_class: '',
-          icon_inner: ''
+          link_url: '#node/' + item.import_id,
+          icon_class: null,
+          icon_inner: null
         });
     }
   },
