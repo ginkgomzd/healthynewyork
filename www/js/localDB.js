@@ -32,14 +32,14 @@ var localDB = {
           localDB.db.transaction(localDB.install,
             function(e){
               alert('localDB::TX::install ERROR'+e.message);
-
+            },
+            function() {
+              $(document).trigger('dbInstallConfirmed');
             }
           );
         } else {
-          console.log('Confirmed DB Install, version: ' + localDB.version);
+          $(document).trigger('dbInstallConfirmed');
         }
-
-        $(document).trigger('dbInstallConfirmed');
     },
     install: function(tx) {
       tx.executeSql('CREATE TABLE IF NOT EXISTS bookmark (content_id INTEGER, content_table TEXT, PRIMARY KEY(content_id, content_table))');
