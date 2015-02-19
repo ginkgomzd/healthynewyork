@@ -1,4 +1,5 @@
 var ask = _.extend(new Controller(), {
+  activePath: '#ask',
   formFields: {},
   formErrors: {},
   initialize: function() {

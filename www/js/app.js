@@ -1,8 +1,13 @@
 
 var app = {
+
+  /**
+   * @var {String} activePath Stores the active path in the app navigation; i.e.,
+   * it determines which icons light up. Should be set by controllers.
+   */
+  activePath: null,
     // Application Constructor
     initialize: function() {
-        app.router = new Router();
         this.bindEvents();
     },
     // Bind Event Listeners
@@ -12,6 +17,29 @@ var app = {
     bindEvents: function() {
         // wait for device API libraries to load
         document.addEventListener('deviceready', this.onDeviceReady, false);
+
+        // wait for the database
+        $(document).on('dbInstallConfirmed', this.onDbInstallConfirmed);
+
+        // Open external links in the system browser
+        //
+        // If this code looks familiar/suspicious, it should. This is very similar
+        // to the code we were using before to route requests through the query string,
+        // which was subject to a race condition. One potentially significant
+        // difference is that the event is different; I believe that mousedown
+        // fires earlier than tap. I've also changed the internal/external check to
+        // use indexOf instead a regex, which should also be faster. Mitigating the danger
+        // to some extent is the fact if we do fall prey to a race condition, the app
+        // won't crash. Instead the URL will be opened by the app webview rather
+        // than the system browser, which isn't so bad.
+        $(document).on('mousedown', 'a', function(e) {
+          var el = $(this);
+          var url = el.attr('href');
+          if (url && (url.indexOf('://') !== -1)) {
+            e.preventDefault();
+            window.open(url, '_system');
+          }
+        });
 
         // wire up off-canvas menu
         $('#toggle-offcanvas').bind('tap', function () {
@@ -28,11 +56,6 @@ var app = {
           }
         });
 
-        // handle all links
-        $('body').on('tap', 'a', function(e){
-          app.router.route(e);
-        });
-
         // initialize modal widget
         $('#modal').modal({
           show: false
@@ -47,9 +70,13 @@ var app = {
         });
     },
     onDeviceReady: function() {
-      // load the coverage info page; faking a tap gets us the icon highlighting
-      // as well as back-button functionality
-      $('.navbar-offcanvas-bottom a[href^="coverage_info"]').trigger('tap');
+      localDB.initialize();
+    },
+    onDbInstallConfirmed: function() {
+      app.router = new Router();
+      app.router.initialize();
+
+      routie('coverage_info');
     },
     /**
      * Depends on jQuery mobile's swipe event. Presently reports on horizontal
@@ -95,20 +122,6 @@ var app = {
     insCarriersPlans: []
 };
 
-_.qs = function (request) {
-  var queryString = request.substring( request.indexOf('?') + 1 );
-  var result = {}, params, temp, i, l;
-   // Split into key/value pairs
-   params = queryString.split("&");
-   // Convert the array of strings into an object
-   for ( i = 0, l = params.length; i < l; i++ ) {
-       temp = params[i].split('=');
-       result[temp[0]] = temp[1];
-   }
-   return result;
-}
-
 $(document).ready(function () {
   app.initialize();
-
 });

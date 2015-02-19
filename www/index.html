@@ -21,7 +21,7 @@
             <div class="navbar-offcanvas" id="navbar-top">
               <a id="toggle-offcanvas" class="btn btn-xs"></a>
               <a id="back" class="btn btn-xs"></a>
-              <a id="nav-search" class="btn btn-xs btn-icon-search" href="pages/search.html"></a>
+              <a id="nav-search" class="btn btn-xs btn-icon-search" href="#search"></a>
             </div> <!-- /#navbar-top -->
 
             <!-- content from individual pages is loaded into this space -->
@@ -31,16 +31,16 @@
               <div class="container">
                 <ul class="list-inline row">
                   <li class="col-xs-3">
-                    <a class="btn btn-primary btn-xs" href="coverage_info"></a>
+                    <a class="btn btn-primary btn-xs" href="#coverage_info"></a>
                   </li>
                   <li class="col-xs-3">
-                    <a class="btn btn-primary btn-xs" href="ask"></a>
+                    <a class="btn btn-primary btn-xs" href="#ask"></a>
                   </li>
                   <li class="col-xs-3">
-                    <a class="btn btn-primary btn-xs" href="pages/bookmarks.html"></a>
+                    <a class="btn btn-primary btn-xs" href="#bookmark"></a>
                   </li>
                   <li class="col-xs-3">
-                    <a class="btn btn-primary btn-xs" href="pages/schedule_appt.html"></a>
+                    <a class="btn btn-primary btn-xs" href="#schedule"></a>
                   </li>
                 </ul>
               </div>
@@ -49,16 +49,17 @@
           <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
             <nav class="container">
               <ul class="nav">
-                <li class="list-group-item"><a href="coverage_info">Coverage Information</a></li>
-                <li class="list-group-item"><a href="ask">Ask a Question</a></li>
-                <li class="list-group-item"><a href="pages/bookmarks.html">Bookmarks</a></li>
-                <li class="list-group-item"><a href="pages/schedule_appt.html">Schedule an Appointment</a></li>
-                <li class="list-group-item"><a href="pages/inbox.html">Inbox</a></li>
-                <li class="list-group-item"><a href="settings">Settings</a></li>
+                <li class="list-group-item"><a href="#coverage_info">Coverage Information</a></li>
+                <li class="list-group-item"><a href="#ask">Ask a Question</a></li>
+                <li class="list-group-item"><a href="#bookmark">Bookmarks</a></li>
+                <li class="list-group-item"><a href="#schedule">Schedule an Appointment</a></li>
+                <li class="list-group-item"><a href="#inbox">Inbox</a></li>
+                <li class="list-group-item"><a href="#settings">Settings</a></li>
               </ul>
             </nav>
           </div><!-- /#sidebar -->
         </div> <!-- /.row -->
+        <script type="text/javascript" src="js/lib/routie-0.3.2/lib/routie.js"></script>
         <script type="text/javascript" src="js/lib/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="js/lib/jquery.mobile.custom.min.js"></script>
         <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
@@ -82,7 +83,7 @@
     <% if (typeof page_title === 'string' && page_title.length > 0) { %>
       <h1 class="text-center"><%= page_title %></h1>
     <% } %>
-    <table class="table <%= table_class %>">
+    <table class="table <%= content_type %>">
       <tbody><%= tbody %></tbody>
     </table>
 </script>
@@ -123,7 +124,7 @@
       <p>Sorry, no results found. You can ask our experts by sending us a question.
       </p>
       <div class="text-center">
-        <a href="ask" class="btn btn-default">Send us your question!</a>
+        <a href="#ask" class="btn btn-default">Send us your question!</a>
       </div>
     </div> <!-- /#no_search_results -->
   </div> <!-- /.container-fluid -->
@@ -159,9 +160,9 @@
         </form>
         <h2 class="text-center">Most Asked Questions</h2>
         <ol>
-          <li><a href="content_leaf?id=3">Where Should I go for Care?</a></li>
-          <li><a href="content_leaf?id=5">How do I Choose a Primary Care Doctor?</a></li>
-          <li><a href="content_leaf?id=24">What's a "Network?"</a></li>
+          <li><a href="#node/3">Where Should I go for Care?</a></li>
+          <li><a href="#node/5">How do I Choose a Primary Care Doctor?</a></li>
+          <li><a href="#node/24">What's a "Network?"</a></li>
         </ol>
       </script>
       <script type="text/template" id="settings_form_tpl">

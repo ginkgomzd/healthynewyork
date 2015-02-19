@@ -3,9 +3,39 @@
  * @returns {undefined}
  */
 Controller = function () {
-  this.destination = '';
+  /**
+   * @var {String} activePath If a child controller sets this, the app navigation
+   * state is updated accordingly when the controller is loaded. This determines
+   * which icons light up. If it is not set, the previous state persists. activePath
+   * should not be set by generic controllers like content_leaf or content_list.
+   */
+  this.activePath = null;
   this.rendered = {};
   this.usesBackButton = false;
+
+  /**
+   * This function is invoked to pass control of the application from one controller
+   * to another.
+   *
+   * It takes care of some app-state housekeeping then calls the controller's main method.
+   */
+  this.control = function() {
+    app.router.setClickStack();
+    if (this.activePath !== null) {
+      app.activePath = this.activePath;
+    }
+
+    app.controller = this;
+    app.controller.main.apply(app.controller, arguments); // pass on arguments (e.g., node id) to the controller's main method
+  };
+
+  /**
+   * Abstract method for children to implement. In the main method you probably want to do
+   * stuff like fetch data from the database or instantiate a view.
+   */
+  this.main = function() {
+    console.log('Application error: controller failed to implement main method');
+  };
 
 /**
   * Updates content on the page and toggles active states for nav links. This
@@ -18,7 +48,7 @@ Controller = function () {
     $('#content').html(this.rendered);
     var contentClasses = this.setContentClasses();
     $('#content').removeClass().addClass(contentClasses);
-    this.resetContentDisplay();
+    this.updateNavDisplay();
     this.postUpdateDisplay();
   };
 
@@ -28,16 +58,12 @@ Controller = function () {
    */
   this.postUpdateDisplay = function() {};
 
-  this.resetContentDisplay = function() {
-    // get the path minus any parameters
-    var q = this.destination.indexOf('?');
-    var basePathLength = (q === -1 ? this.destination.length : q);
-    var basePath = this.destination.substr(0, basePathLength);
-    this.setBackButton(basePath);
+  this.updateNavDisplay = function() {
+    this.setBackButton();
 
     $('.row-offcanvas').removeClass('active'); // any time a link is followed, close the off-canvas menu
     $('nav a').removeClass('active');
-    $('nav a[href^="' + basePath + '"]').addClass('active');
+    $('nav a[href^="' + app.activePath + '"]').addClass('active');
   };
 
   /**
@@ -60,7 +86,7 @@ Controller = function () {
    * @param {string} controller
    * @returns {undefined}
    */
-  this.setBackButton = function(controller) {
+  this.setBackButton = function() {
     if (this.usesBackButton === true) {
       var href = app.router.clickStack[app.router.clickStack.length - 2];
       $('#back').attr('href', href).show();

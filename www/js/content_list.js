@@ -1,22 +1,16 @@
 var content_list = _.extend(new Controller(), {
-  main: function() {
-    this.qs = _.qs(this.destination);
-    this.fetchData();
+  main: function(id) {
+    content_list.id = id;
+    content_list.fetchData();
   },
   fetchData: function() {
-    this.data = {};
-    this.data.rows = [];
-    this.data.page_title = this.qs.page_title;
-    this.data.table_class = this.qs.content_type;
+    content_list.data = {};
+    content_list.data.rows = [];
 
-    localDB.db.transaction(this.buildQueries,
+    localDB.db.transaction(content_list.fetchListNode,
       // TODO: we need a generic error handler
       function(tx, er){
         console.log("Transaction ERROR: "+ er.message);
-      },
-      function(){
-        content_list.bindData();
-        content_list.updateDisplay();
       }
     );
   },
@@ -32,7 +26,7 @@ var content_list = _.extend(new Controller(), {
     var i = 1;
     $.each(content_list.data.rows, function() {
       var row_data = this;
-      row_data.icon_inner = (content_list.qs.has_icons == 'true' ? '' : i++);
+      row_data.icon_inner = (row_data.icon_class !== null ? '' : i++);
       content_list.data.tbody += row_tpl(row_data);
     });
     
@@ -75,30 +69,45 @@ var content_list = _.extend(new Controller(), {
     }
     return rows;
   },
+  fetchListNode: function(tx) {
+    tx.executeSql('SELECT "type", "title", "link" FROM "content" WHERE "import_id" = ?',
+      [content_list.id],
+      function(tx, result) {
+        if (result.rows.length < 1) {
+          console.log('Could not route request; node ID invalid or no such node.');
+        } else {
+          var item = result.rows.item(0);
+          content_list.data.page_title = item.title;
+          urlParts = $.parseJSON(item.link);
+          content_list.data.content_type = urlParts.content_type;
+          content_list.fetchList();
+        }
+      }
+    );
+  },
+  fetchList: function(tx) {
+    localDB.db.transaction(content_list.buildQueries,
+      // TODO: we need a generic error handler
+      function(tx, er){
+        console.log("Transaction ERROR: "+ er.message);
+      },
+      function(){
+        content_list.bindData();
+        content_list.updateDisplay();
+      }
+    );
+  },
   buildQueries: function(tx) {
-    tx.executeSql('SELECT import_id, title, link, icon_class FROM content WHERE type = ?',
-      [content_list.qs.content_type],
+    tx.executeSql('SELECT "import_id", "title", "icon_class" FROM "content" WHERE "type" = ?',
+      [content_list.data.content_type],
       content_list.parseResult
     );
   },
   parseResult: function(tx, result) {
-    var contentUrl = '';
-
     for(var i=0; i < result.rows.length; i++) {
       var item = result.rows.item(i);
-      contentUrl = content_list.createContentUrl(item);
-      content_list.data.rows.push({title_text: item.title, link_url: contentUrl, icon_class: item.icon_class});
+      content_list.data.rows.push({title_text: item.title, link_url: '#node/' + item.import_id, icon_class: item.icon_class});
     }
-  },
-  createContentUrl: function(item) {
-    if(typeof item.link === 'string' && item.link.length > 0) {
-      urlParts = $.parseJSON(item.link);
-      contentUrl = urlParts.controller + '?' + 'content_type=' + urlParts.content_type
-        + '&page_title=' + urlParts.page_title;
-    } else {
-      contentUrl = 'content_leaf?id=' + item.import_id;
-    }
-    return contentUrl;
   },
   usesBackButton: true,
 

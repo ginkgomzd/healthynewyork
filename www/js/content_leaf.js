@@ -1,12 +1,12 @@
 var content_leaf = _.extend(new Controller(), {
-  main: function() {
-    this.qs = _.qs(this.destination);
-    this.fetchData();
+  main: function(id) {
+    content_leaf.id = id;
+    content_leaf.fetchData();
   },
   fetchData: function() {
-    this.data = {};
+    content_leaf.data = {};
 
-    localDB.db.transaction(this.buildQueries,
+    localDB.db.transaction(content_leaf.buildQueries,
       // TODO: we need a generic error handler
       function(tx, er){
         console.log("Transaction ERROR: "+ er.message);
@@ -21,7 +21,7 @@ var content_leaf = _.extend(new Controller(), {
     var btn_src = $('#bookmark_btn_tpl').html();
     var btn_tpl = _.template(btn_src);
     content_leaf.data.bookmark_btn = btn_tpl({
-      content_id: content_leaf.qs.id,
+      content_id: content_leaf.id,
       content_table: 'content',
       status: content_leaf.data.status
     });
@@ -36,7 +36,7 @@ var content_leaf = _.extend(new Controller(), {
           LEFT JOIN bookmark \
           ON content.import_id = bookmark.content_id \
           WHERE import_id = ?',
-      [content_leaf.qs.id],
+      [content_leaf.id],
       content_leaf.parseResult
     );
   },

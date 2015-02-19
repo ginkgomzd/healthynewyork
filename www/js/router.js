@@ -3,51 +3,55 @@ Router = function() {
    * @see this.setClickStack
    */
   this.clickStack = [];
-  /**
-   * Determines how to route requests.
-   *
-   * @param {Tap event} e
-   */
-  this.route = function(e) {
-      e.preventDefault();
-      var el = $(e.currentTarget);
-      var destination = el.attr('href');
-      this.setClickStack(destination);
 
-      // don't try to route external links (i.e., those with a protocol ://); pass them to the system browser
-      if (!/:\/\//.test(destination)) {
-        this.control(destination);
-      } else {
-        window.open(destination, '_system');
+  this.initialize = function() {
+    var router = this;
+    routie({
+      'content_leaf/:id': function(id) {
+        content_leaf.control(id);
+      },
+      'content_list/:id': function(id) {
+        content_list.control(id);
+      },
+      'node/:id': this.routeNode,
+      '*': function(controllerName) {
+        controller = router.getControllerByName(controllerName);
+        if (controller !== false) {
+          controller.control();
+        } else if (controllerName !== '') {
+          console.log('Route for ' + controllerName + ' not implemented');
+        }
       }
-    };
+    });
+  };
 
-  this.control = function(destination) {
-    if (typeof destination === 'undefined') {
-      return;
-    }
-
-    var q = destination.indexOf('?');
-    if (q === -1) {
-      var destinationBase = destination;
-    } else {
-      var destinationBase = destination.substring(0, q);
-    }
-
-    var controller = this.getControllerByName(destinationBase);
-    if (controller !== false) {
-      app.controller = controller;
-    } else if (destination === 'pages/bookmarks.html') {
-      app.controller = bookmark;
-    } else if (/^pages\/search\.html/.test(destination)) {
-      app.controller = search;
-    } else if (destination === 'pages/schedule_appt.html') {
-      app.controller = schedule;
-    } else if (destination) {
-      app.controller = new Controller();
-    }
-    app.controller.destination = destination;
-    app.controller.main();
+/**
+ * Determines whether a node is a list or a leaf and routes it accordingly
+ *
+ * @param {Int} id Node ID
+ */
+  this.routeNode = function(id) {
+    localDB.db.transaction(
+      function(tx) {
+        tx.executeSql(
+          'SELECT "link" FROM "content" WHERE "import_id" =  ?',
+          [id],
+          function(tx, result) {
+            if (result.rows.length < 1) {
+              console.log('Could not route request; node ID invalid or no such node.');
+            } else {
+              var item = result.rows.item(0);
+              if (item.link === null) {
+                routie('content_leaf/' + id);
+              } else {
+                routie('content_list/' + id);
+              }
+            }
+          }
+        );
+      },
+      function() {console.log('Could not route request; node lookup failed.');}
+    );
   };
 
   /**
@@ -75,12 +79,13 @@ Router = function() {
    * @param {string} destination
    * @returns {undefined}
    */
-  this.setClickStack = function (destination) {
-    var index = this.clickStack.indexOf(destination);
+  this.setClickStack = function () {
+    var route = '#' + window.location.hash.substring(1);
+    var index = this.clickStack.indexOf(route);
     if (index === -1) {
-      this.clickStack.push(destination);
+      this.clickStack.push(route);
     } else {
       this.clickStack = this.clickStack.slice(0, index + 1);
     }
-  }
+  };
 };
