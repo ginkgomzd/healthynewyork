@@ -1,5 +1,9 @@
 var scheduleBase =  {
   formFields: {},
+  /**
+   * @type Array Insurance carriers, in the format [{id=,name=,plans={id=,name=}}]
+   */
+  insurance_carriers: [],
   initialize: function() {
     this.bindEvents();
   },
@@ -19,7 +23,6 @@ var scheduleBase =  {
    * Get the carriers array from the db
    */
   fetchInsuranceCarriers: function() {
-    console.log("Checkpoint");
     localDB.db.transaction(
       function(tx){
         tx.executeSql(
@@ -37,13 +40,9 @@ var scheduleBase =  {
    * Called from fetchInsuranceCarriers when db query finishes
    */
   fillInsuranceCarriers: function(tx, result) {
-    schedule.findFormElements();
+    var item = result.rows.item(0);
+    schedule.insurance_carriers = JSON.parse(item.value);
 
-    for(var i = 0; i < result.rows.length; i++) {
-      var item = result.rows.item(i);
-      schedule.insurance_carriers = JSON.parse(item.value);
-      break;
-    }
     schedule.populateInsuranceCarriers();
     schedule.populateInsurancePlans();
   },
@@ -87,38 +86,31 @@ var scheduleBase =  {
     schedule.populateInsurancePlans();
   },
   /**
-   * Get an array of insurance carriers, in the format [{id=,name=,plans={id=,name=}}]
-   */
-  getInsuranceCarriers: function() {
-    return schedule.insurance_carriers;
-  },
-  /**
    * Get an array of insurance plans, in the format [{id=,name=}]
    */
   getInsurancePlans: function() {
+    var carrier = {};
     var carrier_id = $('form select[name="insurance_carrier"]').val();
-    $.each(schedule.insurance_carriers, function() { if (this['id']==carrier_id) { carrier=this; } });
+    $.each(schedule.insurance_carriers, function() {
+      if (this['id'] === carrier_id) {
+        carrier = this;
+      }
+    });
     carrier['plans'].shift(); // unset the first plan, b/c it's "Choose a plan".
-    return carrier['plans'];
+    return carrier.hasOwnProperty('plans') ? carrier.plans : [];
   },
   /**
    * Populate the list of insurance carriers the user may select.
    */
   populateInsuranceCarriers: function() {
-    var carriers = schedule.getInsuranceCarriers();
     $('form select[name="insurance_carrier"] option:not(:first)').remove();
     var select = $('form select[name="insurance_carrier"]');
-    $.each(carriers, function(){
+    $.each(schedule.insurance_carriers, function(){
       var opt = '<option value="' + this.id + '">' + this.name + '</option>';
       select.append(opt);
     });
 
-    if (schedule.formFields.hasOwnProperty('insurance_carrier') && schedule.formFields.insurance_carrier.value) {
-      select.val(schedule.formFields.insurance_carrier.value);
-    } else {
-      select.val(-1);
-    }
-
+    schedule.setDefaultOption('insurance_carrier');
   },
   /**
    * Populate the list of insurance plans the user may select.
@@ -132,10 +124,18 @@ var scheduleBase =  {
       select.append(opt);
     });
 
-    if (typeof schedule.formFields.hasOwnProperty('insurance_plan') && schedule.formFields.insurance_plan.value
-      && $("form select[name='insurance_plan'] option[value='"+schedule.formFields.insurance_plan.value+"']").length > 0)
+    schedule.setDefaultOption('insurance_plan');
+  },
+  /**
+   * @param {String} field Name of the select field to set the default value for
+   */
+  setDefaultOption: function(field) {
+    var select = $('form select[name="' + field + '"]');
+    if (schedule.formFields.hasOwnProperty(field)
+      && schedule.formFields[field].hasOwnProperty('value')
+      && $("form select[name='" + field + "'] option[value='" + schedule.formFields[field].value + "']").length > 0)
     {
-      select.val(schedule.formFields.insurance_plan.value);
+      select.val(schedule.formFields[field].value);
     } else {
       select.val(-1);
     }
@@ -184,10 +184,10 @@ var scheduleBase =  {
    */
   findFormElements: function() {
     schedule.formFields.insurance_carrier = {
-      element: $('form [name="insurance_carrier"]'),
+      element: $('form [name="insurance_carrier"]')
     };
     schedule.formFields.insurance_plan = {
-      element: $('form [name="insurance_plan"]'),
+      element: $('form [name="insurance_plan"]')
     };
   },
   renderTpl: function() {
