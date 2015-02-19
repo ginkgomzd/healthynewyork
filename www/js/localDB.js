@@ -102,12 +102,16 @@ tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "ico
 tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "icon_class") VALUES (?,?,?,?,?)', [40, 'insurance_basics', 'Where to Go for Help', '{"controller": "content_list", "content_type": "where_to_go_for_help", "page_title": "Where to Go for Help"}', '']);
 tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "icon_class") VALUES (?,?,?,?,?)', [41, 'money_saving_tips', 'Compare Costs', '{"controller": "content_list", "content_type": "compare_costs", "page_title": "Compare Costs"}', '']);
 tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "icon_class") VALUES (?,?,?,?,?)', [42, 'how_insurance_works', 'How Insurance Works', '{"controller": "content_list", "content_type": "how_insurance_works", "page_title": "How Insurance Works"}', 'icon_stethoscope']);
+/** END Content Inserts **/
 
-tx.executeSql('INSERT INTO "settings" ("key", "value") VALUES (?,?)', ['insurance_plans', fetchPlansJsonFromServer()]);
-
-
-      /** END Content Inserts **/
+      localDB.installInsCarriersPlansFromServer(tx);
       localDB.markInstalled(tx);
+    },
+    installInsCarriersPlansFromServer: function(tx) {
+      app.fetchInsCarriersPlansFromServer().done(function() {
+        tx.executeSql('REPLACE INTO "settings" ("key", "value") VALUES (?,?)', ['insurance_plans', JSON.stringify(app.insCarriersPlans)]);
+        delete app.insCarriersPlans; // garbage cleanup
+      });
     },
     installError: function(err) {
       alert("LocalDB:: Install error");
