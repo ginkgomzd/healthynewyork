@@ -181,9 +181,8 @@ var settingsBase = {
    * This is a placeholder function to populate the list of insurance carriers the user may select.
    */
   populateInsuranceCarriers: function() {
-    var carriers = schedule.getInsuranceCarriers();
     var select = $('form select[name="insurance_carrier"]');
-    $.each(carriers, function(){
+    $.each(schedule.insurance_carriers, function(){
       var opt = '<option value="' + this.id + '">' + this.name + '</option>';
       select.append(opt);
     });

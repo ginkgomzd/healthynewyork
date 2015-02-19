@@ -55,7 +55,12 @@ var localDB = {
       key TEXT NOT NULL, \
       value TEXT NULL, \
       PRIMARY KEY(profile_id, key) \
-      );')
+      );');
+
+      tx.executeSql('CREATE TABLE IF NOT EXISTS settings ( \
+      key TEXT NOT NULL PRIMARY KEY, \
+      value TEXT NULL \
+      );');
 
       /** Content Inserts **/
 tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "body") VALUES (?,?,?,?)', [2, 'health_checklist', 'Get Insurance', '<p> Congratulations on getting health coverage - it is a big step for your health! If you are not insured, check out healthcare.gov to learn how to get started. </p>']);
@@ -97,10 +102,16 @@ tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "ico
 tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "icon_class") VALUES (?,?,?,?,?)', [40, 'insurance_basics', 'Where to Go for Help', '{"controller": "content_list", "content_type": "where_to_go_for_help", "page_title": "Where to Go for Help"}', '']);
 tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "icon_class") VALUES (?,?,?,?,?)', [41, 'money_saving_tips', 'Compare Costs', '{"controller": "content_list", "content_type": "compare_costs", "page_title": "Compare Costs"}', '']);
 tx.executeSql('INSERT INTO "content" ("import_id", "type", "title", "link", "icon_class") VALUES (?,?,?,?,?)', [42, 'how_insurance_works', 'How Insurance Works', '{"controller": "content_list", "content_type": "how_insurance_works", "page_title": "How Insurance Works"}', 'icon_stethoscope']);
+/** END Content Inserts **/
 
-
-      /** END Content Inserts **/
+      localDB.installInsCarriersPlansFromServer(tx);
       localDB.markInstalled(tx);
+    },
+    installInsCarriersPlansFromServer: function(tx) {
+      app.fetchInsCarriersPlansFromServer().done(function() {
+        tx.executeSql('REPLACE INTO "settings" ("key", "value") VALUES (?,?)', ['insurance_plans', JSON.stringify(app.insCarriersPlans)]);
+        delete app.insCarriersPlans; // garbage cleanup
+      });
     },
     installError: function(err) {
       alert("LocalDB:: Install error");
