@@ -18,7 +18,6 @@ page.onConsoleMessage = function(msg) {
 page.settings.userAgent = 'iOS / Safari Mobile: Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_4 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B350 Safari/8536.25'; 
 page.open('http://zocdoc.com', function (status) {
     
-
     if ( status === "success" ) {
 
     	// console.log(page.content);
@@ -55,10 +54,12 @@ function get_plans(page)
 		var optionValues = [];
 
 		jQuery('#insurancePlan select option').each(function() {
-			var plan = new Object();
-			plan.id = jQuery(this).val();
-			plan.name = jQuery(this).text();
-			optionValues.push(plan);
+			if (jQuery(this).val() != -1) {
+				var plan = new Object();
+				plan.id = jQuery(this).val();
+				plan.name = jQuery(this).text();
+				optionValues.push(plan);
+			}
 		});
 
 		return optionValues;
