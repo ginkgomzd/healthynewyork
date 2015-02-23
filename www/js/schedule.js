@@ -97,7 +97,6 @@ var scheduleBase =  {
         carrier = this;
       }
     });
-    carrier['plans'].shift(); // unset the first plan, b/c it's "Choose a plan".
     return carrier.hasOwnProperty('plans') ? carrier.plans : [];
   },
   /**
