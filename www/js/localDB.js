@@ -18,17 +18,24 @@ var localDB = {
     // must explicitly call 'localDB.myMethod(...);'
     onDeviceReady: function() {
       localDB.db = window.openDatabase("healthy", "1.0", "Healthy New York", 1000000);
-
       localDB.db.transaction(localDB.checkVersion);
     },
     checkVersion: function(tx) {
         tx.executeSql('SELECT version FROM installed ORDER BY timestamp DESC LIMIT 1', [],
-          localDB.confirmInstall, localDB.confirmInstall);
+            localDB.confirmInstall,
+                function() {
+                    localDB.db.transaction(localDB.install,
+                        function(e){
+                            alert('localDB::TX::install ERROR'+e.message);
+                        },
+                        function() {
+                            $(document).trigger('dbInstallConfirmed');
+                        });
+                }
+        );
     },
     confirmInstall: function(tx, result) {
-        if ( !result.hasOwnProperty('rows')
-          || result.rows.length < 1
-          || localDB.version !== result.rows.item(0).version)  {
+        if (result.rows.length < 1 || localDB.version !== result.rows.item(0).version)  {
           localDB.db.transaction(localDB.install,
             function(e){
               alert('localDB::TX::install ERROR'+e.message);
