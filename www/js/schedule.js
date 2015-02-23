@@ -149,6 +149,7 @@ var scheduleBase =  {
    */
   handleSubmit: function(e) {
     e.preventDefault();
+    $("#loading-div").show();
 
     schedule.formFields.insurance_carrier = {
       element: $('form [name="insurance_carrier"]')
@@ -158,6 +159,8 @@ var scheduleBase =  {
     };
     schedule.getFormValues();
     schedule.showResults();
+
+    $('#zocdoc_frame').load(function() { $("#loading-div").hide(); });
   },
   showResults: function () {
     $('form#schedule').hide();
