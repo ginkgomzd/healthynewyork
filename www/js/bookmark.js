@@ -6,6 +6,7 @@ var bookmark = _.extend(new Controller(), {
     },
     bindEvents: function() {
       $('body').on('tap', '.toggle-fave', function(e){
+        e.preventDefault();
         var el = $(e.currentTarget);
 
         if (el.is('.active')) {
