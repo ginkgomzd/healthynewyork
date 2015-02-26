@@ -137,7 +137,7 @@ var scheduleBase =  {
     {
       select.val(schedule.formFields[field].value);
     } else {
-      select.val(-1);
+      select.val('');
     }
   },
   /**
