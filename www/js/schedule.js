@@ -111,6 +111,7 @@ var scheduleBase =  {
     });
 
     schedule.setDefaultOption('insurance_carrier');
+    select.select2();
   },
   /**
    * Populate the list of insurance plans the user may select.
@@ -125,6 +126,7 @@ var scheduleBase =  {
     });
 
     schedule.setDefaultOption('insurance_plan');
+    select.select2();
   },
   /**
    * @param {String} field Name of the select field to set the default value for
