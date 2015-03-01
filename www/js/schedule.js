@@ -11,7 +11,7 @@ var scheduleBase =  {
   bindEvents: function() {
     $('body').on('submit', 'form#schedule', this.handleSubmit);
     $('body').on('change', 'form#schedule select[name="insurance_carrier"]', this.populateInsurancePlans);
-    $('body').on('change', 'form#schedule select[name="insurance_plan"]', this.askSaveSelection);
+    $('body').on('change', 'form#schedule select[name="insurance_plan"]:not(.settingDefault)', this.askSaveSelection);
     $('body').on('click', '#saveCancel #modal-save', this.saveToProfile);
     $('body').on('change', '#saveCancel .dont-nag-me', this.dontNag);
   },
@@ -111,7 +111,6 @@ var scheduleBase =  {
     });
 
     schedule.setDefaultOption('insurance_carrier');
-    select.select2();
   },
   /**
    * Populate the list of insurance plans the user may select.
@@ -126,21 +125,22 @@ var scheduleBase =  {
     });
 
     schedule.setDefaultOption('insurance_plan');
-    select.select2();
   },
   /**
    * @param {String} field Name of the select field to set the default value for
    */
   setDefaultOption: function(field) {
     var select = $('form select[name="' + field + '"]');
+    select.addClass('settingDefault'); // don't trigger "save selection" dialog
     if (schedule.formFields.hasOwnProperty(field)
       && schedule.formFields[field].hasOwnProperty('value')
       && $("form select[name='" + field + "'] option[value='" + schedule.formFields[field].value + "']").length > 0)
     {
-      select.val(schedule.formFields[field].value);
+      select.select2("val", schedule.formFields[field].value);
     } else {
-      select.val('');
+      select.select2("val", '');
     }
+    select.removeClass('settingDefault');
   },
   /**
    * Handles the submission of the ask a question form
@@ -252,6 +252,10 @@ var scheduleBase =  {
     } else {
       app.dontNagMe = 0;
     }
+  },
+  postUpdateDisplay: function() {
+    $('form select[name="insurance_plan"]').select2();
+    $('form select[name="insurance_carrier"]').select2();
   }
 }
 
