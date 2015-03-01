@@ -188,6 +188,7 @@ var settingsBase = {
       select.append(opt);
     });
     select.val(settings.formFields.provider.value);
+    select.select2();
   },
   /**
    * This is a placeholder function to populate the list of insurance plans the user may select.
@@ -201,6 +202,7 @@ var settingsBase = {
       select.append(opt);
     });
     select.val(settings.formFields.plan.value);
+    select.select2();
   }
 };
 
