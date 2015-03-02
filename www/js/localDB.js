@@ -1,3 +1,4 @@
+
 var localDB = {
     version: '0.0.1',
     // Application Constructor
@@ -99,8 +100,39 @@ var localDB = {
     },
     installContent: function() {
       app.fetchContentFromServer().done(function() {
-        content = app.contentServer;
-        localDB.db.transaction( localDB.installDemoContent );
+        // localDB.db.transaction( localDB.installDemoContent );
+        localDB.db.transaction( function(tx) {
+
+            var allowedColumns=["title","type","body","link","icon_class","field_type"];
+
+            $.each(app.contentServer.nodes, function(k, node) {
+              var queryColumns=[];
+              var queryValues=[];
+              var queryValuePlaceholders=[];
+              $.each(node.node, function(column, value) {
+                if (allowedColumns.indexOf(column)>-1) {
+                  if (column=="field_type") {
+                    column="type";
+                  }
+                  queryColumns.push('"'+column+'"');
+                  queryValues.push('"'+value+'"');
+                  queryValuePlaceholders.push('?');
+                }
+              });
+              // console.log('INSERT INTO "content" ('+queryColumns.join(', ')+') VALUES ('+queryValues.join(', ')+')');
+              tx.executeSql(
+                'INSERT INTO "content" ('+queryColumns.join(', ')+') VALUES ('+queryValuePlaceholders.join(',')+')',
+                queryValues,
+                null,
+                function (tx, er) {
+                  console.log("Transaction ERROR("+er.code+"): "+ er.message);
+                }
+              );
+            });
+            localDB.installInsCarriersPlansFromServer(tx);
+            localDB.markInstalled(tx);
+
+        });
       });
     },
     installDemoContent: function(tx) {
