@@ -57,8 +57,8 @@ a {
 }
 
 #sidebar li {
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
+  background: #E2E2E2;
+  border-radius: 0;
 }
 
 .navbar-offcampus-bottom li {
@@ -67,8 +67,9 @@ a {
 
 /* bootstrap style overrides */
 .btn.btn-primary, .btn.btn-primary.active {
-  background-color: #E8E8E9;
-  border-color: #FFFFFF;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
   height: 58px;
   width: 58px;
 }
@@ -172,7 +173,7 @@ a {
   }
 
   .navbar-offcanvas-bottom {
-    background: #28589C;
+    background: #E2E2E2;
     bottom: 0;
     margin-bottom: 0;
   }
@@ -217,7 +218,7 @@ a {
     background-image: url('../img/nav_bookmark.png');
   }
 
-  nav a[href^="bookmark"].active {
+  nav a[href^="#bookmark"].active {
     background-image: url('../img/nav_bookmark_active.png');
   }
 
