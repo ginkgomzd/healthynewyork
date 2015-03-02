@@ -134,6 +134,29 @@ var app = {
      defer.resolve();
      return defer.promise();
     },
+    /**
+     * This is a placeholder function to fetch content_timestamp from server
+     *
+     * @returns {jQuery.Promise}
+     */
+    fetchContentTimestampFromServer: function() {
+     var defer = $.Deferred();
+     // in the real implementation, this value will be retrieved from the server
+     // rather than hardcoded in
+     app.contentTimestampServer = (new Date).getTime()+20;
+
+     defer.resolve();
+     return defer.promise();
+    },
+    fetchContentFromServer: function() {
+      var defer = $.Deferred();
+     // in the real implementation, this value will be retrieved from the server
+     // rather than hardcoded in
+     app.contentServer = {timestamp:1425055180424};
+
+     defer.resolve();
+     return defer.promise();
+    },
     dontNagMe: 0,
     /**
      * An array of objects representing the insurance carriers and providers
