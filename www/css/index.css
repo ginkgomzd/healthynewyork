@@ -57,8 +57,8 @@ a {
 }
 
 #sidebar li {
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
+  background: #E2E2E2;
+  border-radius: 0;
 }
 
 .navbar-offcampus-bottom li {
