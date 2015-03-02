@@ -217,7 +217,7 @@ a {
     background-image: url('../img/nav_bookmark.png');
   }
 
-  nav a[href^="bookmark"].active {
+  nav a[href^="#bookmark"].active {
     background-image: url('../img/nav_bookmark_active.png');
   }
 
