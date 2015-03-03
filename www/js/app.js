@@ -71,6 +71,13 @@ var app = {
     },
     onDeviceReady: function() {
       localDB.initialize();
+      var ret = parsePlugin.initialize(
+         'Fb0w8YZ8IzTKaNtLT7AYNsBNUlR8fAwWKbIvMKwW',
+         'zFRugdxlPSc2nlAuHklJZEuy9LSTEjPObykVoGww',
+          function(obj) {
+             parsePlugin.subscribe('');
+          }
+      );
     },
     onDbInstallConfirmed: function() {
       app.router = new Router();

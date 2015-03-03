@@ -8,7 +8,8 @@ var pluginlist = [
 // putting net-info here to be built-later to resolve problem on ios -- MZD
     "org.apache.cordova.network-information",
     "org.apache.cordova.dialogs",
-    "org.apache.cordova.inappbrowser"
+    "org.apache.cordova.inappbrowser",
+    "https://github.com/avivais/phonegap-parse-plugin.git"
 ];
 
 // no need to configure below
