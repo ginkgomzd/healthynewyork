@@ -17,8 +17,8 @@ body {
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
     background-color:#28589C;
-    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
-    font-size:12px;
+    font-family:'HelveticaNeue', 'Helvetica Neue', Roboto, sans-serif;
+    font-size:11pt;
     margin:0px;
     padding:0px;
     width:100%;
@@ -42,7 +42,6 @@ a {
 
 #content {
   color: #FFFFFF;
-  font-size: 16px;
   padding-top: 54px;
   padding-bottom: 98px;
   overflow:auto;
@@ -176,6 +175,15 @@ a {
     background: #E2E2E2;
     bottom: 0;
     margin-bottom: 0;
+    padding: 5px;
+  }
+
+  .navbar-offcanvas-bottom .container {
+    margin: 0;
+  }
+
+  .navbar-offcanvas-bottom ul {
+    margin: 0;
   }
 
   nav.navbar-offcanvas-bottom li {
@@ -237,28 +245,37 @@ a {
   nav a[href^="#settings"] {
     background-image: url('../img/wrench.png');
   }
+}
 
-  h1, .h1 {
-    font-size: 26px;
-  }
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+  font-weight: bold;
+  text-transform: uppercase;
+}
 
-  h2, .h2 {
-    font-size: 22px;
-  }
+h1, .h1 {
+  font-size: 25pt;
+}
 
-  h3, .h3 {
-    font-size: 18px;
-  }
+h2, .h2 {
+  font-size: 18pt;
+}
 
-  h4, .h4 {
-    font-size: 16px;
-  }
+h3, .h3 {
+  font-size: 16pt;
+}
 
-  h5, .h5 {
-    font-size: 14px;
-  }
+h4, .h4 {
+  font-size: 14pt;
+}
 
-  h6, .h6 {
-    font-size: 13px;
-  }
+h5, .h5 {
+  font-size: 13pt;
+}
+
+h6, .h6 {
+  font-size: 12pt;
+}
+
+.form-control {
+  font-size: 10pt;
 }
