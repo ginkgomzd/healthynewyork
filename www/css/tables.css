@@ -3,6 +3,11 @@
   padding-right: 0;
 }
 
+#content.has-tables h1 {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 table,
 .table-striped>tbody>tr:nth-child(even)>td,
 .table-striped>tbody>tr:nth-child(even)>td.toggle-fave.active {
