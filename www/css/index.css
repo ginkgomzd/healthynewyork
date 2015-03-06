@@ -238,10 +238,6 @@ a {
     background-image: url('../img/nav_schedule_active.png');
   }
 
-  nav a[href^="#inbox"] {
-    background-image: url('../img/inbox.png');
-  }
-
   nav a[href^="#settings"] {
     background-image: url('../img/wrench.png');
   }
