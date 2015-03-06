@@ -46,6 +46,7 @@ Controller = function () {
   this.updateDisplay = function() {
     var destination = this.destination;
     $('#content').html(this.rendered);
+    $(window).scrollTop(0);
     var contentClasses = this.setContentClasses();
     $('#content').removeClass().addClass(contentClasses);
     this.updateNavDisplay();

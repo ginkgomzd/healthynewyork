@@ -164,6 +164,7 @@ var scheduleBase =  {
     $('#zocdoc_frame').load(function() { $("#loading-div").hide(); });
   },
   showResults: function () {
+    $('#zocdoc_wrapper').show();
     $('form#schedule').hide();
     var qs = '';
     $.each(this.formFields, function(k, v) {
@@ -205,7 +206,7 @@ var scheduleBase =  {
     // disable all listeners for this event
     e.preventDefault();
 
-    $('#zocdoc_frame').hide();
+    $('#zocdoc_wrapper').hide();
     $('form#schedule').show();
 
     $('#toggle-offcanvas').show();
