@@ -70,9 +70,11 @@ var ask = _.extend(new Controller(), {
     );
   },
   bindData: function() {
+    this.data.query = search.query;
+
     var src = $('#ask_form_tpl').html();
     var content_tpl = _.template(src);
-    this.rendered = content_tpl(ask.data);
+    this.rendered = content_tpl(this.data);
     this.updateDisplay();
   },
   buildQueries: function(tx) {
