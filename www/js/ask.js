@@ -52,13 +52,43 @@ var ask = _.extend(new Controller(), {
     });
   },
   main: function() {
-    this.renderTpl();
+    this.fetchData();
   },
-  renderTpl: function() {
+  fetchData: function() {
+    this.data = {};
+
+    localDB.db.transaction(
+      ask.buildQueries,
+      // TODO: we need a generic error handler
+      function(tx, er) {
+        console.log("Transaction ERROR: "+ er.message);
+      },
+      function() {
+        ask.bindData();
+        ask.updateDisplay();
+      }
+    );
+  },
+  bindData: function() {
+    this.data.query = search.query;
+
     var src = $('#ask_form_tpl').html();
     var content_tpl = _.template(src);
-    this.rendered = content_tpl();
+    this.rendered = content_tpl(this.data);
     this.updateDisplay();
+  },
+  buildQueries: function(tx) {
+    tx.executeSql(
+      'SELECT "value" FROM "personal_info" WHERE "key"="email"',
+      [],
+      ask.parseResult
+    );
+  },
+  parseResult: function(tx, result) {
+    ask.data.email = '';
+    if (result.rows.length === 1) {
+      ask.data.email = result.rows.item(0).value || '';
+    }
   },
   /**
    * Posts the data to YI's Google Form

@@ -1,4 +1,5 @@
 var search = _.extend(new Controller(), {
+  query: new String,
   whereClause: new String,
   fromClause: 'FROM content',
   selectClause: new String,
@@ -29,8 +30,8 @@ var search = _.extend(new Controller(), {
     search.doSearch($('form#search input#search_terms')[0]);
   },
   validateForm: function() {
-    input = $('form#search input#search_terms')[0];
-    if (input.value === "") {
+    search.query = $('form#search input#search_terms').val();
+    if (search.query === "") {
       console.log('validateForm::no query received');
       return false;
     }
@@ -52,7 +53,7 @@ var search = _.extend(new Controller(), {
     $('#no_search_results').hide();
     results.show();
   },
-  doSearch: function(input) {
+  doSearch: function() {
     localDB.db.transaction(this.doQuery,
       function(er){
         console.log("Transaction ERROR: "+ er.message);
@@ -92,7 +93,7 @@ var search = _.extend(new Controller(), {
     }
   },
   buildQuery: function() {
-    search.buildWhere(input.value.split(' '));
+    search.buildWhere(search.query.split(' '));
     search.selectClause = 'SELECT import_id, title';
     return search.selectClause+' '+search.fromClause+' '+search.whereClause;
   },
