@@ -18,6 +18,9 @@ var app = {
         // wait for device API libraries to load
         document.addEventListener('deviceready', this.onDeviceReady, false);
 
+        window.addEventListener('native.keyboardhide', this.toggleFooter);
+        window.addEventListener('native.keyboardshow', this.toggleFooter);
+
         // wait for the database
         $(document).on('dbInstallConfirmed', this.onDbInstallConfirmed);
 
@@ -79,6 +82,15 @@ var app = {
              parsePlugin.subscribe('');
           }
       );
+    },
+    /**
+     * YINY-106: Show the footer when the keyboard is closed; hide it when it when the keyboard is open.
+     *
+     * @param Event e
+     */
+    toggleFooter: function(e) {
+      var toggle = (e.type === 'native.keyboardshow') ? false : true;
+      $('.navbar-offcanvas-bottom').toggle(toggle);
     },
     onDbInstallConfirmed: function() {
       app.router = new Router();
