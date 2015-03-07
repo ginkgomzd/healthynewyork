@@ -9,7 +9,8 @@ var pluginlist = [
     "org.apache.cordova.network-information",
     "org.apache.cordova.dialogs",
     "org.apache.cordova.inappbrowser",
-    "https://github.com/avivais/phonegap-parse-plugin.git"
+    "https://github.com/avivais/phonegap-parse-plugin.git",
+    "com.ionic.keyboard"
 ];
 
 // no need to configure below
