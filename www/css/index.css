@@ -24,7 +24,12 @@ body {
     width:100%;
 }
 
-a {
+a,
+a:link,
+a:focus,
+a:hover,
+a:visited,
+a:active {
   color: #0BA8DE;
 }
 
@@ -73,8 +78,13 @@ a {
   width: 58px;
 }
 
-.btn {
-    background-color: #99BBDD;
+.btn,
+.btn:active,
+.btn:hover,
+.btn:focus,
+.btn.active {
+  background-color: #0BA8DE;
+  color: #000000;
 }
 
 /* Landscape layout (with min-width) */
