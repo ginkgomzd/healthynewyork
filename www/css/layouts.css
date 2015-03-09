@@ -3,16 +3,12 @@
   margin-top: 10px;
 }
 
-#content.coverage_info {
-  background: #FFFFFF;
-}
-
 #content.coverage_info p {
   color: #000000;
 }
 
 #content.coverage_info a {
-  background: #28589C;
+  background: #0071B9;
   color: #000000;
   font-size: 30pt;
   padding: 15px;

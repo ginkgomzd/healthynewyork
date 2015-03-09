@@ -16,7 +16,7 @@ body {
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-    background-color:#28589C;
+    background-color: #FFFFFF;
     font-family:'HelveticaNeue', 'Helvetica Neue', Roboto, sans-serif;
     font-size:11pt;
     margin:0px;
@@ -41,7 +41,7 @@ a {
 }
 
 #content {
-  color: #FFFFFF;
+  color: #000000;
   padding-top: 54px;
   padding-bottom: 98px;
   overflow:auto;
