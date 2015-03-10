@@ -147,7 +147,7 @@
       </script>
       <script type="text/template" id="bookmark_btn_tpl">
         <button class="btn btn-default btn-block toggle-fave <% if (status === 1) { %>active<% } %>" data-id="<%= content_id %>" data-table="<%= content_table %>">
-          <% if (status === 1) { %>Remove from favorites<% } else { %>Add to favorites<% } %>
+          <span><% if (status === 1) { %>Remove from favorites<% } else { %>Add to favorites<% } %></span>
         </button>
       </script>
       <script type="text/template" id="ask_form_tpl">

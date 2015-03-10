@@ -35,3 +35,25 @@
   height: 100%;
   width: 100%;
 }
+
+.btn.toggle-fave {
+  background-image: url('../img/btn_fave.png');
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  background-size: 20px;
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: -15px;
+  padding-left: 40px;
+  overflow: hidden;
+  width: auto;
+}
+
+.btn.toggle-fave.active {
+  background-image: url('../img/btn_fave_active.png');
+}
+
+.btn.toggle-fave span {
+  margin-left: -500px;
+}

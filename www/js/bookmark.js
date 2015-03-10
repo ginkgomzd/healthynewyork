@@ -15,6 +15,11 @@ var bookmark = _.extend(new Controller(), {
           bookmark.save(el);
         }
       });
+
+      $('body').on('tap', '.btn.toggle-fave', function(e){
+        e.preventDefault();
+        $(this).find('span').animate({marginLeft: "0px"}, "slow");
+      });
     },
 
     /**
