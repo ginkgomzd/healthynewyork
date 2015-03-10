@@ -39,7 +39,7 @@ var coverage_info = _.extend(new Controller(), {
   render: function(data) {
     var src = $('#coverage_info_row_tpl').html();
     var row_tpl = _.template(src);
-    this.rendered = '';
+    this.rendered = "<div class=\"container-fluid\"><p>What's on your mind?</p></div>";
 
     $.each(this.data.rows, function() {
       coverage_info.rendered += row_tpl({
@@ -59,14 +59,5 @@ var coverage_info = _.extend(new Controller(), {
    */
   setContentClasses: function() {
     return 'coverage_info';
-  },
-
-  /**
-   * Overrides "parent" stub method
-   */
-  postUpdateDisplay: function() {
-    var h = 100 / this.data.rows.length;
-    h = h.toString() + '%';
-    $('#content.coverage_info .container-fluid').height(h);
   }
 });

@@ -3,46 +3,21 @@
   margin-top: 10px;
 }
 
+#content.coverage_info p {
+  color: #000000;
+}
+
 #content.coverage_info a {
-  color: #FFFFFF;
-  font-style: italic;
-}
-
-#content.coverage_info .container-fluid {
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-#content.coverage_info .container-fluid:nth-child(odd) {
-  text-align: left;
-}
-
-#content.coverage_info .container-fluid:nth-child(even) {
-  text-align: right;
-}
-
-#content.coverage_info .health_checklist {
-  background-image: url('../img/bnr_stethoscope.png');
-}
-
-#content.coverage_info .insurance_basics {
-  background-image: url('../img/bnr_dictionary.png');
-}
-
-#content.coverage_info .money_saving_tips {
-  background-image: url('../img/bnr_money.png');
-}
-
-#content.coverage_info .health_care_rights {
-  background-image: url('../img/bnr_tools.png');
+  background: #0071B9;
+  color: #000000;
+  font-size: 30pt;
+  padding: 15px;
 }
 
 #content.coverage_info .container-fluid a {
   display: inline-block;
   height: 100%;
-  margin: 0;
-  padding-top: 10px;
-  text-shadow: 1px 1px #000000;
+  margin-top: 5px;
   width: 100%;
 }
 
@@ -59,5 +34,26 @@
   display: none;
   height: 100%;
   width: 100%;
-  
+}
+
+.btn.toggle-fave {
+  background-image: url('../img/btn_fave.png');
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  background-size: 20px;
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: -15px;
+  padding-left: 40px;
+  overflow: hidden;
+  width: auto;
+}
+
+.btn.toggle-fave.active {
+  background-image: url('../img/btn_fave_active.png');
+}
+
+.btn.toggle-fave span {
+  margin-left: -500px;
 }
