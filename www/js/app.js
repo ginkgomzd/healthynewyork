@@ -2,6 +2,19 @@
 var app = {
 
   /**
+   * Timestamp of the build
+   *
+   * The buildTime is used to prepopulate the content_timestamp setting. This
+   * keeps the app from downloading content from the server that is older than
+   * the current build. The buildTime is set to a token that will be replaced
+   * with the timestamp at the time of the build via Cordova's
+   * after_prepare hook.
+   *
+   * @type Number
+   */
+  buildTime: CORDOVA_BUILD_TIME,
+
+  /**
    * @var {String} activePath Stores the active path in the app navigation; i.e.,
    * it determines which icons light up. Should be set by controllers.
    */

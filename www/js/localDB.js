@@ -72,9 +72,7 @@ var localDB = {
       value TEXT NULL \
       );');
 
-      /** Insert first content_timestamp to sometime in the past**/
-      // hint for later:  localDB.version is l
-      tx.executeSql("INSERT INTO settings (key, value) VALUES (?, strftime('%s','now'))", ['content_timestamp']);
+      tx.executeSql("INSERT INTO settings (key, value) VALUES (?, ?)", ['content_timestamp', app.buildTime]);
 
       localDB.installContent(tx);
       // localDB.installDemoContent(tx);
