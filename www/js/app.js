@@ -167,16 +167,39 @@ var app = {
               app.fetchContentTimestampFromServer().done(function(serverTimestamp) {
                 if (serverTimestamp > localTimestamp) {
                   app.fetchContentFromServer().done(function(content) {
-                    localDB.installContent(content).done(function(result) {
-                      if (result) {
-                        // content installation succeeded
+                    // only lock up the user screen if we've succeeded in pulling down the content
+                    $('#modal .modal-title').html('<h1>Please Wait</h1>');
+                    $('#modal .modal-body').html('<p>Retrieving fresh content from the server. This will take just a moment&hellip;</p>');
+                    $('#modal .modal-footer').hide();
+                    $('#modal').modal('show');
 
+                    localDB.installContent(content).done(function(result) {
+                      // content installation succeeded
+                      if (result) {
                         // update the local timestamp
                         localDB.db.transaction(function(tx) {
                           tx.executeSql('UPDATE "settings" SET "value" = ? WHERE "key" = ?', [serverTimestamp, 'content_timestamp']);
                         });
+
+                        // set a timeout so the notification doesn't close before it can be read
+                        setTimeout(
+                          function() {
+                            // it's a little unexpected to hide the modal footer, so we unhide it here
+                            $('#modal .modal-footer').show();
+                            $('#modal').modal('hide');
+                            // refresh the current page in case its content has been updated
+                            routie.reload();
+                          },
+                          3000
+                        );
+
+                      // content installation failed
                       } else {
-                        // content installation failed
+                        $('#modal .modal-title').html('<h1>Error</h1>');
+                        // this error message is a lie; any error will be related to inserting the data, not retrieving it...
+                        $('#modal .modal-body').html('<p>An error occurred while retrieving data from the server.\n\
+                                        Perhaps you lost your network connection. We\'ll try again later.</p>');
+                        $('#modal .modal-footer').show();
                       }
                     });
                   });
