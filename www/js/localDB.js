@@ -185,10 +185,10 @@ var localDB = {
         {"node": {"import_id": 42, "type": 'how_insurance_works', "title": 'How Insurance Works', "link": '{"content_type": "how_insurance_works"}', "icon_class": 'icon_stethoscope'}},
 
         // build the app landing page
-        {"node": {"import_id": 43, "type": 'coverage_info', "title": 'Health Checklist', "link": '{"content_type": "health_checklist"}', "icon_class": 'health_checklist'}},
-        {"node": {"import_id": 44, "type": 'coverage_info', "title": 'Insurance Basics', "link": '{"content_type": "insurance_basics"}', "icon_class": 'insurance_basics'}},
-        {"node": {"import_id": 45, "type": 'coverage_info', "title": 'Money-Saving Tips', "link": '{"content_type": "money_saving_tips"}', "icon_class": 'money_saving_tips'}},
-        {"node": {"import_id": 46, "type": 'coverage_info', "title": 'Health Care Rights', "link": '{"content_type": "health_care_rights"}', "icon_class": 'health_care_rights'}}
+        {"node": {"import_id": 113, "type": 'coverage_info', "title": 'Health Checklist', "link": '{"content_type": "health_checklist"}'}},
+        {"node": {"import_id": 114, "type": 'coverage_info', "title": 'Insurance Basics', "link": '{"content_type": "insurance_basics"}'}},
+        {"node": {"import_id": 115, "type": 'coverage_info', "title": 'Money-Saving Tips', "link": '{"content_type": "money_saving_tips"}'}},
+        {"node": {"import_id": 116, "type": 'coverage_info', "title": 'Health Care Rights', "link": '{"content_type": "health_care_rights"}'}}
       ];
     },
     installInsCarriersPlansFromServer: function(tx) {
