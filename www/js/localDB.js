@@ -79,23 +79,6 @@ var localDB = {
 
 
     },
-    updateContent: function(tx) {
-      tx.executeSql(
-        'SELECT "value" FROM "settings" WHERE key="content_timestamp"',
-        [],
-        function(tx, result) {
-          localDB.contentTimestamp = parseInt(result.rows.item(0).value);
-          app.fetchContentTimestampFromServer().done(function() {
-            if (app.contentTimestampServer > localDB.contentTimestamp) {
-              localDB.installContent();
-            }
-          });
-        },
-        function(tx, er){
-          console.log("Transaction ERROR: "+ er.message);
-        }
-      );
-    },
     installContent: function() {
       app.fetchContentFromServer().done(function() {
         // localDB.db.transaction( localDB.installDemoContent );

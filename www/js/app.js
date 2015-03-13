@@ -14,6 +14,10 @@ var app = {
    */
   buildTime: CORDOVA_BUILD_TIME,
 
+  server: {
+    urlCheckUpdates: 'http://healthyi.ginkgostreet.com/update/json'
+  },
+
   /**
    * @var {String} activePath Stores the active path in the app navigation; i.e.,
    * it determines which icons light up. Should be set by controllers.
@@ -106,6 +110,8 @@ var app = {
       $('.navbar-offcanvas-bottom').toggle(toggle);
     },
     onDbInstallConfirmed: function() {
+      app.updateContent();
+
       app.router = new Router();
       app.router.initialize();
 
@@ -147,19 +153,45 @@ var app = {
      defer.resolve();
      return defer.promise();
     },
+
+    updateContent: function() {
+      localDB.db.transaction(
+        function(tx){
+          tx.executeSql(
+            'SELECT "value" FROM "settings" WHERE key="content_timestamp"',
+            [],
+            function(tx, result) {
+              var localTimestamp = parseInt(result.rows.item(0).value);
+              app.fetchContentTimestampFromServer().done(function(serverTimestamp) {
+                if (serverTimestamp > localTimestamp) {
+                  localDB.installContent();
+                }
+              });
+            },
+            function(tx, er){
+              console.log("Transaction ERROR: "+ er.message);
+            }
+          );
+        }
+      );
+    },
+
     /**
-     * This is a placeholder function to fetch content_timestamp from server
+     * Fetch content_timestamp from server
      *
-     * @returns {jQuery.Promise}
+     * @returns {jQuery.Promise} The promise handler should expect an int as its parameter
      */
     fetchContentTimestampFromServer: function() {
-     var defer = $.Deferred();
-     // in the real implementation, this value will be retrieved from the server
-     // rather than hardcoded in
-     app.contentTimestampServer = 99999999999999;
+      var defer = $.Deferred();
 
-     defer.resolve();
-     return defer.promise();
+      $.getJSON(app.server.urlCheckUpdates, function(data) {
+        if (data.hasOwnProperty('nodes')) {
+          var timestamp = parseInt(data.nodes[0].node.field_timestamp);
+          defer.resolve(timestamp);
+        }
+      });
+
+      return defer.promise();
     },
     /**
      * This is a placeholder function to fetch content from server
