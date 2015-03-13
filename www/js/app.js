@@ -80,6 +80,7 @@ var app = {
 
         // initialize modal widget
         $('#modal').modal({
+          backdrop: 'static',
           show: false
         });
 
