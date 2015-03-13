@@ -65,7 +65,7 @@ var localDB = {
         title TEXT, \
         icon_class TEXT, \
         body TEXT, \
-        link TEXT)'
+        list_contains TEXT)'
       );
 
       tx.executeSql('CREATE TABLE IF NOT EXISTS personal_info ( \
@@ -178,17 +178,17 @@ var localDB = {
         {"node": {"import_id": 37, "type": 'compare_costs', "title": 'Research Covered Prescriptions', "body": '<p>Health plans will help pay the cost of certain prescription medications. You may be able to buy other medications, but medications on your plan’s “formulary” (approved list) usually will be less expensive for you.</p><h2>Does my new insurance plan cover my prescription?</h2><p>To find out which prescriptions are covered through your new Marketplace plan:</p><ul><li><strong>Visit your insurer’s website</strong> to review a list of prescriptions your plan covers</li><li><strong>See your Summary of Benefits and Coverage</strong>, which you can get directly from your insurance company, or by using a link that appears in the detailed description of your plan in your Marketplace account.</li><li><a href="http://marketplace.cms.gov/outreach-and-education/contact-health-plan.pdf"><strong>Call your insurer directly (PDF)</strong></a> to find out what is covered. Have your plan information available. The number is available on your insurance card the insurer\'s website, or the detailed plan description in your Marketplace account.</li><li><strong>Review any coverage materials</strong> that your plan mailed to you.</li></ul>'}},
 
         // listing nodes
-        {"node": {"import_id": 38, "type": 'insurance_basics', "title": 'Terms to Know', "link": '{"content_type": "terms_to_know"}', "icon_class": 'icon_thermometer'}},
-        {"node": {"import_id": 39, "type": 'insurance_basics', "title": 'Types of Plans', "link": '{"content_type": "types_of_plans"}', "icon_class": 'icon_first_aid'}},
-        {"node": {"import_id": 40, "type": 'insurance_basics', "title": 'Where to Go for Help', "link": '{"content_type": "where_to_go_for_help"}', "icon_class": null}},
-        {"node": {"import_id": 41, "type": 'money_saving_tips', "title": 'Compare Costs', "link": '{"content_type": "compare_costs"}', "icon_class": null}},
-        {"node": {"import_id": 42, "type": 'how_insurance_works', "title": 'How Insurance Works', "link": '{"content_type": "how_insurance_works"}', "icon_class": 'icon_stethoscope'}},
+        {"node": {"import_id": 38, "type": 'insurance_basics', "title": 'Terms to Know', "list_contains": 'terms_to_know', "icon_class": 'icon_thermometer'}},
+        {"node": {"import_id": 39, "type": 'insurance_basics', "title": 'Types of Plans', "list_contains": 'types_of_plans', "icon_class": 'icon_first_aid'}},
+        {"node": {"import_id": 40, "type": 'insurance_basics', "title": 'Where to Go for Help', "list_contains": 'where_to_go_for_help', "icon_class": null}},
+        {"node": {"import_id": 41, "type": 'money_saving_tips', "title": 'Compare Costs', "list_contains": 'compare_costs', "icon_class": null}},
+        {"node": {"import_id": 42, "type": 'how_insurance_works', "title": 'How Insurance Works', "list_contains": 'how_insurance_works', "icon_class": 'icon_stethoscope'}},
 
         // build the app landing page
-        {"node": {"import_id": 113, "type": 'coverage_info', "title": 'Health Checklist', "link": '{"content_type": "health_checklist"}'}},
-        {"node": {"import_id": 114, "type": 'coverage_info', "title": 'Insurance Basics', "link": '{"content_type": "insurance_basics"}'}},
-        {"node": {"import_id": 115, "type": 'coverage_info', "title": 'Money-Saving Tips', "link": '{"content_type": "money_saving_tips"}'}},
-        {"node": {"import_id": 116, "type": 'coverage_info', "title": 'Health Care Rights', "link": '{"content_type": "health_care_rights"}'}}
+        {"node": {"import_id": 113, "type": 'coverage_info', "title": 'Health Checklist', "list_contains": 'health_checklist'}},
+        {"node": {"import_id": 114, "type": 'coverage_info', "title": 'Insurance Basics', "list_contains": 'insurance_basics'}},
+        {"node": {"import_id": 115, "type": 'coverage_info', "title": 'Money-Saving Tips', "list_contains": 'money_saving_tips'}},
+        {"node": {"import_id": 116, "type": 'coverage_info', "title": 'Health Care Rights', "list_contains": 'health_care_rights'}}
       ];
     },
     installInsCarriersPlansFromServer: function(tx) {
