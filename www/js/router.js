@@ -34,14 +34,14 @@ Router = function() {
     localDB.db.transaction(
       function(tx) {
         tx.executeSql(
-          'SELECT "link" FROM "content" WHERE "import_id" =  ?',
+          'SELECT "list_contains" FROM "content" WHERE "import_id" =  ?',
           [id],
           function(tx, result) {
             if (result.rows.length < 1) {
               console.log('Could not route request; node ID invalid or no such node.');
             } else {
               var item = result.rows.item(0);
-              if (item.link === null) {
+              if (item.list_contains === null) {
                 routie('content_leaf/' + id);
               } else {
                 routie('content_list/' + id);

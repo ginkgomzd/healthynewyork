@@ -2,6 +2,25 @@
 var app = {
 
   /**
+   * Timestamp of the build
+   *
+   * The buildTime is used to prepopulate the content_timestamp setting. This
+   * keeps the app from downloading content from the server that is older than
+   * the current build. The buildTime is set to a token that will be replaced
+   * with the timestamp at the time of the build via Cordova's
+   * after_prepare hook.
+   *
+   * @type Number
+   */
+  buildTime: CORDOVA_BUILD_TIME,
+
+  server: {
+    urlCheckUpdates: 'http://healthyi.ginkgostreet.com/update/json',
+    urlFetchLeafNodes: 'http://healthyi.ginkgostreet.com/healthy/json',
+    urlFetchListNodes: 'http://healthyi.ginkgostreet.com/listing/json'
+  },
+
+  /**
    * @var {String} activePath Stores the active path in the app navigation; i.e.,
    * it determines which icons light up. Should be set by controllers.
    */
@@ -61,6 +80,7 @@ var app = {
 
         // initialize modal widget
         $('#modal').modal({
+          backdrop: 'static',
           show: false
         });
 
@@ -93,6 +113,8 @@ var app = {
       $('.navbar-offcanvas-bottom').toggle(toggle);
     },
     onDbInstallConfirmed: function() {
+      app.updateContent();
+
       app.router = new Router();
       app.router.initialize();
 
@@ -133,6 +155,117 @@ var app = {
 
      defer.resolve();
      return defer.promise();
+    },
+
+    updateContent: function() {
+      localDB.db.transaction(
+        function(tx){
+          tx.executeSql(
+            'SELECT "value" FROM "settings" WHERE key="content_timestamp"',
+            [],
+            function(tx, result) {
+              var localTimestamp = parseInt(result.rows.item(0).value);
+              app.fetchContentTimestampFromServer().done(function(serverTimestamp) {
+                if (serverTimestamp > localTimestamp) {
+                  app.fetchContentFromServer().done(function(content) {
+                    // only lock up the user screen if we've succeeded in pulling down the content
+                    $('#modal .modal-title').html('<h1>Please Wait</h1>');
+                    $('#modal .modal-body').html('<p>Retrieving fresh content from the server. This will take just a moment&hellip;</p>');
+                    $('#modal .modal-footer').hide();
+                    $('#modal').modal('show');
+
+                    localDB.installContent(content).done(function(result) {
+                      // content installation succeeded
+                      if (result) {
+                        // update the local timestamp
+                        localDB.db.transaction(function(tx) {
+                          tx.executeSql('UPDATE "settings" SET "value" = ? WHERE "key" = ?', [serverTimestamp, 'content_timestamp']);
+                        });
+
+                        // set a timeout so the notification doesn't close before it can be read
+                        setTimeout(
+                          function() {
+                            // it's a little unexpected to hide the modal footer, so we unhide it here
+                            $('#modal .modal-footer').show();
+                            $('#modal').modal('hide');
+                            // refresh the current page in case its content has been updated
+                            routie.reload();
+                          },
+                          3000
+                        );
+
+                      // content installation failed
+                      } else {
+                        $('#modal .modal-title').html('<h1>Error</h1>');
+                        // this error message is a lie; any error will be related to inserting the data, not retrieving it...
+                        $('#modal .modal-body').html('<p>An error occurred while retrieving data from the server.\n\
+                                        Perhaps you lost your network connection. We\'ll try again later.</p>');
+                        $('#modal .modal-footer').show();
+                      }
+                    });
+                  });
+                }
+              });
+            },
+            function(tx, er){
+              console.log("Transaction ERROR: "+ er.message);
+            }
+          );
+        }
+      );
+    },
+
+    /**
+     * Fetch content_timestamp from server
+     *
+     * @returns {jQuery.Promise} The promise handler should expect an int as its parameter
+     */
+    fetchContentTimestampFromServer: function() {
+      var defer = $.Deferred();
+
+      $.getJSON(app.server.urlCheckUpdates, function(data) {
+        if (data.hasOwnProperty('nodes')) {
+          var timestamp = parseInt(data.nodes[0].node.field_timestamp);
+          defer.resolve(timestamp);
+        }
+      });
+
+      return defer.promise();
+    },
+    /**
+     * Fetch content from server
+     *
+     * @returns {jQuery.Promise}
+     */
+    fetchContentFromServer: function() {
+      var content = [];
+      var content_types = ['Leaf', 'List'];
+      var defer = $.Deferred();
+      // for each AJAX call, store the deferred object here; we will only resolve the
+      // main deferred object when each AJAX call has been resolved
+      var deferCollection = {};
+      // each time an AJAX call is resolved, this counter is incremented; when it
+      // matches the length of content_types, we can resolve the main deferred object
+      var resolveCount = 0;
+
+      $.each(content_types, function(i, content_type) {
+        deferCollection[content_type] = $.Deferred();
+        var url = 'urlFetch' + content_type + 'Nodes';
+        url = app.server[url];
+        $.getJSON(url, function(data) {
+          if (data.hasOwnProperty('nodes')) {
+            content = content.concat(data.nodes);
+            deferCollection[content_type].resolve();
+
+            // check to see if everyone in the collection has been resolved
+            if (++resolveCount === content_types.length) {
+              defer.resolve(content);
+            }
+          }
+        });
+      });
+
+      return defer.promise();
     },
     dontNagMe: 0,
     /**

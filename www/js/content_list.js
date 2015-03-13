@@ -70,7 +70,7 @@ var content_list = _.extend(new Controller(), {
     return rows;
   },
   fetchListNode: function(tx) {
-    tx.executeSql('SELECT "type", "title", "link" FROM "content" WHERE "import_id" = ?',
+    tx.executeSql('SELECT "type", "title", "list_contains" FROM "content" WHERE "import_id" = ?',
       [content_list.id],
       function(tx, result) {
         if (result.rows.length < 1) {
@@ -78,8 +78,7 @@ var content_list = _.extend(new Controller(), {
         } else {
           var item = result.rows.item(0);
           content_list.data.page_title = item.title;
-          urlParts = $.parseJSON(item.link);
-          content_list.data.content_type = urlParts.content_type;
+          content_list.data.content_type = item.list_contains;
           content_list.fetchList();
         }
       }
