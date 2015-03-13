@@ -167,8 +167,13 @@ var app = {
               app.fetchContentTimestampFromServer().done(function(serverTimestamp) {
                 if (serverTimestamp > localTimestamp) {
                   app.fetchContentFromServer().done(function(content) {
-                    // TODO: refactor install content
-                    // localDB.installContent(content);
+                    localDB.installContent(content).done(function(result) {
+                      if (result) {
+                        // content installation succeeded
+                      } else {
+                        // content installation failed
+                      }
+                    });
                   });
                 }
               });
