@@ -170,6 +170,11 @@ var app = {
                     localDB.installContent(content).done(function(result) {
                       if (result) {
                         // content installation succeeded
+
+                        // update the local timestamp
+                        localDB.db.transaction(function(tx) {
+                          tx.executeSql('UPDATE "settings" SET "value" = ? WHERE "key" = ?', [serverTimestamp, 'content_timestamp']);
+                        });
                       } else {
                         // content installation failed
                       }
