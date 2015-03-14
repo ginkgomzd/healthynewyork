@@ -4,28 +4,51 @@
 
 var fs = require('fs');
 var path = require('path');
+var request = require('request');
 
 var rootdir = process.argv[2];
 
 function replace_string_in_file(filename, to_replace, replace_with) {
-  var data = fs.readFileSync(filename, 'utf8');
+  if (fs.existsSync(filename)) {
+    var data = fs.readFileSync(filename, 'utf8');
 
-  var result = data.replace(new RegExp(to_replace, "g"), replace_with);
-  fs.writeFileSync(filename, result, 'utf8');
+    var result = data.replace(new RegExp(to_replace, "g"), replace_with);
+    fs.writeFileSync(filename, result, 'utf8');
+  } else {
+    console.log('Error prepopulating content: could not find ' + filename);
+  }
 }
 
 if (rootdir) {
-  var filestoreplace = [
-    "platforms/android/assets/www/js/app.js",
-    "platforms/ios/www/index.html"
+  var cnt_fetched = 0;
+  var content = [];
+  var urls = [
+    'http://healthyi.ginkgostreet.com/healthy/json',
+    'http://healthyi.ginkgostreet.com/listing/json'
   ];
-  filestoreplace.forEach(function(val, index, array) {
-    var fullfilename = path.join(rootdir, val);
-    var currentTimestamp = new Date().getTime();
-    // convert from milliseconds to seconds
-    currentTimestamp = Math.floor(currentTimestamp / 1000);
-    if (fs.existsSync(fullfilename)) {
-      replace_string_in_file(fullfilename, 'CORDOVA_BUILD_TIME', currentTimestamp);
-    }
+
+  var platform_path = (process.env.CORDOVA_PLATFORMS === 'android') ? 'platforms/android/assets/www' : 'platforms/ios/www';
+
+  urls.forEach(function(url) {
+    request({url: url, json: true}, function (error, response, json) {
+      if (!error && response.statusCode === 200) {
+        console.log('Content successfully retrieved from ' + url);
+        content = content.concat(json.nodes);
+
+        if (++cnt_fetched === urls.length) {
+          var content_string = JSON.stringify(content);
+
+          var datafile = path.join(rootdir, platform_path, 'js/localDB.js');
+          replace_string_in_file(datafile, 'GSL_INITIAL_DATA', content_string);
+
+          var currentTimestamp = new Date().getTime();
+          // convert from milliseconds to seconds
+          currentTimestamp = Math.floor(currentTimestamp / 1000);
+
+          var appfile = path.join(rootdir, platform_path, 'js/app.js');
+          replace_string_in_file(appfile, 'GSL_BUILD_TIME', currentTimestamp);
+        }
+      }
+    });
   });
 }

@@ -12,7 +12,7 @@ var app = {
    *
    * @type Number
    */
-  buildTime: CORDOVA_BUILD_TIME,
+  buildTime: GSL_BUILD_TIME,
 
   server: {
     urlCheckUpdates: 'http://healthyi.ginkgostreet.com/update/json',
