@@ -96,6 +96,10 @@ table.table .toggle-fave.active span {
   background-image: url('../img/icon_first_aid.png');
 }
 
+#content.content_list table td.icon span.icon_location {
+  background-image: url('../img/icon_location.png');
+}
+
 #content.content_list table td.icon span.icon_thermometer {
   background-image: url('../img/icon_thermometer.png');
 }
