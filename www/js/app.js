@@ -54,7 +54,7 @@ var app = {
         // to some extent is the fact if we do fall prey to a race condition, the app
         // won't crash. Instead the URL will be opened by the app webview rather
         // than the system browser, which isn't so bad.
-        $(document).on('mousedown', 'a', function(e) {
+        $(document).on('click', 'a', function(e) {
           var el = $(this);
           var url = el.attr('href');
           if (url && (url.indexOf('://') !== -1)) {
