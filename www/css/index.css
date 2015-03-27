@@ -196,7 +196,7 @@ a:active {
   nav a {
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 45px 45px;
+    background-size: 40px 40px;
   }
 
   nav a[href^="#coverage_info"] {
