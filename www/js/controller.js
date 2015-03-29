@@ -64,7 +64,6 @@ Controller = function () {
   this.updateNavDisplay = function() {
     this.setBackButton();
 
-    $('.row-offcanvas').removeClass('active'); // any time a link is followed, close the off-canvas menu
     $('nav a').removeClass('active');
     $('nav a[href^="' + app.activePath + '"]').addClass('active');
   };

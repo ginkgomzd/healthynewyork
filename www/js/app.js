@@ -68,6 +68,11 @@ var app = {
           $('.row-offcanvas').toggleClass('active');
         });
 
+        // any time a link is followed, close the off-canvas menu
+        $('nav a').bind('tap', function () {
+              $('.row-offcanvas').toggleClass('active');
+            });
+
         // wire up swipes on the top navbar
         $('#navbar-top').bind('swipe', function (e) {
           var hdir = app.getSwipeDirection(e).horizontal;
