@@ -56,7 +56,7 @@ var scheduleBase =  {
       function(tx){
         tx.executeSql(
           'SELECT "key", "value" FROM "personal_info" \
-          WHERE profile_id = "0" AND (key = "plan" OR key = "provider")',
+          WHERE profile_id = "0" AND (key = "plan" OR key = "provider" or key = "zipcode")',
           [],
           schedule.fillSavedSelections
         )
@@ -81,10 +81,13 @@ var scheduleBase =  {
         case 'plan':
           schedule.formFields.insurance_plan.value = item.value;
           break;
+        case 'zipcode':
+          schedule.formFields.zipcode.value = item.value;
       }
     }
     schedule.populateInsuranceCarriers();
     schedule.populateInsurancePlans();
+    schedule.populateZipcode();
   },
   /**
    * Get an array of insurance plans, in the format [{id=,name=}]
@@ -126,6 +129,9 @@ var scheduleBase =  {
 
     schedule.setDefaultOption('insurance_plan');
   },
+  populateZipcode: function() {
+    $('form input[name="zipcode"]').val(schedule.formFields.zipcode.value);
+  },
   /**
    * @param {String} field Name of the select field to set the default value for
    */
@@ -153,13 +159,7 @@ var scheduleBase =  {
   handleSubmit: function(e) {
     e.preventDefault();
     $("#loading-div").show();
-
-    schedule.formFields.insurance_carrier = {
-      element: $('form [name="insurance_carrier"]')
-    };
-    schedule.formFields.insurance_plan = {
-      element: $('form [name="insurance_plan"]')
-    };
+    schedule.findFormElements();
     schedule.getFormValues();
     schedule.showResults();
 
@@ -170,6 +170,9 @@ var scheduleBase =  {
     $('form#schedule').hide();
     var qs = '';
     $.each(this.formFields, function(k, v) {
+      if (k=='zipcode') {
+        k = 'address';
+      }
       qs += k + '=' + v.value + '&';
     });
     $('#zocdoc_frame').show().attr('src','http://www.zocdoc.com/search/'+'?'+ qs);
@@ -196,6 +199,9 @@ var scheduleBase =  {
     };
     schedule.formFields.insurance_plan = {
       element: $('form [name="insurance_plan"]')
+    };
+    schedule.formFields.zipcode = {
+      element: $('form [name="zipcode"]')
     };
   },
   renderTpl: function() {
@@ -241,6 +247,9 @@ var scheduleBase =  {
 
         tx.executeSql('INSERT or REPLACE into personal_info (profile_id, key, value) VALUES (?, ?, ?)',
           [profile_id, 'plan', schedule.formFields.insurance_plan.value]);
+
+        tx.executeSql('INSERT or REPLACE into personal_info (profile_id, key, value) VALUES (?, ?, ?)',
+          [profile_id, 'zipcode', schedule.formFields.zipcode.value]);
       },
       function(tx, err) {
         console.log('schedule::saveToProfile SQL ERROR');
