@@ -17,19 +17,19 @@ var scheduleBase =  {
   },
   main: function() {
     this.renderTpl();
-    this.fetchInsuranceCarriers();
+    this.fetchInsuranceCarriers(schedule.fillInsuranceCarriers);
     this.fetchProfileData();
   },
   /**
    * Get the carriers array from the db
    */
-  fetchInsuranceCarriers: function() {
+  fetchInsuranceCarriers: function(callback) {
     localDB.db.transaction(
       function(tx){
         tx.executeSql(
           'SELECT "value" FROM "settings" WHERE key="insurance_plans"',
           [],
-          schedule.fillInsuranceCarriers,
+          callback,
           function(tx, er){
             console.log("Transaction ERROR: "+ er.message);
           }
@@ -89,10 +89,10 @@ var scheduleBase =  {
   /**
    * Get an array of insurance plans, in the format [{id=,name=}]
    */
-  getInsurancePlans: function() {
+  getInsurancePlans: function(carriers) {
     var carrier = {};
     var carrier_id = $('form select[name="insurance_carrier"]').val();
-    $.each(schedule.insurance_carriers, function() {
+    $.each(carriers, function() {
       if (this['id'] === carrier_id) {
         carrier = this;
       }
@@ -117,7 +117,7 @@ var scheduleBase =  {
    */
   populateInsurancePlans: function() {;
     $('form select[name="insurance_plan"] option:not(:first)').remove();
-    var plans = schedule.getInsurancePlans();
+    var plans = schedule.getInsurancePlans(schedule.insurance_carriers);
     var select = $('form select[name="insurance_plan"]');
     $.each(plans, function(){
       var opt = '<option value="' + this.id + '">' + this.name + '</option>';
@@ -136,9 +136,11 @@ var scheduleBase =  {
       && schedule.formFields[field].hasOwnProperty('value')
       && $("form select[name='" + field + "'] option[value='" + schedule.formFields[field].value + "']").length > 0)
     {
-      select.select2("val", schedule.formFields[field].value);
+      select.val( schedule.formFields[field].value);
+      select.select2();
     } else {
-      select.select2("val", '');
+      select.val('');
+      select.select2();
     }
     select.removeClass('settingDefault');
   },
