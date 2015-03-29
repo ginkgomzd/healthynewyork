@@ -159,6 +159,7 @@ var scheduleBase =  {
   handleSubmit: function(e) {
     e.preventDefault();
     $("#loading-div").show();
+    schedule.findFormElements();
     schedule.getFormValues();
     schedule.showResults();
 
