@@ -152,7 +152,6 @@ var settingsBase = {
   },
   main: function() {
     this.renderTpl();
-    console.log('Settings.Main()');
     schedule.fetchInsuranceCarriers(this.fillInsuranceCarriers);
     this.fetchProfileData();
   },
@@ -182,7 +181,6 @@ var settingsBase = {
     return (Object.keys(this.formErrors).length === 0);
   },
   fillInsuranceCarriers: function(tx, result) {
-    console.log('Settings::fillInsuranceCarriers');
     var item = result.rows.item(0);
     settings.insurance_carriers = JSON.parse(item.value);
   },
