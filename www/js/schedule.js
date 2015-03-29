@@ -136,9 +136,11 @@ var scheduleBase =  {
       && schedule.formFields[field].hasOwnProperty('value')
       && $("form select[name='" + field + "'] option[value='" + schedule.formFields[field].value + "']").length > 0)
     {
-      select.select2("val", schedule.formFields[field].value);
+      select.val( schedule.formFields[field].value);
+      select.select2();
     } else {
-      select.select2("val", '');
+      select.val('');
+      select.select2();
     }
     select.removeClass('settingDefault');
   },
