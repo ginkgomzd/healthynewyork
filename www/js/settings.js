@@ -1,4 +1,5 @@
 var settingsBase = {
+  insurance_carriers: {},
   activePath: '#settings',
   formFields: {},
   formErrors: {},
@@ -151,6 +152,8 @@ var settingsBase = {
   },
   main: function() {
     this.renderTpl();
+    console.log('Settings.Main()');
+    schedule.fetchInsuranceCarriers(this.fillInsuranceCarriers);
     this.fetchProfileData();
   },
   renderTpl: function() {
@@ -178,12 +181,17 @@ var settingsBase = {
 
     return (Object.keys(this.formErrors).length === 0);
   },
+  fillInsuranceCarriers: function(tx, result) {
+    console.log('Settings::fillInsuranceCarriers');
+    var item = result.rows.item(0);
+    settings.insurance_carriers = JSON.parse(item.value);
+  },
   /**
    * This is a placeholder function to populate the list of insurance carriers the user may select.
    */
   populateInsuranceCarriers: function() {
     var select = $('form select[name="insurance_carrier"]');
-    $.each(schedule.insurance_carriers, function(){
+    $.each(settings.insurance_carriers, function(){
       var opt = '<option value="' + this.id + '">' + this.name + '</option>';
       select.append(opt);
     });
@@ -195,7 +203,7 @@ var settingsBase = {
    */
   populateInsurancePlans: function() {
     $('form select[name="insurance_plan"] option:not(:first)').remove();
-    var plans = schedule.getInsurancePlans();
+    var plans = schedule.getInsurancePlans(settings.insurance_carriers);
     var select = $('form select[name="insurance_plan"]');
     $.each(plans, function(){
       var opt = '<option value="' + this.id + '">' + this.name + '</option>';
