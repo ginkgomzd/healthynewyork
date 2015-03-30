@@ -70,7 +70,7 @@ var app = {
 
         // any time a link is followed, close the off-canvas menu
         $('nav a').bind('tap', function () {
-              $('.row-offcanvas').toggleClass('active');
+              $('.row-offcanvas').removeClass('active');
             });
 
         // wire up swipes on the top navbar
