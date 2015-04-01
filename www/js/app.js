@@ -64,12 +64,12 @@ var app = {
         });
 
         // wire up off-canvas menu
-        $('#toggle-offcanvas').bind('tap', function () {
+        $('#toggle-offcanvas').bind('click', function () {
           $('.row-offcanvas').toggleClass('active');
         });
 
         // any time a link is followed, close the off-canvas menu
-        $('nav a').bind('tap', function () {
+        $('nav a').bind('click', function (el) {
               $('.row-offcanvas').removeClass('active');
             });
 
