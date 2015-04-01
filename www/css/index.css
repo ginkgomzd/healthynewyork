@@ -29,7 +29,7 @@ body {
 }
 
 a,
-a:link,
+a:link:not(.btn),
 a:focus,
 a:hover,
 a:visited,
