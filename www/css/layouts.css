@@ -3,6 +3,10 @@
   margin-top: 10px;
 }
 
+#search_submit {
+  float: right;
+}
+
 #content.coverage_info p {
   color: #000000;
 }
