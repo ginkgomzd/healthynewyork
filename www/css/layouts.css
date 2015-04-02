@@ -1,6 +1,23 @@
 /* contains page-specific styles */
-#search {
+#search .form-group {
   margin-top: 10px;
+  margin-right: 0px;
+  margin-left: 0px;
+  padding; 0px;
+  width: 100%;
+}
+
+#search span {
+  display: block;
+  overflow: hidden;
+   margin: 0px;
+   padding: 0px;
+   float: left;
+   width: 80%;
+}
+
+#search_submit {
+  float: right;
 }
 
 #content.coverage_info p {
