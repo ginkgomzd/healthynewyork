@@ -97,6 +97,12 @@ var app = {
           var margin = (total_height - dialog_height)/2;
           dialog.css('margin-top', margin);
         });
+
+        //Prompt To Personalize behavior:
+        $('body').on('click', '#promptPersonalizeContinue', function() {
+          $('#promptPersonal').remove();
+          routie('settings');
+        });
     },
     onDeviceReady: function() {
       localDB.initialize();
@@ -124,6 +130,7 @@ var app = {
       app.router.initialize();
 
       routie('coverage_info');
+      settings.fetchProfileData(app.promptPersonalize);
     },
     /**
      * Depends on jQuery mobile's swipe event. Presently reports on horizontal
@@ -145,6 +152,23 @@ var app = {
       }
 
       return direction;
+    },
+    promptPersonalize: function(tx, result) {
+      console.log('promptPersonalize');
+      if (result.rows.length > 0) {
+        console.log('promptPersonalize Settings already detected');
+        return; // don't alert
+      }
+
+      $('#modal').clone().attr('id', 'promptPersonalize').appendTo('body');
+
+      $('#promptPersonalize .modal-title').empty().html('<h2>Welcome to the HealthYI Mobile App!</h2>');
+      $('#promptPersonalize .modal-body').empty().html('<p>To save time, please take a moment to fill in your personal info.</p>');
+      $('#promptPersonalize .btn-default').empty().html('Cancel');
+      $('<button type="button" id="promptPersonalizeContinue" class="btn btn-default" data-dismiss="modal">Continue</button>').insertAfter('#promptPersonalize .btn-default')
+      $('#promptPersonalize').modal('show');
+
+      return false;
     },
     /**
      * This is a placeholder function to fetch insurance carriers and plans from
