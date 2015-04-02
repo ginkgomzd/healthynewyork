@@ -42,6 +42,11 @@ a:active {
   color: #000000;
 }
 
+.modal-content {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
 .row-offcanvas {
   margin: 0;
 }

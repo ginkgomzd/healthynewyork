@@ -41,19 +41,22 @@ var settingsBase = {
   * Fetches all settings
   * @returns {undefined}
   */
-  fetchProfileData: function() {
+  fetchProfileData: function(success, error) {
+    if (!error) {
+      error = function(er){
+        console.log("Transaction ERROR: "+ er.message);
+      }
+    }
     localDB.db.transaction(
       function(tx){
         tx.executeSql(
           'SELECT "key", "value" FROM "personal_info" \
           WHERE profile_id = "0"',
           [],
-          settings.bindData
+          success
         )
       },
-      function(tx, er){
-        console.log("Transaction ERROR: "+ er.message);
-      }
+      error
     );
   },
   /**
@@ -153,7 +156,7 @@ var settingsBase = {
   main: function() {
     this.renderTpl();
     schedule.fetchInsuranceCarriers(this.fillInsuranceCarriers);
-    this.fetchProfileData();
+    this.fetchProfileData(settings.bindData);
   },
   renderTpl: function() {
     var src = $('#settings_form_tpl').html();
