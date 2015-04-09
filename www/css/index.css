@@ -29,7 +29,7 @@ body {
 }
 
 a,
-a:link:not(.btn),
+a:link,
 a:focus,
 a:hover,
 a:visited,
@@ -94,7 +94,7 @@ a:active {
 .btn:focus,
 .btn.active {
   background-color: #0BA8DE;
-  color: #000000;
+  color: #000000 !important;
 }
 
 /* Landscape layout (with min-width) */
