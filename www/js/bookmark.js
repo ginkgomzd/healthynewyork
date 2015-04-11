@@ -52,6 +52,7 @@ var bookmark = _.extend(new Controller(), {
         function() {console.log('bookmarks::save SQL ERROR');},
         bookmark.updateButton(el)
       );
+      Parse.Analytics.track('save_bookmark', {action: 'save', node: String(el.data('id')), table: el.data('table') });
     },
     updateButton: function(button) {
       // do this for both buttons and stars on the bookmarks page
