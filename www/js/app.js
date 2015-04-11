@@ -154,9 +154,7 @@ var app = {
       return direction;
     },
     promptPersonalize: function(tx, result) {
-      console.log('promptPersonalize');
       if (result.rows.length > 0) {
-        console.log('promptPersonalize Settings already detected');
         return; // don't alert
       }
 
