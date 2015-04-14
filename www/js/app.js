@@ -15,9 +15,9 @@ var app = {
   buildTime: GSL_BUILD_TIME,
 
   server: {
-    urlCheckUpdates: 'http://healthyi.ginkgostreet.com/update/json',
-    urlFetchLeafNodes: 'http://healthyi.ginkgostreet.com/healthy/json',
-    urlFetchListNodes: 'http://healthyi.ginkgostreet.com/listing/json'
+    urlCheckUpdates: 'http://healthyi.yidata.org/update/json',
+    urlFetchLeafNodes: 'http://healthyi.yidata.org/healthy/json',
+    urlFetchListNodes: 'http://healthyi.yidata.org/listing/json'
   },
 
   /**
