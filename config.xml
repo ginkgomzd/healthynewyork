@@ -13,11 +13,16 @@
         Ginkgo Street Labs
     </author>
     <content src="index.html" />
+    <icon src="res/drawable/icon.png" />
+    <icon src="res/drawable/icon.png" density="ldpi" />
+    <icon src="res/drawable/icon.png" density="mdpi" />
+    <icon src="res/drawable/icon.png" density="hdpi" />
+    <icon src="res/drawable/icon.png" density="xhdpi" />
     <access origin="*" />
     <preference name="DisallowOverscroll" value="true" />
 
-    <access origin="*.ginkgostreet.com" subdomains="true" />
-    <access origin="*.yidata.org" subdomains="true" />
-    <access origin="*.zocdoc.com" subdomains="true" />
+    <access origin="http://*.ginkgostreet.com" subdomains="true" />
+    <access origin="http://*.yidata.org" subdomains="true" />
+    <access origin="http://*.zocdoc.com" subdomains="true" />
 
 </widget>
