@@ -15,4 +15,9 @@
     <content src="index.html" />
     <access origin="*" />
     <preference name="DisallowOverscroll" value="true" />
+
+    <access origin="*.ginkgostreet.com" subdomains="true" />
+    <access origin="*.yidata.org" subdomains="true" />
+    <access origin="*.zocdoc.com" subdomains="true" />
+
 </widget>
