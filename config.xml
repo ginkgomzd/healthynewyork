@@ -18,11 +18,21 @@
     <icon src="res/drawable/icon.png" density="mdpi" />
     <icon src="res/drawable/icon.png" density="hdpi" />
     <icon src="res/drawable/icon.png" density="xhdpi" />
-    <access origin="*" />
+
+    <platform name="ios">
+      <splash src="rres/drawable/icon.png" width="320" height="480"/>
+    <splash src="res/drawable/splash.png" width="640" height="960"/>
+    <splash src="res/drawable/splash.png" width="768" height="1024"/>
+    <splash src="res/drawable/splash.png" width="1536" height="2048"/>
+    <splash src="res/drawable/splash.png" width="1024" height="768"/>
+    <splash src="res/drawable/splash.png" width="2048" height="1536"/>
+    <splash src="res/drawable/splash.png" width="640" height="1136"/>
+    <splash src="res/drawable/splash.png" width="750" height="1334"/>
+    <splash src="res/drawable/splash.png" width="1242" height="2208"/>
+    <splash src="res/drawable/splash.png" width="2208" height="1242"/>
+    </platform>
     <preference name="DisallowOverscroll" value="true" />
 
-    <access origin="http://*.ginkgostreet.com" subdomains="true" />
-    <access origin="http://*.yidata.org" subdomains="true" />
-    <access origin="http://*.zocdoc.com" subdomains="true" />
-
+    <access origin="*" />
+    
 </widget>
