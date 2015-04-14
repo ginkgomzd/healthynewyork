@@ -163,6 +163,12 @@ var scheduleBase =  {
     schedule.getFormValues();
     schedule.showResults();
 
+    var logData = {};
+    $.each(schedule.formFields, function(k, v) {
+       logData[k] = v.value;
+    });
+    Parse.Analytics.track('zocdoc', logData);
+
     $('#zocdoc_frame').load(function() { $("#loading-div").hide(); });
   },
   showResults: function () {

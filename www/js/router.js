@@ -15,6 +15,7 @@ Router = function() {
       },
       'node/:id': this.routeNode,
       '*': function(controllerName) {
+        app.logUsage.apply(this, arguments);
         controller = router.getControllerByName(controllerName);
         if (controller !== false) {
           controller.control();
@@ -31,6 +32,7 @@ Router = function() {
  * @param {Int} id Node ID
  */
   this.routeNode = function(id) {
+    app.logUsage.apply(this, arguments);
     localDB.db.transaction(
       function(tx) {
         tx.executeSql(
