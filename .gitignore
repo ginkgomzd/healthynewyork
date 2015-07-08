@@ -1,7 +1,11 @@
 # leave NetBeans meta-data out of the repo
 /nbproject/
 
+#leave webstorm and other intelij IDE metadata out of the repo
+/.idea/
+
 # these directories are controlled by the build process and shouldn't be versioned
 /libraries/
 /platforms/
 /plugins/
+/node_modules/
