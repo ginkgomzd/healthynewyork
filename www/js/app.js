@@ -37,6 +37,9 @@ var app = {
         // wait for device API libraries to load
         document.addEventListener('deviceready', this.onDeviceReady, false);
 
+        window.addEventListener('deviceready', this.analyticsAppOpen);
+        window.addEventListener('resume', this.analyticsAppOpen);
+
         window.addEventListener('native.keyboardhide', this.toggleFooter);
         window.addEventListener('native.keyboardshow', this.toggleFooter);
 
@@ -54,14 +57,14 @@ var app = {
         // to some extent is the fact if we do fall prey to a race condition, the app
         // won't crash. Instead the URL will be opened by the app webview rather
         // than the system browser, which isn't so bad.
-        $(document).on('click', 'a', function(e) {
-          var el = $(this);
-          var url = el.attr('href');
-          if (url && (url.indexOf('://') !== -1)) {
-            e.preventDefault();
-            window.open(url, '_system');
-          }
-        });
+//        $(document).on('click', 'a', function(e) {
+//          var el = $(this);
+//          var url = el.attr('href');
+//          if (url && (url.indexOf('://') !== -1)) {
+//            e.preventDefault();
+//            window.open(url, '_system');
+//          }
+//        });
 
         // wire up off-canvas menu
         $('#toggle-offcanvas').bind('click', function (e) {
@@ -316,6 +319,12 @@ var app = {
       Parse.Analytics.track('usage',{
         request: request
       });
+    },
+    /**
+     * Log a Parse AppOpen Event
+     * @returns {undefined}     */
+    analyticsAppOpen: function() {
+      Parse.Analytics.track('AppOpened');
     },
     dontNagMe: 0,
     /**
