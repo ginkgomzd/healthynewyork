@@ -69,9 +69,10 @@ var app = {
           e.preventDefault();
         });
 
-      $('body').bind('click', function (e) {
+      $('#main').bind('click', function (e) {
         if ($('.row-offcanvas').hasClass('active') && $(e.target).attr("id") !== "toggle-offcanvas") {
           $('.row-offcanvas').removeClass('active');
+          e.preventDefault();
         }
       });
         // any time a link is followed, close the off-canvas menu
