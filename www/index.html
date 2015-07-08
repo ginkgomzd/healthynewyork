@@ -113,7 +113,10 @@
 <script type="text/template" id="content_leaf_tpl">
   <h1><%= title_text %></h1>
   <div class="content"><%= body %></div>
-  <%= bookmark_btn %>
+  <div class="actions">
+    <%= bookmark_btn %>
+    <%= share_btn %>
+  </div>
 </script>
 <script type="text/template" id="search_form_tpl">
   <div class="container-fluid">
@@ -149,6 +152,11 @@
       <script type="text/template" id="bookmark_btn_tpl">
         <button class="btn btn-default btn-block toggle-fave <% if (status === 1) { %>active<% } %>" data-id="<%= content_id %>" data-table="<%= content_table %>">
           <span><% if (status === 1) { %>Remove from favorites<% } else { %>Add to favorites<% } %></span>
+        </button>
+      </script>
+      <script type="text/template" id="share_btn_tpl">
+        <button class="btn btn-default btn-block share" data-id="<%= content_id %>" data-table="<%= content_table %>">
+          <span>Share</span>
         </button>
       </script>
       <script type="text/template" id="ask_form_tpl">

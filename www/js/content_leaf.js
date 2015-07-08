@@ -3,6 +3,35 @@ var content_leaf = _.extend(new Controller(), {
     content_leaf.id = id;
     content_leaf.fetchData();
   },
+  initialize: function() {
+    this.bindEvents();
+  },
+  bindEvents: function() {
+    $('body').on('tap', '.btn.share', function(e){
+      e.preventDefault();
+      content_leaf.socialShare();
+    });
+  },
+  socialShare: function() {
+    var url = "http://healthyi.yidata.org/";
+    var file = null;
+    var msgBody = $(content_leaf.data.body).text().substr(0, 296 - content_leaf.data.title_text.length);
+    var lastSpace = msgBody.lastIndexOf(" ");
+    msgBody = msgBody.substring(0, lastSpace);
+    msgBody = "Check out what I learned from the Healthy NY app:\n\n" + content_leaf.data.title_text + "\n" + msgBody + "...\n";
+    window.plugins.socialsharing.share(
+        msgBody,
+        content_leaf.data.title_text,
+        file,
+        url,
+        function(result) {
+          //onSuccess
+        },
+        function(result) {
+          //onFailure
+        }
+    );
+  },
   fetchData: function() {
     content_leaf.data = {};
 
@@ -20,10 +49,18 @@ var content_leaf = _.extend(new Controller(), {
   bindData: function(data) {
     var btn_src = $('#bookmark_btn_tpl').html();
     var btn_tpl = _.template(btn_src);
+
     content_leaf.data.bookmark_btn = btn_tpl({
       content_id: content_leaf.id,
       content_table: 'content',
       status: content_leaf.data.status
+    });
+
+    var share_src = $('#share_btn_tpl').html();
+    var share_tpl = _.template(share_src);
+    content_leaf.data.share_btn = share_tpl({
+      content_id: content_leaf.id,
+      content_table: 'content'
     });
 
     var src = $('#content_leaf_tpl').html();
@@ -48,4 +85,8 @@ var content_leaf = _.extend(new Controller(), {
     }
   },
   usesBackButton: true
+});
+
+$(document).ready(function () {
+  content_leaf.initialize();
 });
