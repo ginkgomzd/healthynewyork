@@ -13,12 +13,12 @@ var content_leaf = _.extend(new Controller(), {
     });
   },
   socialShare: function() {
-    var url = null;
+    var url = "http://healthyi.yidata.org/";
     var file = null;
     var msgBody = $(content_leaf.data.body).text().substr(0, 296 - content_leaf.data.title_text.length);
     var lastSpace = msgBody.lastIndexOf(" ");
     msgBody = msgBody.substring(0, lastSpace);
-    msgBody = content_leaf.data.title_text + "\n" + msgBody + "...";
+    msgBody = "Check out what I learned from the Healthy NY app:\n\n" + content_leaf.data.title_text + "\n" + msgBody + "...\n";
     console.log(msgBody);
     window.plugins.socialsharing.share(
         msgBody,
