@@ -39,6 +39,7 @@ var coverage_info = _.extend(new Controller(), {
   render: function(data) {
     var src = $('#coverage_info_row_tpl').html();
     var row_tpl = _.template(src);
+    this.rendered = "";
 
     $.each(this.data.rows, function() {
       coverage_info.rendered += row_tpl({
