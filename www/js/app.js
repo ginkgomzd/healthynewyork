@@ -64,10 +64,17 @@ var app = {
         });
 
         // wire up off-canvas menu
-        $('#toggle-offcanvas').bind('click', function () {
+        $('#toggle-offcanvas').bind('click', function (e) {
           $('.row-offcanvas').toggleClass('active');
+          e.preventDefault();
         });
 
+      $('#main').bind('click', function (e) {
+        if ($('.row-offcanvas').hasClass('active') && $(e.target).attr("id") !== "toggle-offcanvas") {
+          $('.row-offcanvas').removeClass('active');
+          e.preventDefault();
+        }
+      });
         // any time a link is followed, close the off-canvas menu
         $('nav a').bind('click', function (el) {
               $('.row-offcanvas').removeClass('active');
