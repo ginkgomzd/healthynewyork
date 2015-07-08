@@ -2,9 +2,9 @@
 <widget xmlns = "http://www.w3.org/ns/widgets"
         xmlns:cdv = "http://cordova.apache.org/ns/1.0"
         id = "org.younginvincibles.healthyi"
-        android-versionCode = "2015040101"
-	ios-CFBundleVersion = "2015040101"
-        version = "1.0-beta1">
+        android-versionCode = "2015041401"
+	ios-CFBundleVersion = "2015041401"
+        version = "1.0.0">
     <name>HealthYI</name>
     <description>
         Find health insurance resources.
@@ -13,6 +13,57 @@
         Ginkgo Street Labs
     </author>
     <content src="index.html" />
-    <access origin="*" />
+
+    <icon src="res/drawable/icon-48.png" density="mdpi" />
+    <icon src="res/drawable/icon-72.png" density="hdpi" />
+    <icon src="res/drawable/icon-96.png" density="xhdpi" />
+
+    <platform name="ios">
+      <!-- iOS 7.0+ -->
+      <!-- iPhone / iPod Touch  -->
+      <icon src="res/drawable/icon-60.png" width="60" height="60" />
+      <icon src="res/drawable/icon-60@2x.png" width="120" height="120" />
+      <!-- iPad -->
+      <icon src="res/drawable/icon-76.png" width="76" height="76" />
+      <icon src="res/drawable/icon-76@2x.png" width="152" height="152" />
+      <!-- iOS 6.1 -->
+      <!-- Spotlight Icon -->
+      <icon src="res/drawable/icon-40.png" width="40" height="40" />
+      <icon src="res/drawable/icon-40@2x.png" width="80" height="80" />
+      <!-- iPhone / iPod Touch -->
+      <icon src="res/drawable/icon.png" width="57" height="57" />
+      <icon src="res/drawable/icon@2x.png" width="114" height="114" />
+      <!-- iPad -->
+      <icon src="res/drawable/icon-72.png" width="72" height="72" />
+      <icon src="res/drawable/icon-72@2x.png" width="144" height="144" />
+      <!-- iPhone Spotlight and Settings Icon -->
+      <icon src="res/drawable/icon-small.png" width="29" height="29" />
+      <icon src="res/drawable/icon-small@2x.png" width="58" height="58" />
+      <!-- iPad Spotlight and Settings Icon -->
+      <icon src="res/drawable/icon-50.png" width="50" height="50" />
+      <icon src="res/drawable/icon-50@2x.png" width="100" height="100" />
+
+      <splash src="res/drawable/splash.png" width="320" height="480"/>
+      <splash src="res/drawable/splash.png" width="640" height="960"/>
+      <splash src="res/drawable/splash.png" width="768" height="1024"/>
+      <splash src="res/drawable/splash.png" width="1536" height="2048"/>
+      <splash src="res/drawable/splash.png" width="1024" height="768"/>
+      <splash src="res/drawable/splash.png" width="2048" height="1536"/>
+      <splash src="res/drawable/splash.png" width="640" height="1136"/>
+      <splash src="res/drawable/splash.png" width="750" height="1334"/>
+      <splash src="res/drawable/splash.png" width="1242" height="2208"/>
+      <splash src="res/drawable/splash.png" width="2208" height="1242"/>
+    </platform>
     <preference name="DisallowOverscroll" value="true" />
+
+    <access origin="*" />
+    <access origin="http://*.ginkgostreet.com" subdomains="true" />
+    <access origin="http://*.yidata.org" subdomains="true" />
+    <access origin="https://*.zocdoc.com" subdomains="true" />
+    <access origin="http://*.zocdoc.com" subdomains="true" />
+    <access origin="http://*.cloudfront.net" subdomains="true" />
+    <access origin="http://*.adroll.com" subdomains="true" />
+    <access origin="http://google-analytics.com" subdomains="true" />
+    <access origin="http://*.googleapis.com" subdomains="true" />
+
 </widget>

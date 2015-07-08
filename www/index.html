@@ -68,6 +68,7 @@
         <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/lib/select2.min.js"></script>
         <script type="text/javascript" src="js/lib/underscore.js"></script>
+        <script type="text/javascript" src="js/lib/parse-1.4.2.min.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/utils.js"></script>
         <script type="text/javascript" src="js/controller.js"></script>
@@ -118,8 +119,8 @@
   <div class="container-fluid">
     <form id="search" class="form-inline" role="form">
       <div class="form-group">
-        <label class="sr-only" for="search_terms">Type your question</label>
-        <span><input type="text" class="form-control" id="search_terms" placeholder="Type your question"></span>
+        <label class="sr-only" for="search_terms">Search</label>
+        <span><input type="text" class="form-control" id="search_terms" placeholder="Search"></span>
         <button id="search_submit" type="submit" class="btn btn-default">Go</button>
       </div>
     </form>
@@ -195,7 +196,7 @@
       </script>
       <script type="text/template" id="schedule_tpl">
         <div class="container-fluid">
-          <h1>Search for a Physician</h1>
+          <h1>Schedule</h1>
           <form role="form" id="schedule">
             <div class="form-group">
               <select class="form-control" name="insurance_carrier">

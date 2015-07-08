@@ -15,9 +15,9 @@ var app = {
   buildTime: GSL_BUILD_TIME,
 
   server: {
-    urlCheckUpdates: 'http://healthyi.ginkgostreet.com/update/json',
-    urlFetchLeafNodes: 'http://healthyi.ginkgostreet.com/healthy/json',
-    urlFetchListNodes: 'http://healthyi.ginkgostreet.com/listing/json'
+    urlCheckUpdates: 'http://healthyi.yidata.org/update/json',
+    urlFetchLeafNodes: 'http://healthyi.yidata.org/healthy/json',
+    urlFetchListNodes: 'http://healthyi.yidata.org/listing/json'
   },
 
   /**
@@ -113,6 +113,9 @@ var app = {
              parsePlugin.subscribe('');
           }
       );
+      //For analytics we use the JS Lib
+      Parse.initialize('Fb0w8YZ8IzTKaNtLT7AYNsBNUlR8fAwWKbIvMKwW',
+        '7FubtodqX5Ew0UWZ1YvFCNt6GP7DdYeL0dkJiI4a');
     },
     /**
      * YINY-106: Show the footer when the keyboard is closed; hide it when it when the keyboard is open.
@@ -293,6 +296,19 @@ var app = {
       });
 
       return defer.promise();
+    },
+    /**
+    * Log node request for analytics
+    * @returns {undefined}
+    */
+    logUsage: function(request) {
+      if ($.isNumeric(request)) {
+        request = '/node/'+request;
+      }
+
+      Parse.Analytics.track('usage',{
+        request: request
+      });
     },
     dontNagMe: 0,
     /**
