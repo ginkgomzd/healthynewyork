@@ -9,7 +9,8 @@ var pluginlist = [
     "org.apache.cordova.network-information",
     "org.apache.cordova.inappbrowser",
     "https://github.com/ginkgostreet/phonegap-parse-plugin.git#healthyi",
-    "com.ionic.keyboard"
+    "com.ionic.keyboard",
+    "https://github.com/Telerik-Verified-Plugins/SocialSharing"
 ];
 
 // no need to configure below

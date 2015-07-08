@@ -74,3 +74,17 @@
 .btn.toggle-fave span {
   margin-left: -500px;
 }
+
+.btn.share {
+    background-image: url('../img/share.png');
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    background-size: 20px;
+    border-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-left: -15px;
+    padding-left: 40px;
+    overflow: hidden;
+    width: auto;
+}
