@@ -19,7 +19,6 @@ var content_leaf = _.extend(new Controller(), {
     var lastSpace = msgBody.lastIndexOf(" ");
     msgBody = msgBody.substring(0, lastSpace);
     msgBody = "Check out what I learned from the Healthy NY app:\n\n" + content_leaf.data.title_text + "\n" + msgBody + "...\n";
-    console.log(msgBody);
     window.plugins.socialsharing.share(
         msgBody,
         content_leaf.data.title_text,
@@ -61,8 +60,7 @@ var content_leaf = _.extend(new Controller(), {
     var share_tpl = _.template(share_src);
     content_leaf.data.share_btn = share_tpl({
       content_id: content_leaf.id,
-      content_table: 'content',
-      status: content_leaf.data.status
+      content_table: 'content'
     });
 
     var src = $('#content_leaf_tpl').html();
