@@ -53,8 +53,7 @@
   width: 100%;
 }
 
-.btn.toggle-fave {
-  background-image: url('../img/btn_fave.png');
+#content .actions .btn {
   background-repeat: no-repeat;
   background-position: 15px center;
   background-size: 20px;
@@ -67,24 +66,18 @@
   width: auto;
 }
 
-.btn.toggle-fave.active {
+#content .actions .btn.toggle-fave {
+  background-image: url('../img/btn_fave.png');
+}
+
+#content .actions .btn.toggle-fave.active {
   background-image: url('../img/btn_fave_active.png');
 }
 
-.btn.toggle-fave span {
+#content .actions .btn.toggle-fave span {
   margin-left: -500px;
 }
 
-.btn.share {
+#content .actions .btn.share {
     background-image: url('../img/share.png');
-    background-repeat: no-repeat;
-    background-position: 15px center;
-    background-size: 20px;
-    border-left: 0;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    margin-left: -15px;
-    padding-left: 40px;
-    overflow: hidden;
-    width: auto;
 }

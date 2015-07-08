@@ -113,8 +113,10 @@
 <script type="text/template" id="content_leaf_tpl">
   <h1><%= title_text %></h1>
   <div class="content"><%= body %></div>
-  <%= bookmark_btn %>
-  <%= share_btn %>
+  <div class="actions">
+    <%= bookmark_btn %>
+    <%= share_btn %>
+  </div>
 </script>
 <script type="text/template" id="search_form_tpl">
   <div class="container-fluid">
