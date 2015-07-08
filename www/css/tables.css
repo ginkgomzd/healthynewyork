@@ -92,24 +92,24 @@ table.table .toggle-fave.active span {
   width: 100%;
 }
 
-#content.content_list table td.icon span.icon_first_aid {
-  background-image: url('../img/icon_first_aid.png');
+#content.content_list table td.icon span.icon_calendar {
+  background-image: url('../img/icon_calendar.png');
+}
+
+#content.content_list table td.icon span.icon_doctor {
+  background-image: url('../img/icon_doctor.png');
 }
 
 #content.content_list table td.icon span.icon_location {
   background-image: url('../img/icon_location.png');
 }
 
-#content.content_list table td.icon span.icon_thermometer {
-  background-image: url('../img/icon_thermometer.png');
+#content.content_list table td.icon span.icon_plans {
+  background-image: url('../img/icon_plans.png');
 }
 
-#content.content_list table td.icon span.icon_stethoscope {
-  background-image: url('../img/icon_stethoscope.png');
-}
-
-#content.content_list table td.icon span.icon_caduceus {
-  background-image: url('../img/icon_caduceus.png');
+#content.content_list table td.icon span.icon_terms {
+  background-image: url('../img/icon_terms.png');
 }
 
 #content.content_list table td.link {
