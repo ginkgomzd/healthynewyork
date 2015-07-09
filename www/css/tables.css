@@ -74,6 +74,7 @@ table.table .toggle-fave.active span {
   font-size: 2em;
   text-align: center;
   width: 52px;
+  overflow: hidden;
 }
 
 #content.content_list table.insurance_basics td.icon,
@@ -92,8 +93,22 @@ table.table .toggle-fave.active span {
   width: 100%;
 }
 
+
 #content.content_list table td.icon span.icon_calendar {
   background-image: url('../img/icon_calendar.png');
+}
+#content.content_list table td.icon span.checkMark {
+  display:none;
+}
+#content.content_list table td.icon.checked span.checkMark {
+  display:inline-block;
+}
+#content.content_list table td.icon.checked span.checkIndex {
+  display:none;
+}
+
+#content.content_list table td.icon span.icon_first_aid {
+  background-image: url('../img/icon_first_aid.png');
 }
 
 #content.content_list table td.icon span.icon_doctor {
