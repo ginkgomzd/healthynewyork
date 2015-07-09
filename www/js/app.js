@@ -113,7 +113,7 @@ var app = {
          'Fb0w8YZ8IzTKaNtLT7AYNsBNUlR8fAwWKbIvMKwW',
          'zFRugdxlPSc2nlAuHklJZEuy9LSTEjPObykVoGww',
           function(obj) {
-             parsePlugin.subscribe('');
+             parsePlugin.subscribe('beta-testers'); // temp segment for development, reset to '' before merging branch;
           }
       );
       //For analytics we use the JS Lib
@@ -317,6 +317,7 @@ var app = {
      * Log a Parse AppOpen Event
      * @returns {undefined}     */
     analyticsAppOpen: function() {
+      console.log('IN analyticsAppOpened');
       Parse.Analytics.track('AppOpened');
     },
     dontNagMe: 0,
