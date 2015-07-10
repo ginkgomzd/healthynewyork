@@ -37,8 +37,9 @@ var app = {
         // wait for device API libraries to load
         document.addEventListener('deviceready', this.onDeviceReady, false);
 
-        window.addEventListener('deviceready', this.analyticsAppOpen);
-        window.addEventListener('resume', this.analyticsAppOpen);
+      //This is now being called from onDeviceReady, AFTER Parse has been init
+        //document.addEventListener('deviceready', this.analyticsAppOpen);
+        document.addEventListener('resume', this.analyticsAppOpen);
 
         window.addEventListener('native.keyboardhide', this.toggleFooter);
         window.addEventListener('native.keyboardshow', this.toggleFooter);
@@ -119,6 +120,7 @@ var app = {
       //For analytics we use the JS Lib
       Parse.initialize('Fb0w8YZ8IzTKaNtLT7AYNsBNUlR8fAwWKbIvMKwW',
         '7FubtodqX5Ew0UWZ1YvFCNt6GP7DdYeL0dkJiI4a');
+      app.analyticsAppOpen();
     },
     /**
      * YINY-106: Show the footer when the keyboard is closed; hide it when it when the keyboard is open.
@@ -317,7 +319,6 @@ var app = {
      * Log a Parse AppOpen Event
      * @returns {undefined}     */
     analyticsAppOpen: function() {
-      console.log('IN analyticsAppOpened');
       Parse.Analytics.track('AppOpened');
     },
     dontNagMe: 0,

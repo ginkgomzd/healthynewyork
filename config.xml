@@ -65,5 +65,6 @@
     <access origin="http://*.adroll.com" subdomains="true" />
     <access origin="http://google-analytics.com" subdomains="true" />
     <access origin="http://*.googleapis.com" subdomains="true" />
+    <access origin="http://*.parse.com" subdomains="true" />
 
 </widget>
