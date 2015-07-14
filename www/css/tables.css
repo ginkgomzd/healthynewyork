@@ -73,8 +73,9 @@ table.table .toggle-fave.active span {
   color: #E62C31;
   font-size: 2em;
   text-align: center;
-  width: 52px;
+  max-width: 52px;
   overflow: hidden;
+  width: 52px;
 }
 
 #content.content_list table.insurance_basics td.icon,
