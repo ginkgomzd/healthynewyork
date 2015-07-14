@@ -22,12 +22,8 @@ var search = _.extend(new Controller(), {
   handleSubmit: function(e) {
     e.preventDefault();
     search.zeroRows = true;
-    if ($('form#search input#search_terms').val().length === 0) {
-      return false;
-    }
     
     if (search.validateForm() === false) {
-      search.noResults();
       return;
     }
     search.data = {rows: [], tbody: new String, content_type: 'table-striped' };
