@@ -3,6 +3,27 @@ var content_list = _.extend(new Controller(), {
     content_list.id = id;
     content_list.fetchData();
   },
+  initialize: function() {
+    this.bindEvents();
+  },
+  bindEvents: function() {
+    $('body').on('tap', 'td.icon', function(e){
+      if (content_list.data.content_type === "health_checklist") {
+        var el = $(this);
+        var id = el.data("id");
+        if(content_list.data.checklist[id]) {
+          content_list.data.checklist[id] = false;
+          el.removeClass("checked");
+        } else {
+          content_list.data.checklist[id] = true;
+          el.addClass("checked");
+        }
+
+        content_list.saveChecklist();
+      }
+      e.preventDefault();
+    });
+  },
   fetchData: function() {
     content_list.data = {};
     content_list.data.rows = [];
@@ -26,7 +47,14 @@ var content_list = _.extend(new Controller(), {
     var i = 1;
     $.each(content_list.data.rows, function() {
       var row_data = this;
+      row_data.checkmark_class = '';
       row_data.icon_inner = (row_data.icon_class !== null ? '' : i++);
+      if(content_list.data.content_type == "health_checklist") {
+        row_data.icon_class = "checkIndex";
+        if(content_list.data.checklist[ row_data.id ]) {
+          row_data.checkmark_class = 'checked';
+        }
+      }
       content_list.data.tbody += row_tpl(row_data);
     });
     
@@ -91,8 +119,12 @@ var content_list = _.extend(new Controller(), {
         console.log("Transaction ERROR: "+ er.message);
       },
       function(){
-        content_list.bindData();
-        content_list.updateDisplay();
+        if(content_list.data.content_type === "health_checklist") {
+          content_list.fetchChecklist();
+        } else {
+          content_list.bindData();
+          content_list.updateDisplay();
+        }
       }
     );
   },
@@ -105,8 +137,42 @@ var content_list = _.extend(new Controller(), {
   parseResult: function(tx, result) {
     for(var i=0; i < result.rows.length; i++) {
       var item = result.rows.item(i);
-      content_list.data.rows.push({title_text: item.title, link_url: '#node/' + item.import_id, icon_class: item.icon_class});
+      content_list.data.rows.push({title_text: item.title, link_url: '#node/' + item.import_id, id: item.import_id, icon_class: item.icon_class});
     }
+  },
+  fetchChecklist: function() {
+    localDB.db.transaction(
+        function(tx){
+          tx.executeSql(
+              'SELECT "value" FROM "settings" WHERE key="health_checklist"',
+              [],
+              function(tx, result) {
+                if(result.rows.length > 0) {
+                  var item = result.rows.item(0);
+                  content_list.data.checklist = JSON.parse(item.value);
+                } else {
+                  content_list.data.checklist = {};
+                }
+                content_list.bindData();
+                content_list.updateDisplay();
+              },
+              function(tx, er){
+                console.log("Transaction ERROR: "+ er.message);
+              }
+          )
+        }
+    );
+  },
+  saveChecklist: function() {
+    //Not 100% why data has to be a var and not called inline,
+    //but that is the only way it works.
+    var data = JSON.stringify(content_list.data.checklist);
+    localDB.db.transaction(
+        function(tx) {
+          tx.executeSql('REPLACE INTO "settings" ("key", "value") VALUES (?,?)', ['health_checklist', data]);
+        },
+        function() {console.log('Checklist::Update SQL ERROR');}
+    );
   },
   usesBackButton: true,
 
@@ -117,4 +183,8 @@ var content_list = _.extend(new Controller(), {
   setContentClasses: function() {
     return 'content_list';
   }
+});
+
+$(document).ready(function () {
+  content_list.initialize();
 });

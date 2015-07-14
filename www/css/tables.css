@@ -73,6 +73,8 @@ table.table .toggle-fave.active span {
   color: #E62C31;
   font-size: 2em;
   text-align: center;
+  max-width: 52px;
+  overflow: hidden;
   width: 52px;
 }
 
@@ -94,6 +96,18 @@ table.table .toggle-fave.active span {
 
 #content.content_list table td.icon span.icon_calendar {
   background-image: url('../img/icon_calendar.png');
+}
+
+#content.content_list table.health_checklist td.icon.checked:before {
+  content: '\2713';
+}
+
+#content.content_list table td.icon.checked span.checkIndex {
+  display:none;
+}
+
+#content.content_list table td.icon span.icon_first_aid {
+  background-image: url('../img/icon_first_aid.png');
 }
 
 #content.content_list table td.icon span.icon_doctor {
