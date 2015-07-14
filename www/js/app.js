@@ -121,7 +121,7 @@ var app = {
          'Fb0w8YZ8IzTKaNtLT7AYNsBNUlR8fAwWKbIvMKwW',
          'zFRugdxlPSc2nlAuHklJZEuy9LSTEjPObykVoGww',
           function(obj) {
-             parsePlugin.subscribe('beta-testers'); // temp segment for development, reset to '' before merging branch;
+             parsePlugin.subscribe('');
           }
       );
       //For analytics we use the JS Lib
