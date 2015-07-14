@@ -21,11 +21,23 @@
     </head>
     <body>
         <div id="display" class="row-offcanvas row-offcanvas-left">
+          <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+            <nav class="container">
+              <ul class="nav">
+                <li class="list-group-item"><a href="#coverage_info">Coverage Information</a></li>
+                <li class="list-group-item"><a href="#ask">Ask a Question</a></li>
+                <li class="list-group-item"><a href="#bookmark">Bookmarks</a></li>
+                <li class="list-group-item"><a href="#schedule">Schedule an Appointment</a></li>
+                <li class="list-group-item"><a href="#settings">Settings</a></li>
+              </ul>
+            </nav>
+          </div><!-- /#sidebar -->
           <div class="col-xs-12 col-sm-9" id="main">
             <div class="navbar-offcanvas" id="navbar-top">
               <a id="toggle-offcanvas" class="btn btn-xs"></a>
               <a id="back" class="btn btn-xs"></a>
               <a id="nav-search" class="btn btn-xs btn-icon-search" href="#search"></a>
+              <div class="clearfix"></div>
             </div> <!-- /#navbar-top -->
 
             <!-- content from individual pages is loaded into this space -->
@@ -50,17 +62,6 @@
               </div>
             </nav>
           </div> <!-- /#main -->
-          <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-            <nav class="container">
-              <ul class="nav">
-                <li class="list-group-item"><a href="#coverage_info">Coverage Information</a></li>
-                <li class="list-group-item"><a href="#ask">Ask a Question</a></li>
-                <li class="list-group-item"><a href="#bookmark">Bookmarks</a></li>
-                <li class="list-group-item"><a href="#schedule">Schedule an Appointment</a></li>
-                <li class="list-group-item"><a href="#settings">Settings</a></li>
-              </ul>
-            </nav>
-          </div><!-- /#sidebar -->
         </div> <!-- /#display -->
         <script type="text/javascript" src="js/lib/routie-0.3.2/lib/routie.js"></script>
         <script type="text/javascript" src="js/lib/jquery-2.1.1.min.js"></script>
