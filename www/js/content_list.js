@@ -13,18 +13,10 @@ var content_list = _.extend(new Controller(), {
         var id = el.data("id");
         if(content_list.data.checklist[id]) {
           content_list.data.checklist[id] = false;
-          el.find("span.checkMark").fadeOut("fast", function() {
-            el.find("span.checkIndex").fadeIn("fast");
-            el.removeClass("checked");
-          });
-
-
+          el.removeClass("checked");
         } else {
           content_list.data.checklist[id] = true;
-          el.find("span.checkIndex").fadeOut("fast", function() {
-            el.find("span.checkMark").fadeIn("fast");
-            el.addClass("checked");
-          });
+          el.addClass("checked");
         }
 
         content_list.saveChecklist();

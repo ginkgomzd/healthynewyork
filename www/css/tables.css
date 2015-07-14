@@ -97,12 +97,11 @@ table.table .toggle-fave.active span {
 #content.content_list table td.icon span.icon_calendar {
   background-image: url('../img/icon_calendar.png');
 }
-#content.content_list table td.icon span.checkMark {
-  display:none;
+
+#content.content_list table.health_checklist td.icon.checked:before {
+  content: '\2713';
 }
-#content.content_list table td.icon.checked span.checkMark {
-  display:inline-block;
-}
+
 #content.content_list table td.icon.checked span.checkIndex {
   display:none;
 }
