@@ -39,6 +39,9 @@ var content_list = _.extend(new Controller(), {
     var tpl_src = $('#table_page_tpl').html();
     var template = _.template(tpl_src);
 
+    if(content_list.data.content_type == "health_checklist") {
+      content_list.data.pre_table = '<p>When you\'ve complete an item, tap its number in the list to check if off.</p>';
+    }
     content_list.data.tbody = '';
 
     var src = $('#content_list_table_row_tpl').html();
