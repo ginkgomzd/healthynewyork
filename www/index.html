@@ -90,6 +90,9 @@
     <% if (typeof page_title === 'string' && page_title.length > 0) { %>
       <h1><%= page_title %></h1>
     <% } %>
+    <% if (typeof pre_table === 'string' && pre_table.length > 0) { %>
+      <div class="pre_table"><%= pre_table %></div>
+    <% } %>
     <table class="table <%= content_type %>">
       <tbody><%= tbody %></tbody>
     </table>
@@ -101,15 +104,6 @@
   <tr>
     <td class="icon <%= checkmark_class %>" data-id="<%= id %>"><span class="<%= icon_class %>"><%= icon_inner %></span></td>
     <td class="link"><a href="<%= link_url %>"><%= title_text %></a></td>
-  </tr>
-</script>
-<script type="text/template" id="health_checklist_table_row_tpl">
-  <tr>
-    <td class="icon"><span class="<%= icon_class %>"><%= icon_inner %></span></td>
-    <td class="link"><a href="<%= link_url %>"><%= title_text %></a></td>
-    <td class="spacer"></td>
-    <td class="icon"><span class="<%= icon_class_2 %>"><%= icon_inner_2 %></span></td>
-    <td class="link"><a href="<%= link_url_2 %>"><%= title_text_2 %></a></td>
   </tr>
 </script>
 <script type="text/template" id="content_leaf_tpl">
