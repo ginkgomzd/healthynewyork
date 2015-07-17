@@ -88,7 +88,9 @@ var search = _.extend(new Controller(), {
         { title_text: item.title,
           link_url: '#node/' + item.import_id,
           icon_class: null,
-          icon_inner: null
+          icon_inner: null,
+          id: item.import_id,
+          checkmark_class: null
         });
     }
   },
