@@ -23,8 +23,8 @@ if (rootdir) {
   var cnt_fetched = 0;
   var content = [];
   var urls = [
-    'http://healthyi.ginkgostreet.com/healthy/json',
-    'http://healthyi.ginkgostreet.com/listing/json'
+    'http://healthyi.yidata.org/healthy/json',
+    'http://healthyi.yidata.org/listing/json'
   ];
 
   var platform_path = (process.env.CORDOVA_PLATFORMS === 'android') ? 'platforms/android/assets/www' : 'platforms/ios/www';
