@@ -121,7 +121,7 @@ var app = {
          'Fb0w8YZ8IzTKaNtLT7AYNsBNUlR8fAwWKbIvMKwW',
          'zFRugdxlPSc2nlAuHklJZEuy9LSTEjPObykVoGww',
           function(obj) {
-             parsePlugin.subscribe('');
+             parsePlugin.subscribe('beta-testers');
           }
       );
       //For analytics we use the JS Lib
