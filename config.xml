@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<!-- Format for android and iOS versions: YYMMDDNN, where NN is a counter for the day's builds (01, 02, etc.) -->
+<!-- Format for android and iOS versions: YYYYMMDDNN, where NN is a counter for the day's builds (01, 02, etc.) -->
 <widget xmlns = "http://www.w3.org/ns/widgets"
         xmlns:cdv = "http://cordova.apache.org/ns/1.0"
         id = "org.younginvincibles.healthyi"
-        android-versionCode = "15072801"
-	ios-CFBundleVersion = "15072801"
+        android-versionCode = "2015072801"
+	ios-CFBundleVersion = "2015072801"
         version = "1.1.0">
     <name>HealthYI</name>
     <description>
