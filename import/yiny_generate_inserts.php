@@ -118,7 +118,7 @@ echo generate_sqlite_insert('content', $file_array, $field_map);
 
 
 /***
- * Generate Healthy NY app db insert statements (SQLite) w/ tx.executeSql()
+ * Generate HealthYI app db insert statements (SQLite) w/ tx.executeSql()
  ***/
 function generate_sqlite_insert($table_name, $file_array, $field_map, $first_row_is_header = TRUE, $field_names = NULL) {
 

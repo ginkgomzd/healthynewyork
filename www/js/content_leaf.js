@@ -18,7 +18,7 @@ var content_leaf = _.extend(new Controller(), {
     var msgBody = $(content_leaf.data.body).text().substr(0, 296 - content_leaf.data.title_text.length);
     var lastSpace = msgBody.lastIndexOf(" ");
     msgBody = msgBody.substring(0, lastSpace);
-    msgBody = "Check out what I learned from the Healthy NY app:\n\n" + content_leaf.data.title_text + "\n" + msgBody + "...\n";
+    msgBody = "Check out what I learned from the HealthYI app:\n\n" + content_leaf.data.title_text + "\n" + msgBody + "...\n";
     window.plugins.socialsharing.share(
         msgBody,
         content_leaf.data.title_text,
