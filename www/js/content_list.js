@@ -40,7 +40,7 @@ var content_list = _.extend(new Controller(), {
     var template = _.template(tpl_src);
 
     if(content_list.data.content_type == "health_checklist") {
-      content_list.data.pre_table = '<p>When you\'ve complete an item, tap its number in the list to check it off.</p>';
+      content_list.data.pre_table = '<p>When you\'ve completed an item, tap its number in the list to check it off.</p>';
     }
     content_list.data.tbody = '';
 
