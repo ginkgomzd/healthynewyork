@@ -251,6 +251,22 @@ nav a[href^="#settings"] {
   height: 100%;
 }
 
+.shutter-offcanvas {
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 1000;
+}
+
+.row-offcanvas.active .shutter-offcanvas {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
 .row-offcanvas-left.active .sidebar-offcanvas {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
