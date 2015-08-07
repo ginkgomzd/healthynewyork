@@ -3,8 +3,8 @@
 <widget xmlns = "http://www.w3.org/ns/widgets"
         xmlns:cdv = "http://cordova.apache.org/ns/1.0"
         id = "org.younginvincibles.healthyi"
-        android-versionCode = "2015072801"
-	ios-CFBundleVersion = "2015072801"
+        android-versionCode = "2015080701"
+	ios-CFBundleVersion = "2015080701"
         version = "1.1.0">
     <name>HealthYI</name>
     <description>
