@@ -14,6 +14,10 @@ var scheduleBase =  {
     $('body').on('change', 'form#schedule select[name="insurance_plan"]:not(.settingDefault)', this.askSaveSelection);
     $('body').on('click', '#saveCancel #modal-save', this.saveToProfile);
     $('body').on('change', '#saveCancel .dont-nag-me', this.dontNag);
+    $("#loading-div").click(function () {
+      //Hide the loading animation if it is clicked
+      $("#loading-div").fadeOut();
+    });
   },
   main: function() {
     this.renderTpl();
@@ -168,8 +172,6 @@ var scheduleBase =  {
        logData[k] = v.value;
     });
     Parse.Analytics.track('zocdoc', logData);
-
-    $('#zocdoc_frame').load(function() { $("#loading-div").hide(); });
   },
   showResults: function () {
     $('#zocdoc_wrapper').show();
@@ -182,6 +184,10 @@ var scheduleBase =  {
       qs += k + '=' + v.value + '&';
     });
     $('#zocdoc_frame').show().attr('src','http://www.zocdoc.com/search/'+'?'+ qs);
+    //This hides the loading bar after one half second.
+    setTimeout(function() {
+      $("#loading-div").fadeOut();
+    }, 3000);
 
     // configure the back button to bring back the form
     $('#toggle-offcanvas').hide();
