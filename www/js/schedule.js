@@ -187,7 +187,7 @@ var scheduleBase =  {
     //This hides the loading bar after one half second.
     setTimeout(function() {
       $("#loading-div").fadeOut();
-    }, 500);
+    }, 3000);
 
     // configure the back button to bring back the form
     $('#toggle-offcanvas').hide();
