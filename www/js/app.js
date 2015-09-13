@@ -73,11 +73,9 @@ var app = {
           e.preventDefault();
         });
 
-      $('#main').bind('click', function (e) {
-        if ($('.row-offcanvas').hasClass('active') && $(e.target).attr("id") !== "toggle-offcanvas") {
-          $('.row-offcanvas').removeClass('active');
-          e.preventDefault();
-        }
+      $('.shutter-offcanvas').bind('click', function (e) {
+        $('.row-offcanvas').removeClass('active');
+        e.preventDefault();
       });
         // any time a link is followed, close the off-canvas menu
         $('nav a').bind('click', function (el) {
@@ -121,7 +119,7 @@ var app = {
          'Fb0w8YZ8IzTKaNtLT7AYNsBNUlR8fAwWKbIvMKwW',
          'zFRugdxlPSc2nlAuHklJZEuy9LSTEjPObykVoGww',
           function(obj) {
-             parsePlugin.subscribe('');
+             parsePlugin.subscribe('beta-testers');
           }
       );
       //For analytics we use the JS Lib
