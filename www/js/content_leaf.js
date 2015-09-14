@@ -13,7 +13,7 @@ var content_leaf = _.extend(new Controller(), {
     });
   },
   socialShare: function() {
-    var url = "http://healthyi.yidata.org/";
+    var url = "http://app.healthyyoungamerica.org/";
     var file = null;
     var msgBody = $(content_leaf.data.body).text().substr(0, 296 - content_leaf.data.title_text.length);
     var lastSpace = msgBody.lastIndexOf(" ");
