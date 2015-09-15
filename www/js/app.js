@@ -143,7 +143,8 @@ var app = {
       app.router.initialize();
 
       routie('coverage_info');
-      settings.fetchProfileData(app.promptPersonalize);
+      settings.fetchProfileData({});
+      app.welcomeMessage();
     },
     /**
      * Depends on jQuery mobile's swipe event. Presently reports on horizontal
@@ -166,6 +167,23 @@ var app = {
 
       return direction;
     },
+    welcomeMessage: function() {
+      $('#modal').clone().attr('id', 'welcomeMessage').appendTo('body');
+      $('#welcomeMessage .modal-title').empty().html('<h2>Welcome to the HealthYI Mobile App!</h2>');
+
+      $('#welcomeMessage .modal-body').empty().html('<p>You\'ve got health insurance. Now what?</p><ul><li>Complete the Health Checklist</li><li>Understand Insurance Basics</li><li>Schedule doctor\'s appointments</li><li>Ask the experts</li><li>Save money and learn about your insurance coverage</li></ul>');
+
+      $('#welcomeMessage .btn-default').empty().html('Continue');
+      $('#welcomeMessage').modal('show');
+
+      return false;
+    },
+    /**
+     * Unused: Suggest user add personal data.
+     * @param {type} tx
+     * @param {type} result
+     * @returns {undefined|Boolean}
+     */
     promptPersonalize: function(tx, result) {
       if (result.rows.length > 0) {
         return; // don't alert
