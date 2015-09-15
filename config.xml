@@ -3,9 +3,9 @@
 <widget xmlns = "http://www.w3.org/ns/widgets"
         xmlns:cdv = "http://cordova.apache.org/ns/1.0"
         id = "org.younginvincibles.healthyi"
-        android-versionCode = "2015081001"
-	ios-CFBundleVersion = "2015081001"
-        version = "1.1-beta3">
+        android-versionCode = "2015091501"
+	ios-CFBundleVersion = "2015091501"
+        version = "1.1.1">
     <name>HealthYI</name>
     <description>
         Find health insurance resources.
