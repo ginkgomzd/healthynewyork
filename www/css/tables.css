@@ -100,6 +100,7 @@ table.table .toggle-fave.active span {
 
 #content.content_list table.health_checklist td.icon.checked:before {
   content: '\2713';
+  color: green;
 }
 
 #content.content_list table td.icon.checked span.checkIndex {
