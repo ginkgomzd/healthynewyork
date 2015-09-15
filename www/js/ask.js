@@ -22,11 +22,11 @@ var ask = _.extend(new Controller(), {
 
     ask.formFields.email = {
       element: $('form#ask [name="email"]'),
-      googleName: "entry.1020011979"
+      googleName: "entry.853271876"
     };
     ask.formFields.question = {
       element: $('form#ask [name="question"]'),
-      googleName: "entry.580093334"
+      googleName: "entry.1272122560"
     };
     ask.getFormValues();
 
@@ -100,7 +100,7 @@ var ask = _.extend(new Controller(), {
     });
 
     var result = $.post(
-      'https://docs.google.com/forms/d/1RguP0c51sn8RZn5h2urGJl4WR8g_O4xJMOtThEIViZg/formResponse',
+      'https://docs.google.com/forms/d/1y1ciX5QJkfPN5T2M0_FZWJVlwmPP78vB2bYSDTkBtFo/formResponse',
       data,
       function() {
         $('#modal .modal-title').empty().html('<h1>Question Submitted</h1>');
