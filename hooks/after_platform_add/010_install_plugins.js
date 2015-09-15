@@ -6,9 +6,9 @@
 var pluginlist = [
 // appear to be built in reverse
 // putting net-info here to be built-later to resolve problem on ios -- MZD
-    "org.apache.cordova.network-information",
-    "org.apache.cordova.inappbrowser",
-    "https://github.com/ginkgostreet/phonegap-parse-plugin.git#healthyi",
+    "cordova-plugin-network-information",
+    "cordova-plugin-inappbrowser",
+    "https://github.com/grrrian/phonegap-parse-plugin.git --variable APP_ID=Fb0w8YZ8IzTKaNtLT7AYNsBNUlR8fAwWKbIvMKwW --variable CLIENT_KEY=zFRugdxlPSc2nlAuHklJZEuy9LSTEjPObykVoGww",
     "com.ionic.keyboard",
     "nl.x-services.plugins.socialsharing",
     "cordova-plugin-whitelist"
