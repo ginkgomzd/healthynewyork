@@ -20,7 +20,7 @@ var coverage_info = _.extend(new Controller(), {
   buildQueries: function(tx) {
     tx.executeSql(
       'SELECT "import_id", "title", "icon_class" FROM "content" \
-      WHERE "type" = ?',
+      WHERE "type" = ? ORDER BY import_id',
       ['coverage_info'],
       coverage_info.buildRows
     );
