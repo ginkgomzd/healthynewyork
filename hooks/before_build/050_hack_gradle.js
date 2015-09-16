@@ -20,8 +20,9 @@ function replace_in_file(filename, to_replace, replace_with) {
 }
 
 var gradle = path.join(rootdir, 'platforms/android/build.gradle');
-var find = 'privateHelpers.extractIntFromManifest\\("versionCode"\\) + "0"';
+var find = 'privateHelpers.extractIntFromManifest\\("versionCode"\\) \\+ "0"';
 var repl = 'privateHelpers.extractIntFromManifest("versionCode")';
 
+console.log('HACK GRADLE');
 replace_in_file(gradle, find, repl);
 
